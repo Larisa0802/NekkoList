@@ -5,10 +5,13 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,sig
 
 async function signUp(req,res){
     const auth = getAuth();
-    let asd = await createUserWithEmailAndPassword(auth, req.body.email, req.body.password).then((userCredential) => {
+    await createUserWithEmailAndPassword(auth, req.body.email, req.body.password).then((userCredential) => {
         // Signed up 
-        console.log(userCredential)
-        res.send(userCredential).status(200)
+        if(!userCredential == true){
+            res.status(400)
+        }else{
+            res.send(userCredential).status(200)
+        }
         // ...
     }).catch((error) => {
         const errorCode = error.code;
@@ -20,12 +23,16 @@ async function signUp(req,res){
 
 async function logIn(req,res){
     const auth = getAuth();
-    console.log(req.body.password)
-    let asd = await signInWithEmailAndPassword(auth, req.body.email, req.body.password).then((userCredential) => {
+    await signInWithEmailAndPassword(auth,req.body.email, req.body.password).then((userCredential) => {
         // Signed in 
         //_tokenResponse.localId es el uuid de base de datos
-        console.log(userCredential)
-        res.send(userCredential).status(200)
+        if(userCredential._tokenResponse.registered){
+            res.send(userCredential).status(200)
+            
+        }else{
+            res.status(400) 
+        }
+        
         // ...
     }).catch((error) => {
         const errorCode = error.code;
@@ -36,7 +43,7 @@ async function logIn(req,res){
 
 async function signOutUser(req,res){
     const auth = getAuth()
-    await signOut(auth).then(() => {
+    await signOut(auth).then((userCredential) => {
         res.sendStatus(200)
     }).catch((error) => {
         res.json(error)

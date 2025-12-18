@@ -17,9 +17,8 @@ class FirebaseController{
                     email: req.body.email,
                     password: req.body.password
                 })
-            const datosJson = JSON.parse(datos.config.data)
-            res.cookie("cookie",{email: datosJson.email, pass: datosJson.password, uuid: datos.data.user.uid},{expire:2 * 3600 * 100000000000})
             if(datos.status == 200){
+                const datosJson = JSON.parse(datos.config.data)
                 res.render("login.ejs",{log: {email: datosJson.email, pass: datosJson.password, uuid: datos.data.user.uid}})
             }else{
                 res.status(404).send("No se han encontrado tareas")
@@ -32,14 +31,21 @@ class FirebaseController{
 
     logIn = async (req, res) => {
         try{
-            const datos = await this.client.post("/logIn",{
+            const datos = await this.client.post("/logIn",
+                {
                     email: req.body.email,
                     password: req.body.password
                 })
+            console.log(datos.status)
             if(datos.status == 200){
-                res.render("logOut.ejs",{log: {uuid: req.cookies.cookie["uuid"]}})
-            }else{
-                res.status(404).send("No se han encontrado tareas")
+                const datosJson = JSON.parse(datos.config.data)
+                res.cookie("cookie",{email: datosJson.email, pass: datosJson.password, uuid: datos.data.user.uid},{expire:2 * 3600 * 100000000000})
+                res.render("logOut.ejs")
+            }else if(datos.status == 400){
+                res.send("asd")
+            }
+            else{
+                res.status(404).send("asd")
             }
         }catch(error){
             console.error("Error al consumir la API:", error.message)
@@ -51,7 +57,7 @@ class FirebaseController{
         try{
             const datos = await this.client.post("/signOutUser")
             if(datos.status == 200){
-                res.send("Sesion Cerrada")
+                res.render("login.ejs",{log: ""})
             }else{
                 res.status(404).send("No se han encontrado tareas")
             }
