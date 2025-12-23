@@ -1,0 +1,37 @@
+<% const user = locals.user || null; %> 
+<!--Garantiza que la variable user siempre exista
+local.user -> guarda todas las variables de express que tengan user
+Si express le pasa un usuario se lo pone y sino es null.-->
+
+<header class="main-header">
+
+  <div class="logo">
+    <a href="/">NekkoList</a>
+  </div>
+
+  <nav class="navbar">
+    <!-- Opciones visibles para TODOS -->
+    <a href="/inicio">Inicio</a>
+    <a href="/catalog">Catalogo</a>
+    <a href="/contact">Contacto</a>
+
+    <!-- Usuario NO registrado -->
+    <% if (!user) { %>
+      <a href="/logIn">Login</a>
+      <a href="/register">Registro</a>
+    <% } %>
+
+    <!-- Usuario registrado -->
+    <% if (user) { %>
+      <a href="/perfil">Perfil</a>
+      <a href="/logOut">Cerrar sesión</a>
+    <% } %>
+
+    <!-- Usuario ADMIN -->
+    <% if (user && user.root == true) { %>
+      <a href="/admin">Admin</a>
+    <% } %>
+
+  </nav>
+
+</header>

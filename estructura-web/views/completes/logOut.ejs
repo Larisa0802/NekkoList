@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerrar sesión</title>
+</head>
+
+<body>
+    <% const user = locals.user || null; %>
+    <%- include("../partials/header") %> <!--Header-->
+
+
+    <form action="/signOutUser" method="post">
+        <p id="uid">
+            <%= user ? user.uuid : "" %>
+        </p>
+        <p>Cerrar Sesión</p>
+        <input type="submit" value="Cerrar sesión">
+    </form>
+
+        <%- include("../partials/footer") %> <!--Footer-->
+
+</body>
+
+</html>
