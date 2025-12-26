@@ -1,10 +1,10 @@
 import Jikan from 'jikan4.js'
-
+import animeRepo from '../repositories/anime_repository.mjs'
 
 async function getAnimebyId(req, res){
     const client = new Jikan.Client()
     let arrayData = []
-    for(let i = 1; i <= 1000; i++){
+    for(let i = 1; i <= 10; i++){
         const anime = await client.anime.get(i)
         if(anime){
             arrayData.push(anime)
@@ -12,27 +12,12 @@ async function getAnimebyId(req, res){
             console.log(`Anime with ID ${i} does not exist.`)
         }
     }
-    // console.log(arrayData)
-    // anime.id ; anime.image.ImageFormatCollection["jpeg"]; anime.title.ContentTitle["english"]; anime.titles??; anime.score; anime.synopsis; anime.type; anime.source; anime.episodes; anime.airInfo.AnimeAirInformation["status"]; anime.airInfo.AnimeAirInformation["airing"](false o true); anime.airInfo.AnimeAirInformation["airedFrom"]; anime.airInfo.AnimeAirInformation["airedTo"](can be null)
+    console.log(arrayData[0])
+    await animeRepo.insertAnime(arrayData)
     res.send(arrayData).status(200)
    
 }
 
-// async function getAnimebyName(req,res){
-//     const client = new Jikan.Client()
-//     console.log(req)
-//     const result = (await client.anime.search("Sousou no Frieren")).map((anime) => {
-//         return {
-//         title: anime.title.default,
-//         year: anime.year
-//         }
-//     })
-
-
-//     res.send(result).status(200)
-//     console.log(result)
-
-// }
 
 export default {
         getAnimebyId,
