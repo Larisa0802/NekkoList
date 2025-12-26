@@ -1,13 +1,14 @@
 export class User{
-    constructor({id, nombre, fecha_registro, admin}){
+    constructor({id, email, nombre, fecha_registro, admin}){
         this.id = id
+        this.email = email
         this.nombre = nombre
         this.fecha_registro = fecha_registro
         this.admin = admin
     }
 
     printBasico(){
-        console.log(`UserId:${this.id}, Nombre:${this.nombre}, Fecha Registro: ${this.fecha_registro}, Admin: ${this.admin}`)
+        console.log(`UserId:${this.id},Email:${this.email}, Nombre:${this.nombre}, Fecha Registro: ${this.fecha_registro}, Admin: ${this.admin}`)
     }
 
     getId() {
@@ -16,6 +17,14 @@ export class User{
 
     setId(id) {
         this.id = id
+    }
+
+    getId() {
+        return this.email
+    }
+
+    setEmail(email) {
+        this.email = email
     }
 
     getNombre() {

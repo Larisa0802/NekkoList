@@ -5,7 +5,7 @@ async function insertUser(data){
     const client = await pool.connect()
     let result = ""
     try{
-        await client.query(`INSERT INTO usuarios (id,nombre) VALUES ('${data.id}','${data.nombre}') ON CONFLICT (id) DO NOTHING;`)
+        await client.query(`INSERT INTO usuarios (id,email,nombre) VALUES ('${data.id}', '${data.email}','${data.nombre}') ON CONFLICT (id) DO NOTHING;`)
        
     }catch(err){
         console.error("Error en la insercion de datos",err.message)
