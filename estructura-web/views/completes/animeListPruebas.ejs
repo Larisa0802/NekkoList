@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>asd</title>
+</head>
+<body>
+    <% if (animeData) { %>
+        <% animeData.forEach((anime) => { %>
+            <p><%= anime.title.english %>  <%= anime.year %>  <%= anime.episodes %>  <%= anime.source %> <%= anime.type %>  <%= anime.synopsis.replaceAll("[Written by MAL Rewrite]", "") %> <%= anime.score %></p>
+            <img src="<%=anime.image.jpg.default%>">
+        <% }) %>
+    
+    <% } else { %>
+        <h1>Bienvenid@ asd</h1>
+    <% } %>
+</body>
+</html>

@@ -1,6 +1,7 @@
 import express from "express"
 import path from "path"
-import taskRoutes from "./routes/firebase_routes.mjs"
+import firebaseRoutes from "./routes/firebase_routes.mjs"
+import jikanRoutes from "./routes/jikan_controller.mjs"
 import cookieParser from "cookie-parser" //npm i cookie-parser
 
 
@@ -17,7 +18,8 @@ app.use(express.static(path.join(actualRoute,"public")))
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
-app.use(taskRoutes)
+app.use(firebaseRoutes)
+app.use(jikanRoutes)
 
 
 //escucha
