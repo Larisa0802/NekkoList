@@ -9,7 +9,7 @@ async function insertAnime(arrayData){
         for(let i = 0; i < arrayData.length; i++){
             //datos a guardar en db anime.id; anime.title.english; anime.genres[].name; anime.synopsis; anime.episodes; anime.airInfo.airedFrom
             let date = new Date(arrayData[i].airInfo.airedFrom)
-            await client.query(`INSERT INTO animes (id,titulo,genero,descripcion,episodios,fecha_pub,imagen) VALUES ('${arrayData[i].id}', '${arrayData[i].title.english}', '${genreConstructor(arrayData[i].genres)}', '${arrayData[i].synopsis.replaceAll("[Written by MAL Rewrite]", "").replaceAll("\'","").replaceAll("\"","")}', ${arrayData[i].episodes}, '${date.toISOString()}', '${imageChecker(arrayData[i].image)}') ON CONFLICT (id) DO NOTHING;`)
+            await client.query(`INSERT INTO animes (id,titulo,genero,descripcion,episodios,fecha_pub,imagen) VALUES (${arrayData[i].id}, '${titleChecker(arrayData[i].title)}', '${genreConstructor(arrayData[i].genres)}', '${arrayData[i].synopsis.replaceAll("[Written by MAL Rewrite]", "").replaceAll("\'","").replaceAll("\"","")}', ${arrayData[i].episodes}, '${date.toISOString()}', '${imageChecker(arrayData[i].image)}') ON CONFLICT (id) DO NOTHING;`)
         }
        
     }catch(err){
@@ -117,6 +117,16 @@ function imageChecker(imageObject){
         return imageObject.jpg.default
     }
     return image
+}
+
+function titleChecker(titleObject){
+    let title = ""
+    if(titleObject.english){
+        return titleObject.english.replaceAll("\'","").replaceAll("\"","")
+    }else if(titleObject.japanese){
+        return titleObject.japanese.replaceAll("\'","").replaceAll("\"","")
+    }
+    return title
 }
 
 
