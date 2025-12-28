@@ -1,5 +1,5 @@
 import express from "express"
-import AnimeController from "../controllers/firebase_controller.mjs"
+import firebaseController from "../controllers/firebase_controller.mjs"
 
 
 const router = new express.Router()
@@ -25,9 +25,9 @@ router.get("/inicio", (req, res) => {
 })
 
 //Enviar datos al servidor desde formularios/axios
-router.post("/signUp", AnimeController.signUp)
-router.post("/logIn", AnimeController.logIn)
-router.post("/signOutUser", AnimeController.signOutUser)
+router.post("/signUp", firebaseController.signUp)
+router.post("/logIn", firebaseController.logIn)
+router.post("/signOutUser", firebaseController.signOutUser)
 
 
 

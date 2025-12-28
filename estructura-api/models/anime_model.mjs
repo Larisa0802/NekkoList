@@ -6,6 +6,7 @@ export class Anime{
         this.genero = genero
         this.descripcion = descripcion
         this.episodios = episodios
+        // cambiar estructura a yyyy-mm-dd solo
         this.fecha_pub = fecha_pub
         this.imagen = imagen
     }

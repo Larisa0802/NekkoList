@@ -1,4 +1,6 @@
 export class Favourites{
+    // cambiar progreso por rating en db
+
     constructor({usuario_id, anime_id, fecha_agregado, progreso}){
         this.usuario_id = usuario_id
         this.anime_id = anime_id

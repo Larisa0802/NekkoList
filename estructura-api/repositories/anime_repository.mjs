@@ -2,7 +2,7 @@ import pool from "../config/database.mjs"
 import { Anime } from "../models/anime_model.mjs"
 
 
-async function insertAnime(arrayData){
+async function insertAnimeJikan(arrayData){
     const client = await pool.connect()
     let result = ""
     try{
@@ -62,7 +62,7 @@ async function selectAnimeById(id){
 }
 
 
-// revisar bien como se quiere hacer
+// solo se envia un solo objeto a modificar en un objeto json dentro de l pagina con el id especifico
 async function updateAnimeById(id, column, value){
     const client = await pool.connect()
     let result = ""
@@ -94,7 +94,7 @@ async function deleteAnimeById(id){
     }
     return result
 }
-
+// generos en blanco si no existen se deben contatenar los temas
 function genreConstructor(genres){
     let genero = ""
     for(let i = 0; i < genres.length; i++){
@@ -128,11 +128,12 @@ function titleChecker(titleObject){
     }
     return title
 }
+//si no existen los episodios ponerlos en ongoing
 
 
 
 export default {
-    insertAnime,
+    insertAnimeJikan,
     selectAllAnime,
     selectAnimeById,
     updateAnimeById,

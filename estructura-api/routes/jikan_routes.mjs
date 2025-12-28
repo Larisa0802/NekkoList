@@ -4,7 +4,7 @@ import jikanController from "../controllers/jikan_controller.mjs"
 const router = new express.Router()
 
 
-router.get("/getAnimebyId", jikanController.getAnimebyId)
+router.get("/jikanAnimeDatabase", jikanController.getAnimebyId)
 
 
 export default router

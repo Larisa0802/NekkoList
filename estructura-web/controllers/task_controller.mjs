@@ -13,15 +13,26 @@ class AnimeController {
     listar = async (req, res) => {
         try {
             //Envia un GET a la API y espera respuesta
-            const respuesta = await this.client.get("/animes")
+            const respuesta = await this.client.get("/getAllAnimes")
             const animes = respuesta.data //Respuesta de la api
 
-            //Renderizado en la página de catalogo con la información de la variable animes
-            res.render("completes/catalogo", {
-                title: "Catalogo",
-                animes,
-                user: req.session.user || null
-            })
+            if(respuesta.status == 200){
+                //Renderizado en la página de catalogo con la información de la variable animes
+                res.render("completes/catalog", {
+                    title: "Catalogo",
+                    animes: animes,
+                    user: req.cookies["datosUsuario"].user || null
+                })
+            }else{
+                res.render("completes/catalog", {
+                    title: "Catálogo",
+                    animes: [],
+                    error: "No se pudo cargar el catálogo",
+                    user: req.cookies["datosUsuario"].user || null
+                })
+            }
+            
+            
 
         } catch (error) {
             console.error("Error al obtener animes:", error.message)
@@ -30,7 +41,7 @@ class AnimeController {
                 title: "Catálogo",
                 animes: [],
                 error: "No se pudo cargar el catálogo",
-                user: req.session.user || null
+                user: req.cookies["datosUsuario"].user || null
             })
         }
     }
@@ -39,19 +50,19 @@ class AnimeController {
     detalle = async (req, res) => {
         const { id } = req.params
         try {
-            const respuesta = await this.client.get(`/animes/${id}`)
+            const respuesta = await this.client.get(`/getAnimeById/${id}`)
             const anime = respuesta.data
 
             res.render("completes/detalle", {
                 title: anime.titulo,
-                anime,
-                user: req.session.user || null
+                anime:anime,
+                user: req.cookies["datosUsuario"].user || null
             })
 
         } catch (error) {
             res.status(404).render("completes/not_found", {
                 title: "Anime no encontrado",
-                user: req.session.user || null
+                user: req.cookies["datosUsuario"].user || null
             })
         }
     }

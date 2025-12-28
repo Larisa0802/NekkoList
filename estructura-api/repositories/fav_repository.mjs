@@ -1,6 +1,10 @@
 import pool from "../config/database.mjs"
 import { Favourites } from "../models/fav_model.mjs"
 
+// data{
+//      userId: 'asd',
+//      animeId: 12 
+// }
 async function insertFavorite(data){
     const client = await pool.connect()
     let result = ""
@@ -17,7 +21,7 @@ async function insertFavorite(data){
 }
 
 
-// que se quiere mostrar exactamente en favoritos??
+// mostrar todos los datos de los animes mas el rating
 async function selectAllFavourites(usuario_id){
     const client = await pool.connect()
     let result = ""
