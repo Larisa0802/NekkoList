@@ -21,14 +21,14 @@ class AnimeController {
                 res.render("completes/catalog", {
                     title: "Catalogo",
                     animes: animes,
-                    user: req.cookies["datosUsuario"].user || null
+                    user: req.cookies["datosUsuario"]?.uuid || null
                 })
             }else{
                 res.render("completes/catalog", {
                     title: "Catálogo",
                     animes: [],
                     error: "No se pudo cargar el catálogo",
-                    user: req.cookies["datosUsuario"].user || null
+                    user: req.cookies["datosUsuario"]?.uuid || null
                 })
             }
             
@@ -41,7 +41,7 @@ class AnimeController {
                 title: "Catálogo",
                 animes: [],
                 error: "No se pudo cargar el catálogo",
-                user: req.cookies["datosUsuario"].user || null
+                user: req.cookies["datosUsuario"]?.uuid || null
             })
         }
     }
@@ -56,13 +56,13 @@ class AnimeController {
             res.render("completes/detalle", {
                 title: anime.titulo,
                 anime:anime,
-                user: req.cookies["datosUsuario"].user || null
+                user: req.cookies["datosUsuario"]?.uuid || null
             })
 
         } catch (error) {
             res.status(404).render("completes/not_found", {
                 title: "Anime no encontrado",
-                user: req.cookies["datosUsuario"].user || null
+                user: req.cookies["datosUsuario"]?.uuid || null
             })
         }
     }

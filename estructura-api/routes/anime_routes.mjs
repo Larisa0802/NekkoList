@@ -5,7 +5,9 @@ const router = new express.Router()
 
 
 router.get("/getAllAnimes", animeController.getAllAnimes)
-router.get("/getAnimeById", animeController.getAnimeById)
+router.get("/getAnimeById/:id", animeController.getAnimeById)
+router.post("/deleteAnime", animeController.deleteAnime)
+router.post("/updateAnime", animeController.updateAnime)
 
 
 export default router

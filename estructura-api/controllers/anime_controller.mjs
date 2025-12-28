@@ -4,7 +4,6 @@ async function getAllAnimes(req, res){
     let animes = undefined
     try{
         animes = await animeRepo.selectAllAnime()
-        console.log(typeof animes)
     }catch(error){
         console.log(error)
         res.send(error).status(500)
@@ -16,8 +15,8 @@ async function getAllAnimes(req, res){
 async function getAnimeById(req, res){
     let animes = undefined
     try{
-        animes = await animeRepo.selectAnimeById(req.body.id)
-        console.log(typeof animes)
+        animes = await animeRepo.selectAnimeById(req.params.id)
+
     }catch(error){
         console.log(error)
         res.send(error).status(500)
@@ -27,7 +26,42 @@ async function getAnimeById(req, res){
 }
 
 
+// data = {
+//     id:asd,
+//     titulo:asd,
+//     genero:asd,
+//     descripcion:asd,
+//     episodios:asd,
+//     fecha_pub:asd,
+//     imagen:asd,
+// }
+async function updateAnime(req, res){
+    try{
+        await animeRepo.updateAnimeById(req.body.data)
+
+    }catch(error){
+        console.log(error)
+        res.send(error).status(500)
+    }
+    res.sendStatus(200)
+   
+}
+
+async function deleteAnime(req, res){
+    try{
+        await animeRepo.deleteAnimeById(req.body.id)
+    }catch(error){
+        console.log(error)
+        res.send(error).status(500)
+    }
+    res.sendStatus(200)
+   
+}
+
+
 export default {
         getAllAnimes,
-        getAnimeById
+        getAnimeById,
+        updateAnime,
+        deleteAnime
     }

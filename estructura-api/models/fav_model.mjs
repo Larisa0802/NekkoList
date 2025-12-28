@@ -1,15 +1,16 @@
 export class Favourites{
     // cambiar progreso por rating en db
 
-    constructor({usuario_id, anime_id, fecha_agregado, progreso}){
+    constructor({usuario_id, anime_id, fecha_agregado, rating, animeData}){
         this.usuario_id = usuario_id
         this.anime_id = anime_id
         this.fecha_agregado = fecha_agregado
-        this.progreso = progreso
+        this.rating = rating
+        this.animeData = animeData
     }
 
     printBasico(){
-        console.log(`UserId:${this.usuario_id}, AnimeId:${this.anime_id}, Agregado En: ${this.fecha_agregado}, Progreso: ${this.progreso}`)
+        console.log(`UserId:${this.usuario_id}, AnimeId:${this.anime_id}, Agregado En: ${this.fecha_agregado}, Rating: ${this.rating}, AnimeData: ${this.animeData}`)
     }
 
     getUsuarioId() {
@@ -36,12 +37,20 @@ export class Favourites{
         this.fecha_agregado = fecha_agregado
     }
 
-    getProgreso() {
-        return this.progreso
+    getRating() {
+        return this.rating
     }
 
-    setProgreso(progreso) {
-        this.progreso = progreso
+    setRating(rating) {
+        this.rating = rating
+    }
+
+    getAnimeData() {
+        return this.animeData
+    }
+
+    setAnimeData(animeData) {
+        this.animeData = animeData
     }
 
     

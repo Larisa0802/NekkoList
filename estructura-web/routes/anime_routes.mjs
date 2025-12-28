@@ -5,10 +5,10 @@ import taskController from "../controllers/task_controller.mjs"
 const router = new express.Router()
 
 //Mostrar pags
-
-//Enviar datos al servidor desde formularios/axios
 router.get("/catalogo", taskController.listar)
-router.get("/detalles/:id", taskController.listar)
+router.get("/detalles/:id", taskController.detalle)
+//Enviar datos al servidor desde formularios/axios
+
 
 
 

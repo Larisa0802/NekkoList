@@ -28,6 +28,8 @@ router.get("/inicio", (req, res) => {
 router.post("/signUp", firebaseController.signUp)
 router.post("/logIn", firebaseController.logIn)
 router.post("/signOutUser", firebaseController.signOutUser)
+router.post("/updatePassword", firebaseController.updatePassword)
+router.post("/updateEmail", firebaseController.updateEmail)
 
 
 
