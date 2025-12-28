@@ -1,8 +1,9 @@
 import express from "express"
 import path from "path"
 import firebaseRoutes from "./routes/firebase_routes.mjs"
-import jikanRoutes from "./routes/jikan_controller.mjs"
+import jikanRoutes from "./routes/jikan_routes.mjs"
 import animeRoutes from "./routes/anime_routes.mjs"
+import favRoutes from "./routes/fav_routes.mjs"
 import cookieParser from "cookie-parser" //npm i cookie-parser
 
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(firebaseRoutes)
 app.use(jikanRoutes)
 app.use(animeRoutes)
+app.use(favRoutes)
 
 
 //escucha

@@ -29,8 +29,37 @@ async function getUserData(req, res){
    
 }
 
+// data = {
+//     id:asd,
+//     email:asd,
+//     nombre:asd
+// }
+async function updateUser(req, res){
+    try{
+        await userRepo.updateUserById(req.body.data)
+    }catch(error){
+        console.log(error)
+        res.send(error).status(500)
+    }
+    res.sendStatus(200)
+   
+}
+
+async function deleteUser(req, res){
+    try{
+        await userRepo.deleteUserById(req.body.id)
+    }catch(error){
+        console.log(error)
+        res.send(error).status(500)
+    }
+    res.sendStatus(200)
+   
+}
+
 
 export default {
     insertUser,
-    getUserData
+    getUserData,
+    updateUser,
+    deleteUser
 }

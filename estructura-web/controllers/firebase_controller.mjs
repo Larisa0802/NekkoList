@@ -1,6 +1,6 @@
 import axios from "axios"
 
-class AnimeController {
+class FirebaseController {
     constructor() {
         this.client = axios.create({
             baseURL: "http://localhost:3000"
@@ -55,9 +55,7 @@ class AnimeController {
 
             if (datos.status === 200) { //Si todo va bien
                 // Guardamos cookie con los datos del usuario
-                const userData = await this.client.get(`/getUserData/${datos.data.user.uid}`, {
-                    id:datos.data.user.uid 
-                })
+                const userData = await this.client.get(`/getUserData/${datos.data.user.uid}`)
                 
                 // los datos de la cookie son los que se tienen que usar para mostrar el perfeil y utilizar para las llamadas del pefil
                 res.cookie("datosUsuario", {
@@ -67,7 +65,7 @@ class AnimeController {
                     admin: userData.data[0].admin,
                     nombre: userData.data[0].nombre
                 }, {
-                    expire: 2 * 3600 * 100000000000
+                    maxAge: 2 * 3600 * 100000000000
                 })
 
                 res.render("completes/index", {
@@ -102,6 +100,45 @@ class AnimeController {
             res.status(500).send("Error al buscar todas las tareas")
         }
     }
+
+    //te deberia devolver a la pagina de datos del usuario; esto se deberia aplicar para todos los updates y delete; en este caso pondria la modificacion de la contraseña separada de la modificacion del nombre y del email
+    updatePassword = async (req, res) => {
+        try {
+            const datos = await this.client.post("/updatePassword", {password: req.body.pass})
+            if (datos.status === 200) {
+                res.render("completes/", { })
+            } else {
+                res.status(404).send("No se han encontrado tareas")
+            }
+
+        } catch (error) {
+            console.error("Error al consumir la API:", error.message)
+            res.status(500).send("Error al buscar todas las tareas")
+        }
+    }
+
+    //te deberia devolver a la pagina de datos del usuario; esto se deberia aplicar para todos los updates y delete
+    updateEmail = async (req, res) => {
+        try {
+            const datos = await this.client.post("/updateEmail",{email: req.body.email})
+            const userData = await this.client.post("/updateUser",
+                {
+                    id:req.cookies["datosUsuario"].uuid,
+                    nombre:req.cookies["datosUsuario"].nombre,
+                    email:req.cookies["datosUsuario"].email
+
+                })
+            if (datos.status === 200) {
+                res.render("completes/", { })
+            } else {
+                res.status(404).send("No se han encontrado tareas")
+            }
+
+        } catch (error) {
+            console.error("Error al consumir la API:", error.message)
+            res.status(500).send("Error al buscar todas las tareas")
+        }
+    }
 }
 
-export default new AnimeController()
+export default new FirebaseController()

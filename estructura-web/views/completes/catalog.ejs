@@ -7,12 +7,12 @@
 </head>
 <body>
     <%- include("../partials/header") %> <!--Header-->
-
+    <!-- <a href="/jikanAnimeDatabase">Cargar Animes Jikan</a> -->
     <% if (animes) { %>
         <% animes.forEach((anime) => { %>
             <p>Titulo: <%= anime.titulo %> Id: <%= anime.id %>  Genero: <%= anime.genero %>   Episodios: <%= anime.episodios != null ? anime.episodios : "On-Going" %> Fecha: <%= new Date(anime.fecha_pub).toISOString().split("T")[0] %>   Sinopsis: <%= anime.descripcion %> </p>
             <img src="<%=anime.imagen%>">
-            <button id="addFav" data-id="<%= anime.id %>">Añadir Fav</button>
+            <a href="/insertFav/<%= user %>&<%= anime.id %>">Añadir Fav</a> <a href="/detalles/<%= anime.id %>">Mas Informacion</a>
         <% }) %>
     
     <% } %>

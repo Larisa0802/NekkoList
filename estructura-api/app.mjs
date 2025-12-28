@@ -3,6 +3,7 @@ import rutasFirebase from "./routes/firebase_routes.mjs"
 import rutasJikan from "./routes/jikan_routes.mjs"
 import rutasAnime from "./routes/anime_routes.mjs"
 import rutasUser from "./routes/user_routes.mjs"
+import rutasFav from "./routes/fav_routes.mjs"
 import cors from "cors"
 import { initializeApp } from "firebase/app";
 
@@ -31,6 +32,7 @@ app.use(rutasFirebase)
 app.use(rutasJikan)
 app.use(rutasAnime)
 app.use(rutasUser)
+app.use(rutasFav)
 
 
 app.listen(PORT, () => console.log("ESCUCHANDO EN", PORT))

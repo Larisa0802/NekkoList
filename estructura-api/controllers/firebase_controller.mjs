@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut,validatePassword  } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword, updateEmail} from "firebase/auth";
 
 
 // https://firebase.google.com/docs/auth/web/manage-users?hl=es-419
@@ -16,7 +16,7 @@ async function signUp(req,res){
     }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        res.json(error)
+        res.json(error).status(500)
         // ..
     });
 }
@@ -37,7 +37,7 @@ async function logIn(req,res){
     }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        res.json(error)
+        res.json(error).status(500)
     });
 }
 
@@ -46,12 +46,36 @@ async function signOutUser(req,res){
     await signOut(auth).then((userCredential) => {
         res.sendStatus(200)
     }).catch((error) => {
-        res.json(error)
+        res.json(error).status(500)
+    });
+}
+
+async function changePassword(req,res){
+    const auth = getAuth();
+
+    const user = auth.currentUser;
+    const newPassword = req.body.password;
+
+    await updatePassword(user, newPassword).then(() => {
+        res.sendStatus(200)
+    }).catch((error) => {
+        res.json(error).status(500)
+    });
+}
+
+async function changeEmail(req,res){
+    const auth = getAuth();
+    await updateEmail(auth.currentUser, req.body.email).then(() => {
+        res.sendStatus(200)
+    }).catch((error) => {
+        res.json(error).status(500)
     });
 }
 
     export default {
         signUp,
         logIn,
-        signOutUser
+        signOutUser,
+        changePassword,
+        changeEmail
     }
