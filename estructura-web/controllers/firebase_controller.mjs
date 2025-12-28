@@ -13,18 +13,24 @@ class AnimeController {
             //Poner nombre
             const datosJson = {
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                nombre: req.body.name
             }
 
             // Petición a la API
             const datos = await this.client.post("/signup", datosJson)
 
             if (datos.status === 200) {
+                await this.client.post("/insertUserData", {
+                    email: datosJson.email,
+                    nombre: datosJson.nombre,
+                    id: datos.data.user.uid
+                })
                 res.render("completes/logIn", {
                     log: {
                         email: datosJson.email,
                         pass: datosJson.password,
-                        uuid: datos.data.uid   // UID devuelto por la API
+                        uuid: datos.data.user.uid   // UID devuelto por la API
                     }
                 })
             } else {
@@ -39,6 +45,7 @@ class AnimeController {
 
     logIn = async (req, res) => {
         try {
+            //cambiar estructura para que comprube si la cookie existe para utilizar las llamadas con la info del formulario o de la cookie existente
             const datosJson = {
                 email: req.body.email,
                 password: req.body.password
@@ -47,20 +54,24 @@ class AnimeController {
             const datos = await this.client.post("/logIn", datosJson)
 
             if (datos.status === 200) { //Si todo va bien
-
                 // Guardamos cookie con los datos del usuario
-                res.cookie("cookie", {
+                const userData = await this.client.get(`/getUserData/${datos.data.user.uid}`, {
+                    id:datos.data.user.uid 
+                })
+                
+                // los datos de la cookie son los que se tienen que usar para mostrar el perfeil y utilizar para las llamadas del pefil
+                res.cookie("datosUsuario", {
                     email: datosJson.email,
                     pass: datosJson.password,
-                    uuid: datos.data.uid   // UID devuelto por la API
+                    uuid: datos.data.user.uid,
+                    admin: userData.data[0].admin,
+                    nombre: userData.data[0].nombre
                 }, {
                     expire: 2 * 3600 * 100000000000
                 })
 
                 res.render("completes/index", {
-                    user: {
-                        email: datosJson.email
-                    }
+                    user: userData.data[0]
                 }) 
             }
             else if (datos.status === 400) {

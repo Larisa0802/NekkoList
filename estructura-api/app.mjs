@@ -1,8 +1,9 @@
 import express from "express"
 import rutasFirebase from "./routes/firebase_routes.mjs"
 import rutasJikan from "./routes/jikan_routes.mjs"
+import rutasAnime from "./routes/anime_routes.mjs"
+import rutasUser from "./routes/user_routes.mjs"
 import cors from "cors"
-import Jikan from 'jikan4.js'
 import { initializeApp } from "firebase/app";
 
 
@@ -28,6 +29,8 @@ const cors_config = {
 app.use(cors(cors_config))
 app.use(rutasFirebase)
 app.use(rutasJikan)
+app.use(rutasAnime)
+app.use(rutasUser)
 
 
 app.listen(PORT, () => console.log("ESCUCHANDO EN", PORT))

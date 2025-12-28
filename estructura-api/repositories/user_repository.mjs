@@ -16,7 +16,27 @@ async function insertUser(data){
     return result
 }
 
-// se quiere un select * de todos los usuarios??
+async function selectUser(){
+    const client = await pool.connect()
+    let result = ""
+    let user = undefined
+    try{
+        result = await client.query(`SELECT * from usuarios;`)
+
+    }catch(err){
+        console.error("Error en la insercion de datos",err.message)
+        result = err.message
+    }finally{
+        client.release()
+        
+    }
+    if(result && result.rows){
+        user = result.rows.map((e) => new User(e))
+    }
+    return user
+}
+
+
 async function selectUserById(id){
     const client = await pool.connect()
     let result = ""
@@ -37,12 +57,17 @@ async function selectUserById(id){
     return user
 }
 
-// revisar bien como se quiere montar??
-async function updateUserById(id, column, value){
+// se envian todos los campos de un a vez al ser modificados
+// data = {
+//     email = asd,
+//     nombre = asd,
+//     id = asd
+// }
+async function updateUserById(userData){
     const client = await pool.connect()
     let result = ""
     try{
-        result = await client.query(`UPDATE usuarios set ${column} = ${value} where id = '${id}';`)
+        result = await client.query(`UPDATE usuarios set email = ${userData.email}, nombre = ${userData.nombre} where id = '${userData.id}';`)
 
     }catch(err){
         console.error("Error en la insercion de datos",err.message)
@@ -74,6 +99,7 @@ async function deleteUserById(id){
 
 export default {
     insertUser,
+    selectUser,
     selectUserById,
     updateUserById,
     deleteUserById

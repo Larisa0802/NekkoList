@@ -14,8 +14,9 @@ async function getAnimebyId(req, res){
         }
     }
     // console.log(arrayData)
-    await animeRepo.insertAnime(arrayData)
-    res.send(arrayData).status(200)
+    let asd = await animeRepo.insertAnimeJikan(arrayData)
+    console.log(asd)
+    res.sendStatus(200)
    
 }
 
