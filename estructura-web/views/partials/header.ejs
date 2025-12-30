@@ -1,8 +1,3 @@
-<% const user = locals.user || null; %> 
-<!--Garantiza que la variable user siempre exista
-local.user -> guarda todas las variables de express que tengan user
-Si express le pasa un usuario se lo pone y sino es null.-->
-
 <header class="main-header">
 
   <div class="logo">
@@ -12,9 +7,10 @@ Si express le pasa un usuario se lo pone y sino es null.-->
   <nav class="navbar">
     <!-- Opciones visibles para TODOS -->
     <a href="/inicio">Inicio</a>
-    <a href="/catalogo">Catalogo</a>
+    <a href="/catalog">Catalogo</a>
     <a href="/contact">Contacto</a>
 
+    <!--Comprueba si el usuario esta o no registrado o si es admin-->
     <!-- Usuario NO registrado -->
     <% if (!user) { %>
       <a href="/logIn">Login</a>
@@ -23,12 +19,13 @@ Si express le pasa un usuario se lo pone y sino es null.-->
 
     <!-- Usuario registrado -->
     <% if (user) { %>
-      <a href="/perfil">Perfil</a>
+      <a href="/profile">Perfil</a>
+      <a href="/favourites">Favoritos</a>
       <a href="/logOut">Cerrar sesión</a>
     <% } %>
 
     <!-- Usuario ADMIN -->
-    <% if (user && user.root == true) { %>
+    <% if (user && user.admin == true) { %>
       <a href="/admin">Admin</a>
     <% } %>
 

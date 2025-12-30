@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+        <%- include ("../partials/header") %>
+
+        <% if(user) { %>
+    <h1>Cambiar email</h1>
+    <form id="changeEmailF">
+      <label for="email">Introduce tu nuevo email</label>
+      <input type="email" id="newEmail" placeholder="Nuevo email" required/>
+      <br><br>
+      <label for="password">Introduce tu contraseña actual</label>
+      <input type="password" id="pass" placeholder="Contraseña actual" required />
+      <br><br>
+      <button type="submit">Actualizar email</button>
+    </form>
+
+    <div id="msg"></div>
+
+     <%}else{%>
+        <h3>Debes estar logueado</h3>
+        <% } %>
+
+        <%- include("../partials/footer")%>
+
+    <script>
+        const form = document.getElementById("changeEmailF")
+         const mensaje = document.getElementById("msg")
+
+         form.addEventListener("submit", async (e) => {
+
+            e.preventDefault()
+            
+            const newEmail = document.getElementById("newEmail").value.trim()
+            const pass = document.getElementById("pass").value.trim()
+
+            mensaje.innerHTML = ""
+
+            //Validaciones
+
+            if(!newEmail || !oldPass){
+                mensaje.innerHTML = "<h2 style='color:red'> Todos los campos son obligatorios</h2>"
+                return
+            }
+
+            try { 
+                //Hace una peticion de tipo post a updateEmail, enviando el nuevo email y la password en formato json
+                const response = await fetch("/updateEmail", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json"},
+                    body: JSON.stringify({newEmail, pass})
+                })
+
+                //Recoge la respuesta
+                const data = await response.json()
+
+                //Si es correcta, salta el mensaje, sino salta el error.
+                if(response.ok) {
+                    mensaje.innerHTML = data.mensaje
+                    setTimeout(() => window.location.href = "/profile", 2000)
+                }else{
+                    mensaje.innerHTML = "<h2 style='color:red'>" + data.error + "</h2>"
+                }
+            }catch(error){
+                mensaje.innerHTML = "<h2 style='color:red'>Error: "+ error.message + "</h2>"
+            }
+         })
+    </script>
+  </body>
+</html>
