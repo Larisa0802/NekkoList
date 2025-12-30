@@ -14,11 +14,32 @@ const actualRoute = path.resolve(".")
 
 
 //middleware
+app.use(cookieParser())
+
+//Comprueba que exista la cookie, que no este vacia o corrupta, si no vale es null y si vale continua.
+app.use((req, res, next) => {
+  const user = req.cookies["datosUsuario"];
+
+  // Si no existe o esta vacia es null
+  if (!user || user === "null" || user === "undefined") {
+    res.locals.user = null;
+    return next();
+  }
+
+  // Si es un objeto vacio es null
+  if (typeof user === "object" && Object.keys(user).length === 0) {
+    res.locals.user = null;
+    return next();
+  }
+
+  res.locals.user = user;
+  next();
+});
+
 app.set("view engine", "ejs")
 app.set("views", path.join(actualRoute,"views"))
 app.use(express.static(path.join(actualRoute,"public")))
 app.use(express.json())
-app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
 app.use(firebaseRoutes)
 app.use(jikanRoutes)

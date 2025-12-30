@@ -19,7 +19,7 @@ export class User{
         this.id = id
     }
 
-    getId() {
+    getEmail() {
         return this.email
     }
 

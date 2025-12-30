@@ -9,15 +9,12 @@
   <body>
     <% const user=locals.user || null; %> 
     <%- include("../partials/header") %> <!--Header-->
-    
+  
     <% if (user) { %>
     <h1>Bienvenid@ <%= user.nombre %></h1>
-    <h1>Creaste la cuenta el: <%= new Date(user.fecha_registro).toISOString().split("T")[0] %></h1>
-    <h1>Permisos: <%= user.admin %></h1>
+
     <% } else { %>
     <h1>Bienvenid@ a NekkoList</h1>
-
-    
 
     <% } %> <%- include("../partials/footer") %> <!--Footer-->
   </body>
