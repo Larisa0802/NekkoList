@@ -5,6 +5,7 @@ import jikanRoutes from "./routes/jikan_routes.mjs"
 import animeRoutes from "./routes/anime_routes.mjs"
 import favRoutes from "./routes/fav_routes.mjs"
 import cookieParser from "cookie-parser" //npm i cookie-parser
+import { initializeApp } from "firebase/app";
 
 
 //inicializacion del server
@@ -35,6 +36,19 @@ app.use((req, res, next) => {
   res.locals.user = user;
   next();
 });
+
+const firebaseConfig = {
+  apiKey:  process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID
+};
+const firebase = initializeApp(firebaseConfig);
+
+
+
 
 app.set("view engine", "ejs")
 app.set("views", path.join(actualRoute,"views"))

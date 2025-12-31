@@ -1,4 +1,12 @@
 import axios from "axios";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  updatePassword,
+  verifyBeforeUpdateEmail
+} from "firebase/auth";
 
 class FirebaseController {
   constructor() {
@@ -115,36 +123,32 @@ class FirebaseController {
         return res.json({ error: "No estas logueado" });
       }
 
-      const verificar = await this.client.post("/logIn", {
-        email: userData.email,
-        password: req.body.oldPass,
-      });
 
-      //Si hay algun error
-      if (!verificar.data.user) {
-        return res
-          .status(400)
-          .json({ error: "La contraseña antigua es incorrecta" });
-      }
+      const auth = getAuth();
 
-      const datos = await this.client.post("/updatePassword", {
-        password: req.body.newPass,
-      });
+      // Re-login para verificar contraseña
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        req.body.oldPass
+      );
+
+      const user = userCredential.user;
+
+      await updatePassword(user, req.body.newPass);
+
+
 
       // Actualizar cookie con la nueva contraseña
-      if (datos.status === 200) {
-        res.cookie("datosUsuario", {
-          email: userData.email,
-          pass: req.body.newPass,
-          uuid: userData.uuid,
-          admin: userData.admin,
-          nombre: userData.nombre,
-        });
+      res.cookie("datosUsuario", {
+        email: userData.email,
+        pass: req.body.newPass,
+        uuid: userData.uuid,
+        admin: userData.admin,
+        nombre: userData.nombre,
+      });
 
-        res.json({ mensaje: "Contraseña actualizada" });
-      } else {
-        res.status(404).json({ error: "Error al actualizar" });
-      }
+      res.json({ mensaje: "Contraseña actualizada" });
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
       res.status(500).send("Error al cambiar la contraseña");
@@ -156,44 +160,39 @@ class FirebaseController {
   //Actualiza el email antiguo al nuevo con updateEmail y actualiza la cookie.
   updateEmail = async (req, res) => {
     try {
-      const userData = req.cookies["datosUsuario"]; //Recoger la cookie
+      const userData = req.cookies["datosUsuario"];
+      if (!userData) return res.status(401).json({ error: "No logueado" });
 
-      if (!userData) { //Comprobar si el usuario esta logueado
-        return res.json({ error: "No estás logueado" });
-      }
+      const auth = getAuth();
 
-      //Verificar contraseña antigua para permitir el cambio de email
-      const verificar = await this.client.post("/logIn", {
-        email: userData.email,
-        password: req.body.oldPass,
-      });
+      // Login para sesión válida
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        req.body.pass
+      );
 
-      //Si el login falla la contraseña antigua es incorrecta
-      if (!verificar.data.user) {
-        return res
-          .status(400)
-          .json({ error: "La contraseña antigua es incorrecta" });
-      }
+      const user = userCredential.user;
 
-      //Cambiar email
-      const datos = await this.client.post("/updateEmail", {
+
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        req.body.pass
+      );
+
+      await reauthenticateWithCredential(user, credential);
+
+      await verifyBeforeUpdateEmail(user, req.body.newEmail);
+
+      res.cookie("datosUsuario", {
         email: req.body.newEmail,
+        pass: userData.pass,
+        uuid: userData.uuid,
+        admin: userData.admin,
+        nombre: userData.nombre,
       });
 
-      if (datos.status === 200) {
-        //Actualizar cookie
-        res.cookie("datosUsuario", {
-          email: req.body.newEmail,
-          pass: userData.pass,
-          uuid: userData.uuid,
-          admin: userData.admin,
-          nombre: userData.nombre,
-        });
-
-        res.json({ mensaje: "Email actualizado correctamente" });
-      } else {
-        res.status(404).json({ error: "Error al actualizar el email" });
-      }
+      res.json({ mensaje: "Email actualizado correctamente" });
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
       res.status(500).send("Error al cambiar el email");

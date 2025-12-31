@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword, updateEmail} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updatePassword, updateEmail, reauthenticateWithCredential,EmailAuthProvider} from "firebase/auth";
 
 
 // https://firebase.google.com/docs/auth/web/manage-users?hl=es-419
@@ -67,8 +67,16 @@ async function changePassword(req,res){
 
 async function changeEmail(req,res){
     const auth = getAuth();
+    const user = auth.currentUser;
+    let credentials = EmailAuthProvider.credential(
+        user.email, 
+        req.body.passwordChange
+    );
     try{
-        let userCredential = await updateEmail(auth.currentUser, req.body.email)
+        let asd = await reauthenticateWithCredential(user, credentials)
+
+        let userCredential = await updateEmail(user, req.body.emailChange)
+        
         res.sendStatus(200)
     }catch(error){
         res.json(error).status(500)

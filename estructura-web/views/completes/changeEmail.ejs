@@ -33,7 +33,6 @@
          const mensaje = document.getElementById("msg")
 
          form.addEventListener("submit", async (e) => {
-
             e.preventDefault()
             
             const newEmail = document.getElementById("newEmail").value.trim()
@@ -43,7 +42,7 @@
 
             //Validaciones
 
-            if(!newEmail || !oldPass){
+            if(!newEmail || !pass){
                 mensaje.innerHTML = "<h2 style='color:red'> Todos los campos son obligatorios</h2>"
                 return
             }
