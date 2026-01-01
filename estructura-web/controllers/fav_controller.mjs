@@ -11,7 +11,7 @@ class FavController {
     insertFav = async (req, res) => {
         try {
             // Petición a la API
-            const datos = await this.client.get(`/insertFav/${req.params.userId}&${req.params.animeId}`)
+            const datos = await this.client.get(`/insertFav/${req.cookies["datosUsuario"].uuid}&${req.params.animeId}`)
             if (datos.status === 200) {
                 res.sendStatus(200)
             } else {
@@ -45,7 +45,7 @@ class FavController {
     deleteFav = async (req, res) => {
         try {
             // Petición a la API
-            const datos = await this.client.get(`/deleteFav/${req.params.userId}&${req.params.animeId}`)
+            const datos = await this.client.get(`/deleteFav/${req.cookies["datosUsuario"].uuid}&${req.params.animeId}`)
             if (datos.status === 200) {
                 res.render("completes/", {
                     
