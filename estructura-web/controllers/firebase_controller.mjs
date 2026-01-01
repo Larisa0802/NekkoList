@@ -44,7 +44,6 @@ class FirebaseController {
 
   logIn = async (req, res) => {
     try {
-
       //cambiar estructura para que comprube si la cookie existe para utilizar las llamadas con la info del formulario o de la cookie existente
       const datosJson = {
         email: req.body.email,
@@ -54,7 +53,6 @@ class FirebaseController {
       const datos = await this.client.post("/logIn", datosJson);
 
       if (datos.status === 200) {
-        
         const userData = await this.client.get(
           `/getUserData/${datos.data.user.uid}`
         );
@@ -94,7 +92,7 @@ class FirebaseController {
       const datos = await this.client.post("/signOutUser");
 
       if (datos.status === 200) {
-        res.clearCookie("datosUsuario")
+        res.clearCookie("datosUsuario");
         res.redirect("/login");
       } else {
         res.status(404).send("No se han encontrado tareas");
@@ -151,14 +149,14 @@ class FirebaseController {
     }
   };
 
-  //te deberia devolver a la pagina de datos del usuario; esto se deberia aplicar para todos los updates y delete
   //Comprueba la contraseña a través de la verificación del login, si se le pasa bien la contraseña
   //Actualiza el email antiguo al nuevo con updateEmail y actualiza la cookie.
   updateEmail = async (req, res) => {
     try {
       const userData = req.cookies["datosUsuario"]; //Recoger la cookie
 
-      if (!userData) { //Comprobar si el usuario esta logueado
+      if (!userData) {
+        //Comprobar si el usuario esta logueado
         return res.json({ error: "No estás logueado" });
       }
 
@@ -200,6 +198,7 @@ class FirebaseController {
     }
   };
 
+  //Obtener favoritos e info del usuario desde la API
   getProfile = async (req, res) => {
     try {
       const userData = req.cookies["datosUsuario"];
@@ -208,10 +207,15 @@ class FirebaseController {
         return res.redirect("/logIn");
       }
 
+      const favResponse = await this.client.get(`/getAllFav/${userData.uuid}`);
+
+      //Comprueba que favData siempre exista
+      const favData = favResponse.data || [];
+
       res.render("completes/profile", {
         user: userData,
+        favData: favData,
       });
-      
     } catch (error) {
       console.error("Error:", error.message);
       res.status(500).send("Error al cargar el perfil");

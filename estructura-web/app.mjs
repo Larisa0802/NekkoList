@@ -18,16 +18,25 @@ app.use(cookieParser())
 
 //Comprueba que exista la cookie, que no este vacia o corrupta, si no vale es null y si vale continua.
 app.use((req, res, next) => {
-  const user = req.cookies["datosUsuario"];
+  let user = req.cookies["datosUsuario"];
 
-  // Si no existe o esta vacia es null
+  // Si no existe o está vacía
   if (!user || user === "null" || user === "undefined") {
     res.locals.user = null;
     return next();
   }
 
-  // Si es un objeto vacio es null
-  if (typeof user === "object" && Object.keys(user).length === 0) {
+  // Si viene como string, intentar parsearla
+  if (typeof user === "string") {
+    try {
+      user = JSON.parse(user);
+    } catch (e) {
+      user = null;
+    }
+  }
+
+  //Si es un objeto vacio es null
+  if (!user || typeof user !== "object") {
     res.locals.user = null;
     return next();
   }
@@ -35,6 +44,24 @@ app.use((req, res, next) => {
   res.locals.user = user;
   next();
 });
+
+
+function isAdmin(req,res,next){
+  const user = req.cookies.datosUsuario
+
+  if(!user || user.admin !== true){
+    return res.status(403).render("completes/accessDenied")
+  }
+
+  next()
+}
+
+app.get("/", (req,res) => {
+  res.render("completes/index")
+})
+app.get("/admin", isAdmin, (req,res) => {
+  res.render("completes/admin")
+})
 
 app.set("view engine", "ejs")
 app.set("views", path.join(actualRoute,"views"))
