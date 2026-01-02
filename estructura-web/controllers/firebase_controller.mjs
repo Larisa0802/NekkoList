@@ -5,7 +5,8 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
   updatePassword,
-  verifyBeforeUpdateEmail
+  verifyBeforeUpdateEmail,
+  createUserWithEmailAndPassword, signOut
 } from "firebase/auth";
 
 class FirebaseController {
@@ -25,24 +26,25 @@ class FirebaseController {
       };
 
       // Petición a la API
-      const datos = await this.client.post("/signup", datosJson);
+      const auth = getAuth();
+      let userCredential = await createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
 
-      if (datos.status === 200) {
+      if(!userCredential){
+        res.status(400).send("Error en el registro")
+      }else{
         await this.client.post("/insertUserData", {
           email: datosJson.email,
           nombre: datosJson.nombre,
-          id: datos.data.user.uid,
+          id: userCredential.user.uid,
         });
         res.render("completes/logIn", {
           log: {
             email: datosJson.email,
             pass: datosJson.password,
-            uuid: datos.data.user.uid, // UID devuelto por la API
+            uuid: userCredential.user.uid, // UID devuelto por la API
           },
           user: null,
         });
-      } else {
-        res.status(404).send("Error en el registro");
       }
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
@@ -58,38 +60,31 @@ class FirebaseController {
         email: req.body.email,
         password: req.body.password,
       };
-
-      const datos = await this.client.post("/logIn", datosJson);
-
-      if (datos.status === 200) {
-        
-        const userData = await this.client.get(
-          `/getUserData/${datos.data.user.uid}`
-        );
-
-        // los datos de la cookie son los que se tienen que usar para mostrar el perfeil y utilizar para las llamadas del pefil
-        res.cookie(
-          "datosUsuario",
-          {
-            email: datosJson.email,
-            pass: datosJson.password,
-            uuid: datos.data.user.uid,
-            admin: userData.data[0].admin,
-            nombre: userData.data[0].nombre,
-          },
-          {
-            maxAge: 2 * 3600 * 100000000000,
-          }
-        );
+      const auth = getAuth();
+      let userCredential = await signInWithEmailAndPassword(auth,req.body.email, req.body.password)
+        if(userCredential._tokenResponse.registered){
+          const userData = await this.client.get(
+            `/getUserData/${userCredential.user.uid}`
+          );
+          res.cookie("datosUsuario",
+            {
+              email: datosJson.email,
+              pass: datosJson.password,
+              uuid: userCredential.user.uid,
+              admin: userData.data[0].admin,
+              nombre: userData.data[0].nombre,
+            },
+            {
+              maxAge: 2 * 3600 * 100000000000,
+            }
+          );
 
         res.render("completes/index", {
           user: userData.data[0],
         });
-      } else if (datos.status === 400) {
-        res.status(400).send("Error: Email");
-      } else {
-        res.status(404).send("No se encontro la página");
-      }
+        }else{
+          res.status(400).send("Error: Email")
+        }
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
       res.status(500).send("Error al iniciar sesión");
@@ -99,14 +94,11 @@ class FirebaseController {
   //Añadi: Limpiar cookie para que la nav se resetee (no estaba puesto) y redirige al login para que se recargue
   signOutUser = async (req, res) => {
     try {
-      const datos = await this.client.post("/signOutUser");
-
-      if (datos.status === 200) {
-        res.clearCookie("datosUsuario")
-        res.redirect("/login");
-      } else {
-        res.status(404).send("No se han encontrado tareas");
-      }
+      const auth = getAuth()
+      let userCredential = await signOut(auth)
+      res.clearCookie("datosUsuario")
+      res.redirect("/login");
+      
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
       res.status(500).send("Error al buscar todas las tareas");
