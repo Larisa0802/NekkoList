@@ -1,5 +1,4 @@
 import express from "express"
-import rutasFirebase from "./routes/firebase_routes.mjs"
 import rutasJikan from "./routes/jikan_routes.mjs"
 import rutasAnime from "./routes/anime_routes.mjs"
 import rutasUser from "./routes/user_routes.mjs"
