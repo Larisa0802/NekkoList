@@ -1,38 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Perfil</title>
-  </head>
 
-  <body>
-    <%- include("../partials/header") %><!--Header-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil</title>
+</head>
+
+<body>
+  <%- include("../partials/header") %><!--Header-->
     <%if(user) { %>
-    <h1>Bienvenid@ a tu perfil <%= user.nombre %></h1>
+      <h1>Bienvenid@ a tu perfil <%= user.nombre %>
+      </h1>
 
-    <section class="datos">
-      <p>Email: <%= user.email %></p>
-      <p>Admin: <%= user.admin %></p>
-      <p>UUID: <%= user.uuid %></p>
-    </section>
+      <section class="datos">
+        <p>Email: <%= user.email %>
+        </p>
+        <p>Admin: <%= user.admin %>
+        </p>
+        <p>UUID: <%= user.uuid %>
+        </p>
+      </section>
 
-    <button id="cmbPass">Cambiar contraseña</button>
-    <button id="cmbEmail">Cambiar email</button>
+      <button id="cmbPass">Cambiar contraseña</button>
+      <button id="cmbEmail">Cambiar email</button>
 
-    <% }else{ %>
-    <h2>No estas logueado</h2>
-    <% } %> <%- include("../partials/footer") %>
-    <!--Footer-->
+      <h3>Tus favoritos</h3>
 
-    <script>
-      document.getElementById("cmbPass").addEventListener("click", () => {
-        window.location.href = "/changePassword";
-      });
+      <table border="1px solid black">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Género</th>
+            <th>Episodios</th>
+            <th>Fecha de publicación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
 
-      document.getElementById("cmbEmail").addEventListener("click", () => {
-        window.location.href = "/changeEmail";
-      });
-    </script>
-  </body>
+        <tbody>
+          <% if (favData && favData.length> 0) { %>
+            <% favData.forEach((animeFav)=> { %>
+              <tr>
+                <td>
+                  <%= animeFav.animeData.titulo %>
+                </td>
+                <td>
+                  <%= animeFav.animeData.genero %>
+                </td>
+                <td>
+                  <%= animeFav.animeData.episodios !=null ? animeFav.animeData.episodios : "On-Going" %>
+                </td>
+                <td>
+                  <%= new Date(animeFav.animeData.fecha_pub).toISOString().split("T")[0] %>
+                </td>
+                <td>
+                  <button><a href="/deleteFav/<%= user.uuid %>&<%= animeFav.anime_id %>">Eliminar</a></button>
+                </td>
+              </tr>
+              <% }) %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="5">No tienes favoritos aún.</td>
+                  </tr>
+                  <% } %>
+        </tbody>
+      </table>
+
+
+
+      <% }else{ %>
+        <h2>No estas logueado</h2>
+        <% } %> <%- include("../partials/footer") %>
+            <!--Footer-->
+
+            <script>
+              document.getElementById("cmbPass").addEventListener("click", () => {
+                window.location.href = "/changePassword";
+              });
+
+              document.getElementById("cmbEmail").addEventListener("click", () => {
+                window.location.href = "/changeEmail";
+              });
+            </script>
+</body>
+
 </html>
