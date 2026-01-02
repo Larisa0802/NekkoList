@@ -20,15 +20,8 @@
     <!-- Usuario registrado -->
     <% if (user) { %>
       <a href="/profile">Perfil</a>
-      <a href="/favourites">Favoritos</a>
       <a href="/logOut">Cerrar sesión</a>
     <% } %>
-
-    <!-- Usuario ADMIN -->
-    <% if (user && user.admin == true) { %>
-      <a href="/admin">Admin</a>
-    <% } %>
-     
 
   </nav>
 

@@ -65,7 +65,7 @@ class FavController {
             // Petición a la API
             const datos = await this.client.get(`/getAllFav/${req.cookies["datosUsuario"].uuid}`)
             if (datos.status === 200) {
-                res.render("completes/favourites", {
+                res.render("completes/profile", {
                     favData: datos.data,
                     user: req.cookies["datosUsuario"].uuid 
                 })

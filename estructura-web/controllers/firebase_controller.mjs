@@ -199,7 +199,9 @@ class FirebaseController {
         return res.redirect("/logIn");
       }
 
+      const datos = await this.client.get(`/getAllFav/${req.cookies["datosUsuario"].uuid}`)
       res.render("completes/profile", {
+        favData: datos.data,
         user: userData,
       });
       

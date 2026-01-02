@@ -43,6 +43,13 @@ router.get("/changeEmail", (req, res) => {
   res.render("completes/changeEmail");
 });
 
+router.get("/changeName", (req, res) => {
+  if (!res.locals.user) {
+    return res.redirect("/login")
+  }
+  res.render("completes/changeName");
+});
+
 //Enviar datos al servidor desde formularios/axios
 router.post("/signUp", firebaseController.signUp);
 router.post("/logIn", firebaseController.logIn);

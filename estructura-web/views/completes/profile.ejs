@@ -24,6 +24,7 @@
 
       <button id="cmbPass">Cambiar contraseña</button>
       <button id="cmbEmail">Cambiar email</button>
+      <button id="cmbName">Cambiar nombre</button>
 
       <h3>Tus favoritos</h3>
 
@@ -39,7 +40,7 @@
         </thead>
 
         <tbody>
-          <% if (favData && favData.length> 0) { %>
+          <% if (favData && favData.length > 0) { %>
             <% favData.forEach((animeFav)=> { %>
               <tr>
                 <td>
@@ -71,8 +72,7 @@
 
       <% }else{ %>
         <h2>No estas logueado</h2>
-        <% } %> <%- include("../partials/footer") %>
-            <!--Footer-->
+        <% } %> <%- include("../partials/footer") %> <!--Footer-->
 
             <script>
               document.getElementById("cmbPass").addEventListener("click", () => {
@@ -82,6 +82,10 @@
               document.getElementById("cmbEmail").addEventListener("click", () => {
                 window.location.href = "/changeEmail";
               });
+
+              document.getElementById("cmbName").addEventListener("click", () => {
+                window.localtion.href = "/changeName"
+              })
             </script>
 </body>
 
