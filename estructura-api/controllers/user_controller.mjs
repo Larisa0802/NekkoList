@@ -31,9 +31,33 @@ async function getUserData(req, res){
 
 // data = {
 //     id:asd,
-//     email:asd
+//     email:asd,
 // }
+async function updateUserEmail(req, res){
+    try{
+        await userRepo.updateUserEmailById(req.body)
+    }catch(error){
+        console.log(error)
+        res.send(error).status(500)
+    }
+    res.sendStatus(200)
+   
+}
 
+// data = {
+//     id:asd,
+//     nombre:asd
+// }
+async function updateUserName(req, res){
+    try{
+        await userRepo.updateUserNameById(req.body)
+    }catch(error){
+        console.log(error)
+        res.send(error).status(500)
+    }
+    res.sendStatus(200)
+   
+}
 
 async function deleteUser(req, res){
     try{
