@@ -191,6 +191,30 @@ class FirebaseController {
     }
   };
 
+  updateName = async (req, res) => {
+    try {
+      const userData = req.cookies["datosUsuario"];
+      if (!userData) return res.status(401).json({ error: "No logueado" });
+      const datos = await this.client.get(`/updateUserName`,
+      {
+        uuid: userData.uuid,
+        nombre: req.body.newName
+      })
+      res.cookie("datosUsuario", {
+        email: userData.email,
+        pass: userData.pass,
+        uuid: userData.uuid,
+        admin: userData.admin,
+        nombre: req.body.newName,
+      });
+
+      res.json({ mensaje: "Email actualizado correctamente" });
+    } catch (error) {
+      console.error("Error al consumir la API:", error.message);
+      res.status(500).send("Error al cambiar el email");
+    }
+  };
+
   getProfile = async (req, res) => {
     try {
       const userData = req.cookies["datosUsuario"];

@@ -6,7 +6,8 @@ const router = new express.Router()
 
 router.get("/getUserData/:id", userController.getUserData)
 router.post("/insertUserData", userController.insertUser)
-router.post("/updateUser", userController.updateUser)
+router.post("/updateUserEmail", userController.updateUserEmail)
+router.post("/updateUserName", userController.updateUserName)
 router.post("/deleteUser", userController.deleteUser)
 
 

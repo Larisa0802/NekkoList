@@ -7,6 +7,8 @@ async function getAnimebyId(req, res){
     for(let i = 1; i <= 1000; i++){
         const anime = await client.anime.get(i)
         if(anime){
+            // meter personajes de los animes que se clicken en mas informacion, deben llevar otra tabla en base de datos
+            
             // let asd3 = await anime.getCharacters()
             // let asd4 = await anime.getStaff()
             // let asd5 = await anime.getRecommendations()

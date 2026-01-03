@@ -31,10 +31,24 @@ async function getUserData(req, res){
 
 // data = {
 //     id:asd,
-//     email:asd,
-//     nombre:asd
+//     email:asd
 // }
-async function updateUser(req, res){
+async function updateUserEmail(req, res){
+    try{
+        await userRepo.updateUserById(req.body.data)
+    }catch(error){
+        console.log(error)
+        res.send(error).status(500)
+    }
+    res.sendStatus(200)
+   
+}
+
+// data = {
+//     id:asd,
+//     name:asd
+// }
+async function updateUserName(req, res){
     try{
         await userRepo.updateUserById(req.body.data)
     }catch(error){
@@ -60,6 +74,7 @@ async function deleteUser(req, res){
 export default {
     insertUser,
     getUserData,
-    updateUser,
+    updateUserEmail,
+    updateUserName,
     deleteUser
 }
