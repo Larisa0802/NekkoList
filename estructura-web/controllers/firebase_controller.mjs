@@ -29,9 +29,7 @@ class FirebaseController {
       const auth = getAuth();
       let userCredential = await createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
 
-      if(!userCredential){
-        res.status(400).send("Error en el registro")
-      }else{
+      if(userCredential){
         await this.client.post("/insertUserData", {
           email: datosJson.email,
           nombre: datosJson.nombre,
@@ -44,7 +42,11 @@ class FirebaseController {
             uuid: userCredential.user.uid, // UID devuelto por la API
           },
           user: null,
+          errorL:null
         });
+        
+      }else{
+        res.status(400).send("Error en el registro")
       }
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
@@ -87,7 +89,10 @@ class FirebaseController {
         }
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
-      res.status(500).send("Error al iniciar sesión");
+      res.render("completes/logIn", {
+        errorL : {mensaje : "Error al iniciar sesión"},
+        log: { email: req.body.email, pass: req.body.password } 
+      })
     }
   };
 
@@ -147,6 +152,80 @@ class FirebaseController {
     }
   };
 
+  //te deberia devolver a la pagina de datos del usuario; esto se deberia aplicar para todos los updates y delete
+  //Comprueba la contraseña a través de la verificación del login, si se le pasa bien la contraseña
+  //Actualiza el email antiguo al nuevo con updateEmail y actualiza la cookie.
+  updateEmail = async (req, res) => {
+    try {
+      const userData = req.cookies["datosUsuario"];
+      if (!userData) return res.status(401).json({ error: "No logueado" });
+
+      const auth = getAuth();
+
+      // Login para sesión válida
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        req.body.pass
+      );
+
+      const user = userCredential.user;
+
+
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        req.body.pass
+      );
+
+      await reauthenticateWithCredential(user, credential);
+
+      await verifyBeforeUpdateEmail(user, req.body.newEmail);
+
+      let datos = await this.client.post("/updateUserEmail",
+        {
+          id:userData.uuid,
+          email:req.body.newEmail
+        }
+      )
+
+      res.cookie("datosUsuario", {
+        email: req.body.newEmail,
+        pass: userData.pass,
+        uuid: userData.uuid,
+        admin: userData.admin,
+        nombre: userData.nombre,
+      });
+
+      res.json({ mensaje: "Email actualizado correctamente" });
+    } catch (error) {
+      console.error("Error al consumir la API:", error.message);
+      res.status(500).send("Error al cambiar el email");
+    }
+  };
+
+  updateName = async (req, res) => {
+    try {
+      const userData = req.cookies["datosUsuario"];
+      if (!userData) return res.status(401).json({ error: "No logueado" });
+      let datos = await this.client.post("/updateUserName",{
+        id:userData.uuid,
+        nombre:req.body.newName
+      })
+
+      res.cookie("datosUsuario", {
+        email: userData.email,
+        pass: userData.pass,
+        uuid: userData.uuid,
+        admin: userData.admin,
+        nombre: req.body.newName
+      });
+
+      res.json({ mensaje: "Email actualizado correctamente" });
+    } catch (error) {
+      console.error("Error al consumir la API:", error.message);
+      res.status(500).send("Error al cambiar el email");
+    }
+  };
 
   getProfile = async (req, res) => {
     try {
@@ -156,7 +235,9 @@ class FirebaseController {
         return res.redirect("/logIn");
       }
 
+      const datos = await this.client.get(`/getAllFav/${req.cookies["datosUsuario"].uuid}`)
       res.render("completes/profile", {
+        favData: datos.data,
         user: userData,
       });
       
