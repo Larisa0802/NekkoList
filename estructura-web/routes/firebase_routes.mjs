@@ -7,7 +7,7 @@ const router = new express.Router();
 
 //Mostrar pags
 router.get("/login", (req, res) => {
-  res.render("completes/logIn", { log: ""});
+  res.render("completes/logIn", { errorL: null,log: ""});
 });
 
 router.get("/register", (req, res) => {

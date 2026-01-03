@@ -87,7 +87,10 @@ class FirebaseController {
         }
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
-      res.status(500).send("Error al iniciar sesión");
+      res.render("completes/logIn", {
+        errorL : {mensaje : "Error al iniciar sesión"},
+        log: { email: req.body.email, pass: req.body.password } 
+      })
     }
   };
 

@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de sesión</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inicio de sesión</title>
+    </head>
 
-<body>
-    <%- include("../partials/header") %> <!--Header-->
+    <body>
+        <%- include("../partials/header") %> <!--Header-->
 
+        <% if(errorL){ %>
+        <h3 style='color:red'><%= errorL.mensaje %></h3>
+        <% } %>
+        
         <form action="/logIn" method="post">
             <p>Inicia sesión</p>
-            <p>Email: <input name="email" type="text" value="<%= log?.email || '' %>"></p>
-            <p>Contraseña: <input name="password" type="password" value="<%= log?.pass || '' %>"></p>
+            <p>Email: <input name="email" type="text"
+                    value="<%= log?.email || '' %>"></p>
+            <p>Contraseña: <input name="password" type="password"
+                    value="<%= log?.pass || '' %>"></p>
             <input type="submit" value="Entrar">
         </form>
 
@@ -21,6 +27,6 @@
 
         <%- include("../partials/footer") %> <!--Footer-->
 
-</body>
+    </body>
 
 </html>
