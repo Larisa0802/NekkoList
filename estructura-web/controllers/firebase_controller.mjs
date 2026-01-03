@@ -29,9 +29,7 @@ class FirebaseController {
       const auth = getAuth();
       let userCredential = await createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
 
-      if(!userCredential){
-        res.status(400).send("Error en el registro")
-      }else{
+      if(userCredential){
         await this.client.post("/insertUserData", {
           email: datosJson.email,
           nombre: datosJson.nombre,
@@ -44,7 +42,11 @@ class FirebaseController {
             uuid: userCredential.user.uid, // UID devuelto por la API
           },
           user: null,
+          errorL:null
         });
+        
+      }else{
+        res.status(400).send("Error en el registro")
       }
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
@@ -179,12 +181,43 @@ class FirebaseController {
 
       await verifyBeforeUpdateEmail(user, req.body.newEmail);
 
+      let datos = await this.client.post("/updateUserEmail",
+        {
+          id:userData.uuid,
+          email:req.body.newEmail
+        }
+      )
+
       res.cookie("datosUsuario", {
         email: req.body.newEmail,
         pass: userData.pass,
         uuid: userData.uuid,
         admin: userData.admin,
         nombre: userData.nombre,
+      });
+
+      res.json({ mensaje: "Email actualizado correctamente" });
+    } catch (error) {
+      console.error("Error al consumir la API:", error.message);
+      res.status(500).send("Error al cambiar el email");
+    }
+  };
+
+  updateName = async (req, res) => {
+    try {
+      const userData = req.cookies["datosUsuario"];
+      if (!userData) return res.status(401).json({ error: "No logueado" });
+      let datos = await this.client.post("/updateUserName",{
+        id:userData.uuid,
+        nombre:req.body.newName
+      })
+
+      res.cookie("datosUsuario", {
+        email: userData.email,
+        pass: userData.pass,
+        uuid: userData.uuid,
+        admin: userData.admin,
+        nombre: req.body.newName
       });
 
       res.json({ mensaje: "Email actualizado correctamente" });
