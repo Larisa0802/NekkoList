@@ -4,11 +4,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/estilos.css">
+    <link rel="icon" href="/favicon.ico">
     <title>Registro</title>
 </head>
 
 <body>
     <%- include("../partials/header") %><!--Header-->
+        <main class="register-div">
         <form action="/signup" method="post">
             <p>Registrate</p>
             <p>Email: <input name="email" type="text" /></p>
@@ -18,6 +21,8 @@
             <input type="submit" value="Registrarse" />
         </form>
         <div id="msg"></div>
+
+    </main>
         <%- include("../partials/footer") %>
             <!--Footer-->
 

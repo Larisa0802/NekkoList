@@ -1,7 +1,10 @@
 <header class="main-header">
 
   <div class="logo">
-    <a href="/">NekkoList</a>
+    <a href="/">
+      <img src="/img/logo.png" alt="logoImg">
+      <p class="logoName">NekkoList</p>
+    </a>
   </div>
 
   <nav class="navbar">
@@ -20,7 +23,7 @@
     <!-- Usuario registrado -->
     <% if (user) { %>
       <a href="/profile">Perfil</a>
-      <a href="/logOut">Cerrar sesión</a>
+      <a href="/logOut" id="cerrarSes">Cerrar sesión</a>
     <% } %>
 
   </nav>
