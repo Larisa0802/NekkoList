@@ -57,7 +57,47 @@ async function selectUserById(id){
     return user
 }
 
+// se envian todos los campos de un a vez al ser modificados
+// data = {
+//     email = asd,
+//     id = asd
+// }
+async function updateUserEmailById(userData){
+    const client = await pool.connect()
+    let result = ""
+    try{
+        result = await client.query(`UPDATE usuarios set email = '${userData.email}' where id = '${userData.id}';`)
 
+    }catch(err){
+        console.error("Error en la insercion de datos",err.message)
+        result = err.message
+    }finally{
+        client.release()
+        
+    }
+    return result
+}
+
+// se envian todos los campos de un a vez al ser modificados
+// data = {
+//     nombre = asd,
+//     id = asd
+// }
+async function updateUserNameById(userData){
+    const client = await pool.connect()
+    let result = ""
+    try{
+        result = await client.query(`UPDATE usuarios set nombre = '${userData.nombre}' where id = '${userData.id}';`)
+
+    }catch(err){
+        console.error("Error en la insercion de datos",err.message)
+        result = err.message
+    }finally{
+        client.release()
+        
+    }
+    return result
+}
 
 async function deleteUserById(id){
     const client = await pool.connect()
