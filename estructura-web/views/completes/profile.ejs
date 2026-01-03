@@ -1,94 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/estilos.css" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>Perfil</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/estilos.css">
-  <link rel="icon" href="/favicon.ico">
-  <title>Perfil</title>
-</head>
-
-<body>
-  <%- include("../partials/header") %><!--Header-->
+  <body>
+    <%- include("../partials/header") %><!--Header-->
     <%if(user) { %>
-      <h1>Bienvenid@ a tu perfil <%= user.nombre %>
-      </h1>
+    <h1 id="titC">Bienvenido a tu perfil <%= user.nombre %></h1>
 
-      <section class="datos">
-        <p>Email: <%= user.email %>
+    <section class="datos">
+      <h2 id="subtC">Tus datos</h2>
+      <hr />
+      <div id="eau">
+        <p>Email: <%= user.email %></p>
+        <p>Admin: <%= user.admin %></p>
+        <p id="puuid">
+          UUID: <span id="uuid"><%= user.uuid %></span>
+          <button id="copyUUID">Copiar</button>
+          <span id="tooltip" class="tooltip">Copiado ✓</span>
         </p>
-        <p>Admin: <%= user.admin %>
-        </p>
-        <p>UUID: <%= user.uuid %>
-        </p>
-      </section>
+      </div>
+    </section>
 
+    <div class="botones">
       <button id="cmbPass">Cambiar contraseña</button>
       <button id="cmbEmail">Cambiar email</button>
       <button id="cmbName">Cambiar nombre</button>
+    </div>
+    <h3 style="text-align: center; font-size: 30px" id="subtC">Tus favoritos</h3>
 
-      <h3>Tus favoritos</h3>
+    <table class="tablaFav">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Título</th>
+          <th>Género</th>
+          <th>Episodios</th>
+          <th>Fecha de publicación</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-      <table border="1px solid black">
-        <thead>
-          <tr>
-            <th>Título</th>
-            <th>Género</th>
-            <th>Episodios</th>
-            <th>Fecha de publicación</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+      <tbody>
+        <% if (favData && favData.length> 0) { %> <%
+        favData.forEach((animeFav)=> { %>
+        <tr>
+          <td>
+            <img
+              src="<%=animeFav.animeData.imagen%>"
+              alt="<%= animeFav.animeData.titulo %>"
+            />
+          </td>
+          <td><%= animeFav.animeData.titulo %></td>
+          <td><%= animeFav.animeData.genero %></td>
+          <td>
+            <%= animeFav.animeData.episodios !=null ?
+            animeFav.animeData.episodios : "On-Going" %>
+          </td>
+          <td>
+            <%= new
+            Date(animeFav.animeData.fecha_pub).toISOString().split("T")[0] %>
+          </td>
+          <td>
+            <button>
+              <a href="/deleteFav/<%= user.uuid %>&<%= animeFav.anime_id %>"
+                >Eliminar</a
+              >
+            </button>
+          </td>
+        </tr>
+        <% }) %> <% } else { %>
+        <tr>
+          <td colspan="5">No tienes favoritos aún.</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
 
-        <tbody>
-          <% if (favData && favData.length > 0) { %>
-            <% favData.forEach((animeFav)=> { %>
-              <tr>
-                <td>
-                  <%= animeFav.animeData.titulo %>
-                </td>
-                <td>
-                  <%= animeFav.animeData.genero %>
-                </td>
-                <td>
-                  <%= animeFav.animeData.episodios !=null ? animeFav.animeData.episodios : "On-Going" %>
-                </td>
-                <td>
-                  <%= new Date(animeFav.animeData.fecha_pub).toISOString().split("T")[0] %>
-                </td>
-                <td>
-                  <button><a href="/deleteFav/<%= user.uuid %>&<%= animeFav.anime_id %>">Eliminar</a></button>
-                </td>
-              </tr>
-              <% }) %>
-                <% } else { %>
-                  <tr>
-                    <td colspan="5">No tienes favoritos aún.</td>
-                  </tr>
-                  <% } %>
-        </tbody>
-      </table>
+    <% }else{ %>
+    <h2>No estas logueado</h2>
+    <% } %> <%- include("../partials/footer") %>
+    <!--Footer-->
 
+    <script>
+      document.getElementById("cmbPass").addEventListener("click", () => {
+        window.location.href = "/changePassword";
+      });
 
+      document.getElementById("cmbEmail").addEventListener("click", () => {
+        window.location.href = "/changeEmail";
+      });
 
-      <% }else{ %>
-        <h2>No estas logueado</h2>
-        <% } %> <%- include("../partials/footer") %> <!--Footer-->
+      document.getElementById("cmbName").addEventListener("click", () => {
+        window.localtion.href = "/changeName";
+      });
 
-            <script>
-              document.getElementById("cmbPass").addEventListener("click", () => {
-                window.location.href = "/changePassword";
-              });
+      document.getElementById("copyUUID").addEventListener("click", () => {
+        const uuid = document.getElementById("uuid").textContent;
+        navigator.clipboard.writeText(uuid);
 
-              document.getElementById("cmbEmail").addEventListener("click", () => {
-                window.location.href = "/changeEmail";
-              });
+        const tooltip = document.getElementById("tooltip");
+        tooltip.classList.add("show");
 
-              document.getElementById("cmbName").addEventListener("click", () => {
-                window.localtion.href = "/changeName";
-              })
-            </script>
-</body>
-
+        setTimeout(() => {
+          tooltip.classList.remove("show");
+        }, 1200);
+      });
+    </script>
+  </body>
 </html>
