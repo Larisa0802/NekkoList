@@ -3,20 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/estilos.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="icon" href="/favicon.ico">
     <title>Catalogo</title>
 </head>
 <body>
     <%- include("../partials/header") %> <!--Header-->
     <!-- <a href="/jikanAnimeDatabase">Cargar Animes Jikan</a> -->
-    <% if (animes) { %>
-        <% animes.forEach((anime) => { %>
-            <p>Titulo: <%= anime.titulo %> Id: <%= anime.id %>  Genero: <%= anime.genero %>   Episodios: <%= anime.episodios != null ? anime.episodios : "On-Going" %> Fecha: <%= new Date(anime.fecha_pub).toISOString().split("T")[0] %>   Sinopsis: <%= anime.descripcion %> </p>
-            <img src="<%=anime.imagen%>">
-            <a href="/insertFav/<%= user %>&<%= anime.id %>">Añadir Fav</a> <a href="/detalles/<%= anime.id %>">Mas Informacion</a>
-        <% }) %>
-    
-    <% } %>
+     <h1 id="titC" style="margin-top:10%;">Catálogo</h1>
+     <h2 id="subtC">Explore el mundo de los animes libremente scrollenado, o filtrando por título o género en la barra de búsqueda de abajo. Feliz Experiencia!</h2>
+     <input id="entrada" placeholder="Buscar anime por título o género">
+    <main class="catalogContainer">
+        <% if (animes) { %>
+            <% animes.forEach((anime) => { %>
+                    <div class="tarjetaAnime" data-genero="<%= anime.genero %>">
+                        <img src="<%=anime.imagen%>" alt="<%= anime.titulo %>">
+                        <p class="titulo-anime" style="display: none;"><%= anime.titulo %></p>
+                        <p>
+                            Titulo: <%= anime.titulo %> <br>
+                            Genero: <%= anime.genero %>  <br> 
+                        </p>
+                        <button class="masInfo">Mas Informacion</button>
+                        <!--<a href="/detalles/<%= anime.id %>" id="masInfo">Mas Informacion</a>-->
+                        <p class="descripcion">
+                            Id: <%= anime.id %>  <br>
+                            Episodios: <%= anime.episodios != null ? anime.episodios : "On-Going" %> <br>
+                            Fecha: <%= new Date(anime.fecha_pub).toISOString().split("T")[0] %>   <br>
+                            Sinopsis: <%= anime.descripcion %> 
+                        </p>
+                        <button><a href="/insertFav/<%= user %>&<%= anime.id %>" class="favs">Añadir a Favoritos✨</a></button> 
+                    </div>
+                
+            <% }) %>
+        
+        <% } %>
+    </main>
 
     <%- include("../partials/footer") %> <!--Footer-->
+
+    <script>
+        /*JS para la barra de búsqueda*/
+        $("#entrada").on("keyup", function () {
+            let query = $(this).val().toLowerCase().trim();
+            
+            $(".tarjetaAnime").each(function () {
+                let $card = $(this);
+                let title = $card.find(".titulo-anime").text().toLowerCase();
+                let genero = $card.data("genero") ? $card.data("genero").toLowerCase() : "";
+                
+                if (title.includes(query) || genero.includes(query)) {
+                    $card.show();
+                } else {
+                    $card.hide();
+                }
+            });
+        });
+        
+        /*JS para botones*/
+        $(".masInfo").on("click", function(){
+            const descripcion = $(this).siblings(".descripcion");
+            descripcion.slideToggle();
+            
+            if($(this).text() === "Mas Informacion"){
+                $(this).text("Ocultar Informacion");
+            } else {
+                $(this).text("Mas Informacion");
+            }
+        });
+
+        $(".favs").on("click", function(){
+            let boton = $(this);
+
+            if(boton.hasClass('añadido')){
+                boton.text('Añadir a Favoritos✨');
+                boton.css({
+                    "background-color" : "",
+                    "color" : ""
+                });
+                boton.removeClass('añadido');
+            
+        }else{
+            //cambiar a añadido
+            boton.text('Añadido a Favoritos✨');
+
+            //se modifica el color
+            boton.css({
+                "background-color": "#3f6584a9",
+                "color": "grey"
+            });
+
+            boton.addClass("añadido");
+            }
+        });
+
+</script>
 </body>
 </html>

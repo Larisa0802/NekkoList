@@ -1,0 +1,373 @@
+/* CSS DE PARTIALS*/
+
+@font-face{
+    font-family: 'Nekko';
+    src: url('./fonts/SukajanBrushDemoRegular-q2Mmx.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(1, 8, 17, 0.946);
+    color: white;
+}
+
+header{
+    display: grid;
+    grid-template-areas: "logo nav";
+    grid-template-columns: auto auto; 
+    align-items: center;
+    padding: 10px 20px;
+}
+
+header:hover{
+    outline: none;
+    box-shadow: 0 0 10px #00c3ff;
+}
+
+h1{
+    text-align: center;
+    margin-top: 2%;
+}
+
+footer{
+    text-align: center;
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    grid-area: nav;
+}
+
+nav a{
+    height: 30px;
+    width: 100px;
+    text-decoration: none;
+    color: white;
+    margin: 1%;
+    padding-top: 5px;
+    padding-left: 10px;
+    font-family: 'Nekko', sans-serif;
+    font-size: larger;
+}
+
+nav a:hover{
+    height: 30px;
+    width: 110px;
+    border-radius: 5px;
+    background-color: rgba(12, 165, 212, 0.919);
+    animation: neon 5s ease-in-out infinite alternate, fadeInDown 2s ease forwards;
+}
+
+#cerrarSes{
+    width: 180px;
+}
+
+#cerrarSes:hover{
+    width: 150px;
+}
+
+.logo{
+    grid-area: logo;
+}
+
+.logo a{
+    text-decoration: none;
+}
+
+.logo p{
+    color: white;
+    margin-left: 100px;
+    font-family: 'Nekko', sans-serif;
+    font-size: larger;
+}
+
+.logo img{
+    width: 80px;
+    height: 100px;
+    padding-top: 40px;
+    padding-left: 100px;
+}
+
+
+.login-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    color: white;
+    padding: 20px;
+}
+
+.login-div form {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(12, 57, 84, 0.732);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+.login-div form p:first-child {
+    font-family: 'Nekko', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #00c3ff;
+    text-shadow: 1px 1px 5px #000;
+}
+
+.login-div form p {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.login-div form input {
+    padding: 10px 12px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.login-div form input:focus {
+    outline: none;
+    background-color: rgba(0,195,255,0.1);
+    box-shadow: 0 0 10px #00c3ff;
+}
+
+.login-div form input[type="submit"] {
+    margin-top: 10px;
+    padding: 12px 0;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #00c3ff, #0072ff);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.login-div form input[type="submit"]:hover {
+    background: linear-gradient(90deg, #0072ff, #00c3ff);
+    transform: scale(1.05);
+}
+
+/* Enlace de registro */
+.login-div p a {
+    margin-top: 15px;
+    color: #00c3ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.login-div p a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px #00c3ff;
+}
+
+
+.register-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    color: white;
+    padding: 20px;
+}
+
+.register-div form {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(12, 57, 84, 0.732);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+.register-div form p:first-child {
+    font-family: 'Nekko', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #00c3ff;
+    text-shadow: 1px 1px 5px #000;
+}
+
+.register-div form p {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.register-div form input {
+    padding: 10px 12px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.register-div form input:focus {
+    outline: none;
+    background-color: rgba(0,195,255,0.1);
+    box-shadow: 0 0 10px #00c3ff;
+}
+
+.register-div form input[type="submit"] {
+    margin-top: 10px;
+    padding: 12px 0;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #00c3ff, #0072ff);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.register-div form input[type="submit"]:hover {
+    background: linear-gradient(90deg, #0072ff, #00c3ff);
+    transform: scale(1.05);
+}
+
+/* CSS DE COMPLETES*/
+.catalogContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px;
+    align-items: center;
+}
+
+.tarjetaAnime{
+    background-color: rgba(2, 45, 75, 0.064);
+    width: 310px;
+    height: auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 5);
+    margin-top: 10px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.tarjetaAnime:hover {
+  transform: translateY(-10px);
+  transform: scale(1.2);
+}
+
+.tarjetaAnime img {
+  width: 100%;
+  height: 440px;
+  display: block;
+  padding-left: 2px;
+
+}
+
+.descripcion{
+    display: none;
+}
+
+#entrada {
+    width: 70%;
+    height: 30px;
+    font-size: 16px;
+    margin: 100px 200px;
+  }
+
+#entrada:focus {
+    outline: none;
+    background-color: rgba(0,195,255,0.1);
+    box-shadow: 0 0 10px #00c3ff;
+    color: white;
+}
+
+#titC {
+  margin-top: 50px;
+  font-family: 'Nekko', sans-serif;
+}
+
+#titC,
+#subtC {
+  font-size: 48px;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 0 5px #00c3ff, 0 0 10px #2fc3f0, 0 0 20px #33bbe4;
+  animation: neon 5s ease-in-out infinite alternate, fadeInDown 2s ease forwards;
+}
+
+#subtC {
+  font-size: 15px;
+}
+
+@keyframes neon {
+  from {
+    text-shadow: 0 0 5px #17cbef, 0 0 10px #14e6f1, 0 0 20px #0ad4ee;
+  }
+  to {
+    text-shadow: 0 0 10px #70daf5, 0 0 20px #68ecfa, 0 0 40px #30daf4;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/*CSS DE INDEX*/
+.presentacion{
+    width: 600px;
+    height: 200px;
+    background-color: rgba(2, 63, 89, 0.412);
+    border-radius: 50px;
+    display: flex;
+    padding: 100px 100px;
+    margin-left: 250px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*RESPONSIVE*/

@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="/estilos.css">
+    <link rel="icon" href="/favicon.ico">
+    <title>Bienvenido!</title>
   </head>
 
   <body>
@@ -11,11 +13,61 @@
     <%- include("../partials/header") %> <!--Header-->
   
     <% if (user) { %>
-    <h1>Bienvenid@ <%= user.nombre %></h1>
+    <h1 id="titC" style="margin-top:5%;">Bienvenido <%= user.nombre %></h1>
+
+    <main class="mainContainerUser">
+        <div class="presentacion">
+            <p>
+              Descubre y explora una amplia colección de animes donde podrás consultar información 
+              detallada de cada serie: sinopsis, géneros, número de episodios y fecha de publicación. 
+              Utiliza nuestro buscador inteligente para filtrar por título o género y encuentra 
+              exactamente lo que buscas. Guarda tus animes favoritos para tenerlos siempre a mano 
+              y construye tu propia lista personalizada. Todo lo que necesitas para gestionar 
+              tu experiencia anime en un solo lugar.
+            </p>
+            <img src="/img/pet.png" alt="pet">
+          </div>
+
+          <!--Estadisticas-->
+          <aside class="usuariosContainer">
+              <div class="us1">
+                <img src="/img/perfilAvatar.png" alt="avatar">
+                <p>Nombre: </p>
+                <p>Animes en Favoritos: </p>
+              </div>
+              <div class="us2">
+                <img src="/img/perfilAvatar.png" alt="avatar">
+                <p>Nombre: </p>
+                <p>Animes en Favoritos: </p>
+              </div>
+          </aside>
+    </main>
+
+        <!--Ranking 3 animes mas seguidos:-->
+         <h2 id="subtC">Ranking 3 animes mas seguidos</h2>
+
+        <section>
+
+        </section>
 
     <% } else { %>
-    <h1>Bienvenid@ a NekkoList</h1>
+    <h1 id="titC" style="margin-top:5%;">Bienvenido a NekkoList</h1>
+      <div class="presentacion">
+        <p>
+            Descubre y explora una amplia colección de animes donde podrás consultar información 
+            detallada de cada serie: sinopsis, géneros, número de episodios y fecha de publicación. 
+            Utiliza nuestro buscador inteligente para filtrar por título o género y encuentra 
+            exactamente lo que buscas. Guarda tus animes favoritos para tenerlos siempre a mano 
+            y construye tu propia lista personalizada. Todo lo que necesitas para gestionar 
+            tu experiencia anime en un solo lugar.
+          </p>
+        <img src="/img/pet.png" alt="pet">
+      </div>
 
     <% } %> <%- include("../partials/footer") %> <!--Footer-->
+
+    <script>
+
+    </script>
   </body>
 </html>
