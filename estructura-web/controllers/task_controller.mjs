@@ -36,7 +36,7 @@ class AnimeController {
   detalle = async (req, res) => {
     const { id } = req.params;
     try {
-      const respuesta = await this.client.get(`/getAnimesById/${id}`);
+      const respuesta = await this.client.get(`/getAnimeById/${id}`);
       const anime = respuesta.data;
 
       res.render("completes/detalle", {

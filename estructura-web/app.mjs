@@ -6,12 +6,14 @@ import animeRoutes from "./routes/anime_routes.mjs"
 import favRoutes from "./routes/fav_routes.mjs"
 import cookieParser from "cookie-parser" //npm i cookie-parser
 import { initializeApp } from "firebase/app";
-
+import { fileURLToPath } from 'url';
 
 //inicializacion del server
 const PORT = 3001
 const app = express()
 const actualRoute = path.resolve(".")
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 //middleware
@@ -80,6 +82,7 @@ const firebaseConfig = {
 
 const firebase = initializeApp(firebaseConfig);
 
+app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "ejs")
 app.set("views", path.join(actualRoute,"views"))
 app.use(express.static(path.join(actualRoute,"public")))

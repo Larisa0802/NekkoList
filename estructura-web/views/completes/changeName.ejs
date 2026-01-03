@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/estilos.css">
+        <link rel="icon" href="/favicon.ico">
+        <title>Document</title>
+    </head>
+    <body>
+        <%- include ("../partials/header") %> <% if(user) { %>
+
+        <form action="/updateUserName" method="post">
+            <label for="name">Introduce tu nuevo nombre</label>
+            <input type="text" name="newName" required />
+            <button type="submit">Cambiar nombre</button>
+        </form>
+
+        <%}else{%>
+            <h3>Debes estar logueado</h3>
+
+        <% } %> 
+        
+        <%- include ("../partials/footer") %>
+    </body>
+</html>

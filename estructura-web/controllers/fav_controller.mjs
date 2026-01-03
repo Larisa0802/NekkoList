@@ -13,7 +13,7 @@ class FavController {
             // Petición a la API
             const datos = await this.client.get(`/insertFav/${req.cookies["datosUsuario"].uuid}&${req.params.animeId}`)
             if (datos.status === 200) {
-                res.sendStatus(200)
+                res.redirect("/profile")
             } else {
                 res.status(404).send("No se han encontrado tareas")
             }
@@ -47,9 +47,7 @@ class FavController {
             // Petición a la API
             const datos = await this.client.get(`/deleteFav/${req.cookies["datosUsuario"].uuid}&${req.params.animeId}`)
             if (datos.status === 200) {
-                res.render("completes/", {
-                    
-                })
+                res.redirect("/profile")
             } else {
                 res.status(404).send("No se han encontrado tareas")
             }
@@ -65,7 +63,7 @@ class FavController {
             // Petición a la API
             const datos = await this.client.get(`/getAllFav/${req.cookies["datosUsuario"].uuid}`)
             if (datos.status === 200) {
-                res.render("completes/favourites", {
+                res.render("completes/profile", {
                     favData: datos.data,
                     user: req.cookies["datosUsuario"].uuid 
                 })

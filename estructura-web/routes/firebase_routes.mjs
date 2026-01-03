@@ -7,7 +7,7 @@ const router = new express.Router();
 
 //Mostrar pags
 router.get("/login", (req, res) => {
-  res.render("completes/logIn", { log: ""});
+  res.render("completes/logIn", { errorL: null,log: ""});
 });
 
 router.get("/register", (req, res) => {
@@ -43,11 +43,19 @@ router.get("/changeEmail", (req, res) => {
   res.render("completes/changeEmail");
 });
 
+router.get("/changeName", (req, res) => {
+  if (!res.locals.user) {
+    return res.redirect("/login")
+  }
+  res.render("completes/changeName");
+});
+
 //Enviar datos al servidor desde formularios/axios
 router.post("/signUp", firebaseController.signUp);
 router.post("/logIn", firebaseController.logIn);
 router.post("/signOutUser", firebaseController.signOutUser);
 router.post("/updatePassword", firebaseController.updatePassword);
 router.post("/updateEmail", firebaseController.updateEmail);
+router.post("/updateUserName", firebaseController.updateName);
 
 export default router;

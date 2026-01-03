@@ -1,7 +1,10 @@
 <header class="main-header">
 
   <div class="logo">
-    <a href="/">NekkoList</a>
+    <a href="/">
+      <img src="/img/logo.png" alt="logoImg">
+      <p class="logoName">NekkoList</p>
+    </a>
   </div>
 
   <nav class="navbar">
@@ -20,15 +23,8 @@
     <!-- Usuario registrado -->
     <% if (user) { %>
       <a href="/profile">Perfil</a>
-      <a href="/favourites">Favoritos</a>
-      <a href="/logOut">Cerrar sesión</a>
+      <a href="/logOut" id="cerrarSes">Cerrar sesión</a>
     <% } %>
-
-    <!-- Usuario ADMIN -->
-    <% if (user && user.admin == true) { %>
-      <a href="/admin">Admin</a>
-    <% } %>
-     
 
   </nav>
 
