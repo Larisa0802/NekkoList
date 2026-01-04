@@ -38,10 +38,12 @@ class AnimeController {
     try {
       const respuesta = await this.client.get(`/getAnimeById/${id}`);
       const anime = respuesta.data;
+      const char = await this.client.get(`/getAllCharacters/${id}`);
 
       res.render("completes/detalle", {
         title: anime.titulo,
-        anime,
+        anime: anime,
+        char: char.data,
         user: req.cookies["datosUsuario"] || null,
       });
     } catch (error) {

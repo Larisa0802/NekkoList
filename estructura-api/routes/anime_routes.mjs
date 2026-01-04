@@ -8,6 +8,8 @@ router.get("/getAllAnimes", animeController.getAllAnimes)
 router.get("/getAnimeById/:id", animeController.getAnimeById)
 router.post("/deleteAnime", animeController.deleteAnime)
 router.post("/updateAnime", animeController.updateAnime)
+router.post("/getAnimeFollowStat", animeController.getAnimeFollowStat)
+
 
 
 export default router

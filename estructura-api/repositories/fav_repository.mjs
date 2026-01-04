@@ -93,6 +93,10 @@ async function deleteFavouriteById(favData){
     return result
 }
 
+
+
+
+
 export default {
     insertFavorite,
     selectAllFavourites,

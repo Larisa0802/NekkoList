@@ -80,7 +80,10 @@ class FirebaseController {
               maxAge: 2 * 3600 * 100000000000,
             }
           );
-
+        // tiene como atributos rankingAnimeFav.count y rankingAnimeFav.titulo
+        let rankingAnimeFav = await this.client.post("/getAnimeFollowStat")
+        // tiene como atributos rankingUserFav.count y rankingUserFav.nombre
+        let rankingUserFav = await this.client.post("/getAnimeFollowStat")
         res.render("completes/index", {
           user: userData.data[0],
         });

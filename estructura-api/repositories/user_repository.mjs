@@ -115,6 +115,28 @@ async function deleteUserById(id){
     return result
 }
 
+async function selectUserFollowedStat(){
+    const client = await pool.connect()
+    let result = ""
+    let user = undefined
+    try{
+        result = await client.query(`select count(favoritos.anime_id), usuarios.nombre from usuarios join favoritos on (favoritos.usuario_id = usuarios.id) group by favoritos.usuario_id, usuarios.nombre order by count DESC limit 5;`)
+
+    }catch(err){
+        console.error("Error en la insercion de datos",err.message)
+        result = err.message
+    }finally{
+        client.release()
+        
+    }
+    if(result && result.rows){
+        console.log(result.rows)
+        user = result.rows
+      
+    }
+    return user
+}
+
 
 
 export default {
@@ -123,5 +145,6 @@ export default {
     selectUserById,
     updateUserEmailById,
     updateUserNameById,
-    deleteUserById
+    deleteUserById,
+    selectUserFollowedStat
 }
