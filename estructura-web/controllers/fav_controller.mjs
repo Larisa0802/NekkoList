@@ -13,7 +13,7 @@ class FavController {
             // Petición a la API
             const datos = await this.client.get(`/insertFav/${req.cookies["datosUsuario"].uuid}&${req.params.animeId}`)
             if (datos.status === 200) {
-                res.redirect("/profile")
+                res.redirect("/catalog")
             } else {
                 res.status(404).send("No se han encontrado tareas")
             }

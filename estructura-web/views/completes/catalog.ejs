@@ -38,7 +38,7 @@
                         <% } else { %>
                             <a href="#" class="catalogoSinUser">Añadir a Favoritos✨</a>
                         <% } %>
-                        <% if(user && user.rol === "admin"){ %>
+                        <% if(user && user.admin === true){ %>
                             <button onclick="openEditModal(
                                 '<%= anime.id %>',
                                 '<%= anime.titulo %>',
