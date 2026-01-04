@@ -70,11 +70,25 @@ async function deleteUser(req, res){
    
 }
 
+async function getUserFollowStat(req, res){
+    let users = undefined
+    try{
+        users = await userRepo.selectUserFollowedStat()
+
+    }catch(error){
+        console.log(error)
+        res.send(error).status(500)
+    }
+    res.send(users).status(200)
+   
+}
+
 
 export default {
     insertUser,
     getUserData,
     updateUserEmail,
     updateUserName,
-    deleteUser
+    deleteUser,
+    getUserFollowStat
 }

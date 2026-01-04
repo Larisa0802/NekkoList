@@ -149,6 +149,28 @@ function episodeChecker(episodes){
 
 }
 
+async function selectAnimeFollowedStat(){
+    const client = await pool.connect()
+    let result = ""
+    let anime = undefined
+    try{
+        result = await client.query(`select count(animes.id), animes.titulo from animes join favoritos on (favoritos.anime_id = animes.id) group by favoritos.anime_id,animes.titulo order by count DESC limit 5;`)
+
+    }catch(err){
+        console.error("Error en la insercion de datos",err.message)
+        result = err.message
+    }finally{
+        client.release()
+        
+    }
+    if(result && result.rows){
+        console.log(result.rows)
+        anime = result.rows
+      
+    }
+    return anime
+}
+
 
 
 export default {
@@ -156,5 +178,6 @@ export default {
     selectAllAnime,
     selectAnimeById,
     updateAnimeById,
-    deleteAnimeById
+    deleteAnimeById,
+    selectAnimeFollowedStat
 }
