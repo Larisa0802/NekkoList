@@ -738,3 +738,22 @@ td {
   width: 100px;
   height: 100px;
 }
+
+/*css botones catalogo*/
+.favs, .catalogoSinUser{
+  text-decoration: none;
+  font-size: small;
+}
+.masInfo, .favs, .catalogoSinUser{
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 50px;
+    border: 1px solid rgb(32, 196, 251);
+    color: white;
+    background-color: rgba(128, 128, 128, 0);
+}
+
+.masInfo:hover, .favs:hover, .catalogoSinUser:hover{
+    background: linear-gradient(to right, #20c4ff, #17507ffc);
+    transition: background 0.3s;
+}

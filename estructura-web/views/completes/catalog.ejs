@@ -32,7 +32,12 @@
                             Fecha: <%= new Date(anime.fecha_pub).toISOString().split("T")[0] %>   <br>
                             Sinopsis: <%= anime.descripcion %> 
                         </p>
-                        <button><a href="/insertFav/<%= user %>&<%= anime.id %>" class="favs">Añadir a Favoritos✨</a></button> 
+
+                        <% if (user) { %>
+                            <a href="/insertFav/<%= user %>&<%= anime.id %>" class="favs">Añadir a Favoritos✨</a>
+                        <% } else { %>
+                            <a href="#" class="catalogoSinUser">Añadir a Favoritos✨</a>
+                        <% } %>
                         <% if(user && user.rol === "admin"){ %>
                             <button onclick="openEditModal(
                                 '<%= anime.id %>',
@@ -127,6 +132,10 @@
 
             boton.addClass("añadido");
             }
+        });
+
+        $(".catalogoSinUser").on("click", function(){
+            alert("Debes loguearte primero!")
         });
 
         function openEditModal(id, titulo, genero, descripcion, episodios){
