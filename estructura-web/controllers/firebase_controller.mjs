@@ -64,8 +64,8 @@ class FirebaseController {
       };
       const auth = getAuth();
       let userCredential = await signInWithEmailAndPassword(auth,req.body.email, req.body.password)
-        if(userCredential._tokenResponse.registered){
-          const userData = await this.client.get(
+if (userCredential && userCredential.user) {
+            const userData = await this.client.get(
             `/getUserData/${userCredential.user.uid}`
           );
           res.cookie("datosUsuario",
@@ -80,13 +80,30 @@ class FirebaseController {
               maxAge: 2 * 3600 * 100000000000,
             }
           );
+
         // tiene como atributos rankingAnimeFav.count y rankingAnimeFav.titulo
         let rankingAnimeFav = await this.client.post("/getAnimeFollowStat")
+
         // tiene como atributos rankingUserFav.count y rankingUserFav.nombre
-        let rankingUserFav = await this.client.post("/getAnimeFollowStat")
+        let rankingUserFav = await this.client.post("/getUserFollowStat")
+
+        if(!rankingAnimeFav || !rankingAnimeFav.data){
+          console.log("No se pudo obtener el ranking de animes favoritos")
+        }
+
+        if(!rankingUserFav || !rankingUserFav.data){
+          console.log("No se pudo obtener el ranking de usuarios con mas favoritos")
+        }
+
+        console.log("rankingAnimeFav:", rankingAnimeFav.data)
+console.log("rankingUserFav:", rankingUserFav.data)
+
         res.render("completes/index", {
           user: userData.data[0],
+          rankingAnimeFav: rankingAnimeFav.data,
+          rankingUserFav: rankingUserFav.data,
         });
+
         }else{
           res.status(400).send("Error: Email")
         }

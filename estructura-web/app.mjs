@@ -59,9 +59,7 @@ function isAdmin(req,res,next){
   next()
 }
 
-app.get("/", (req,res) => {
-  res.render("completes/index")
-})
+
 app.get("/admin", isAdmin, (req,res) => {
   res.render("completes/admin")
 })

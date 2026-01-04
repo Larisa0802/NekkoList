@@ -44,7 +44,6 @@ async function updateAnime(req, res){
         res.send(error).status(500)
     }
     res.sendStatus(200)
-   
 }
 
 async function deleteAnime(req, res){

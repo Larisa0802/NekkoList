@@ -1,26 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/estilos.css">
-        <link rel="icon" href="/favicon.ico">
-        <title>Document</title>
-    </head>
-    <body>
-        <%- include ("../partials/header") %> <% if(user) { %>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/estilos.css" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>Document</title>
+  </head>
 
-        <form action="/updateUserName" method="post">
-            <label for="name">Introduce tu nuevo nombre</label>
-            <input type="text" name="newName" required />
-            <button type="submit">Cambiar nombre</button>
-        </form>
+  <body>
+    <%- include ("../partials/header") %> <% if(user) { %>
 
-        <%}else{%>
-            <h3>Debes estar logueado</h3>
+    <form action="/updateUserName" method="post">
+      <label for="name">Introduce tu nuevo nombre</label>
+      <input type="text" id="newName" name="newName" required />
+      <button id="cmbName">Cambiar nombre</button>
+    </form>
+<div id="mensaje"></div>
+    <%}else{%>
+    <h3>Debes estar logueado</h3>
 
-        <% } %> 
-        
-        <%- include ("../partials/footer") %>
-    </body>
+    <% } %> <%- include ("../partials/footer") %>
+
+   <script>
+    const mensaje = document.getElementById("mensaje")
+
+  async function cambiarNombre() {
+    const name = document.getElementById("newName").value.trim()
+
+    try {
+      const response = await fetch("/updateUserName", {
+        method: "POST",
+        headers: { "Content-Type": "application/json"},
+        body: JSON.stringify({ newName: name })
+      })
+
+      const data = await response.json()
+
+      if(response.ok) {
+        mensaje.innerHTML = "<h2 style='color:green'>" + data.mensaje + "</h2>"
+        setTimeout(() => window.location.href = "/profile", 2000)
+      } else {
+        mensaje.innerHTML = "<h2 style='color:red'>" + data.error + "</h2>"
+      }
+    } catch(error) {
+      mensaje.innerHTML = "<h2 style='color:red'>Error: "+ error.message + "</h2>"
+    }
+  }
+
+  document.getElementById("cmbName").addEventListener("click", (e) => {
+    e.preventDefault()
+    cambiarNombre()
+  })
+</script>
+
+  </body>
 </html>

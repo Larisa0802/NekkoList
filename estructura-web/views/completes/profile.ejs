@@ -17,6 +17,7 @@
       <h2 id="subtC">Tus datos</h2>
       <hr />
       <div id="eau">
+        <p>Nombre: <%= user.nombre %></p>
         <p>Email: <%= user.email %></p>
         <p>Admin: <%= user.admin %></p>
         <p id="puuid">
@@ -97,7 +98,7 @@
       });
 
       document.getElementById("cmbName").addEventListener("click", () => {
-        window.localtion.href = "/changeName";
+        window.location.href = "/changeName";
       });
 
       document.getElementById("copyUUID").addEventListener("click", () => {

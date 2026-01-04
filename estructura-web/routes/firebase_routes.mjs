@@ -6,6 +6,28 @@ const router = new express.Router();
 // Middleware para obtener el usuario de la cookie
 
 //Mostrar pags
+
+router.get("/", async (req, res) => {
+  let rankingAnimeFav = [];
+  let rankingUserFav = [];
+
+  try {
+    const anime = await firebaseController.client.post("/getAnimeFollowStat");
+    const users = await firebaseController.client.post("/getUserFollowStat");
+    rankingAnimeFav = anime.data || [];
+    rankingUserFav = users.data || [];
+  } catch (err) {
+    console.log("Error obteniendo rankings:", err.message);
+  }
+
+  res.render("completes/index", {
+    user: res.locals.user || null,
+    rankingAnimeFav,
+    rankingUserFav
+  });
+});
+
+
 router.get("/login", (req, res) => {
   res.render("completes/logIn", { errorL: null,log: ""});
 });
@@ -18,13 +40,28 @@ router.get("/logOut", (req, res) => {
   res.render("completes/logOut");
 });
 
-router.get("/contact", (req, res) => {
-  res.render("completes/contact");
+
+router.get("/inicio", async (req, res) => {
+  let rankingAnimeFav = [];
+  let rankingUserFav = [];
+
+  try {
+    const anime = await firebaseController.client.post("/getAnimeFollowStat");
+    const users = await firebaseController.client.post("/getUserFollowStat");
+    rankingAnimeFav = anime.data || [];
+    rankingUserFav = users.data || [];
+  } catch (err) {
+    console.log("Error obteniendo rankings:", err.message);
+  }
+
+  res.render("completes/index", {
+    rankingAnimeFav,
+    rankingUserFav
+  });
 });
 
-
-router.get("/inicio", (req, res) => {
-  res.render("completes/index");
+router.get("/contact", (req, res) => {
+  res.render("completes/contact");
 });
 
 router.get("/profile", firebaseController.getProfile);
