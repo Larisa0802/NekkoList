@@ -13,15 +13,16 @@
     <% const user = locals.user || null; %>
     <%- include("../partials/header") %> <!--Header-->
 
-
-    <form action="/signOutUser" method="post">
+    <h1 id="titC">Deseas cerrar sesión?</h1>
+    <main class="logOutDiv">
+        <form action="/signOutUser" method="post">
+        <p>Cerrar Sesión:</p>
         <p id="uid">
             <%= user ? user.uuid : "" %>
         </p>
-        <p>Cerrar Sesión</p>
         <input type="submit" value="Cerrar sesión">
     </form>
-
+    </main>
         <%- include("../partials/footer") %> <!--Footer-->
 
 </body>

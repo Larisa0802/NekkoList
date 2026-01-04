@@ -11,11 +11,15 @@
   <body>
     <%- include ("../partials/header") %> <% if(user) { %>
 
-    <form action="/updateUserName" method="post">
-      <label for="name">Introduce tu nuevo nombre</label>
-      <input type="text" id="newName" name="newName" required />
-      <button id="cmbName">Cambiar nombre</button>
-    </form>
+      <h2 id="titC">Cambiar nombre</h2>
+        <main class="dataChangeDiv">
+          <form action="/updateUserName" method="post">
+            <label for="name">Introduce tu nuevo nombre</label>
+            <input type="text" id="newName" name="newName" required />
+            <button id="cmbName">Cambiar nombre</button>
+          </form>
+
+        </main>
 <div id="mensaje"></div>
     <%}else{%>
     <h3>Debes estar logueado</h3>

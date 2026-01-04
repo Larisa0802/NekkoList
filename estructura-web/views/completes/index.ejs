@@ -14,8 +14,7 @@
     <%- include("../partials/header") %> <!--Header-->
 
       <% if (user) { %>
-        <h1 id="titC" style="margin-top:5%;">Bienvenido <%= user.nombre %>
-        </h1>
+        <h1 id="titC" style="margin-top:5%;">Bienvenido <%= user.nombre %></h1>
 
         <main class="mainContainerUser">
           <div class="presentacion">
@@ -30,43 +29,47 @@
             <img src="/img/pet.png" alt="pet">
           </div>
 
-          <!--Estadisticas-->
-          <aside class="usuariosContainer">
-            <div class="us1">
-              <img src="/img/perfilAvatar.png" alt="avatar">
-              <p>Nombre: </p>
-              <p>Animes en Favoritos: </p>
-            </div>
-            <div class="us2">
-              <img src="/img/perfilAvatar.png" alt="avatar">
-              <p>Nombre: </p>
-              <p>Animes en Favoritos: </p>
-            </div>
-          </aside>
-        </main>
 
-        <!--Ranking 3 animes mas seguidos:-->
-        <% if (rankingAnimeFav) { %>
-          <% let i = 1 %>
-          <h2 id="subtC">Ranking 3 animes mas seguidos</h2>
-          <% rankingAnimeFav.forEach(item=> { %>
-            <p>
-              <%=i++%>º <%= item.titulo %> — <%= item.count %> seguidores
-            </p>
-            <% }) %>
-              <% } %>
+                        <section class="rankingContainer">
+                    <% if (rankingAnimeFav && rankingAnimeFav.length > 0) { %>
+                        <h2 class="subtC">🏆 Top 3 Animes Más Seguidos</h2>
+                        <div class="rankingList">
+                            <% rankingAnimeFav.forEach((item, index) => { %>
+                                <div class="rankingCard top-<%= index + 1 %>">
+                                    <span class="medalla">
+                                        <%= index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉' %>
+                                    </span>
+                                    <div class="rankInfo">
+                                        <span class="rankName"><%= item.titulo %></span>
+                                        <span class="rankCount">
+                                            <%= item.count %> <%= item.count === 1 ? 'seguidor' : 'seguidores' %>
+                                        </span>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    <% } %>
 
-
-                <% if (rankingUserFav) { %>
-                <% let i = 1 %>
-
-                <h2 id="subtC">Ranking 3 usuarios con más favoritos</h2>
-                  <% rankingUserFav.forEach(item=> { %>
-                    <p>
-                       <%=i++%>º <%= item.nombre %> — <%= item.count %> seguidores
-                    </p>
-                  <% }) %>
-                <% } %>
+                    <% if (rankingUserFav && rankingUserFav.length > 0) { %>
+                        <h2 class="subtC">👥 Top 3 Usuarios con Más Favoritos</h2>
+                        <div class="rankingList">
+                            <% rankingUserFav.forEach((item, index) => { %>
+                                <div class="rankingCard top-<%= index + 1 %>">
+                                    <span class="medalla">
+                                        <%= index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉' %>
+                                    </span>
+                                    <div class="rankInfo">
+                                        <span class="rankName"><%= item.nombre %></span>
+                                        <span class="rankCount">
+                                            <%= item.count %> <%= item.count === 1 ? 'favorito' : 'favoritos' %>
+                                        </span>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    <% } %>
+                </section>
+                  </main>
 
                         <% } else { %>
                           <h1 id="titC" style="margin-top:5%;">Bienvenido a NekkoList</h1>

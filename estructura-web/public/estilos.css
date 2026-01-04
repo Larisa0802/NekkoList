@@ -254,6 +254,67 @@ nav a:hover {
   transform: scale(1.05);
 }
 
+.contactoDiv{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  color: white;
+  padding: 15px;
+}
+
+.contactoDiv form {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(12, 57, 84, 0.732);
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.contactoDiv form label {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.contactoDiv form input {
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.contactoDiv form input:focus {
+  outline: none;
+  background-color: rgba(0, 195, 255, 0.1);
+  box-shadow: 0 0 10px #00c3ff;
+}
+
+.contactoDiv form button {
+  margin-top: 10px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00c3ff, #0072ff);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.contactoDiv form button:hover {
+  background: linear-gradient(90deg, #0072ff, #00c3ff);
+  transform: scale(1.05);
+}
+
 /* CSS DE COMPLETES*/
 .catalogContainer {
   display: flex;
@@ -346,13 +407,14 @@ nav a:hover {
 
 /*CSS DE INDEX*/
 .presentacion {
-  width: 600px;
+  width: 500px;
   height: 200px;
   background-color: rgba(2, 63, 89, 0.412);
   border-radius: 50px;
   display: flex;
   padding: 100px 100px;
-  margin-left: 250px;
+  margin-left: 50px;
+  grid-area: div;
 }
 
 .tablaFav {
@@ -500,4 +562,175 @@ td {
   transform: scale(0.96);
 }
 
-/*RESPONSIVE*/
+/*PAGINA LOGOUT*/
+.logOutDiv {
+  background-color: rgba(2, 1, 35, 0.208);
+  color: rgb(255, 255, 255);
+  border-radius: 8px;
+  text-align: center;
+  width: 40%;
+  margin: 20px auto;
+  margin-bottom: 20px;
+  padding-bottom: 10PX;
+  border-color: white;
+  border: 1px solid;
+  box-shadow: 1px 1px 10px 1px white;
+}
+
+/*cambios de datos en perfil*/
+.dataChangeDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+  color: white;
+  padding: 20px;
+}
+
+.dataChangeDiv form {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(12, 57, 84, 0.732);
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.dataChangeDiv form label {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.dataChangeDiv form input {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.dataChangeDiv form input:focus {
+  outline: none;
+  background-color: rgba(0, 195, 255, 0.1);
+  box-shadow: 0 0 10px #00c3ff;
+}
+
+.dataChangeDiv form button {
+  margin-top: 10px;
+  padding: 12px 0;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00c3ff, #0072ff);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.dataChangeDiv button:hover {
+  background: linear-gradient(90deg, #0072ff, #00c3ff);
+  transform: scale(1.05);
+}
+
+/*CSSde ranking*/
+.rankingContainer {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(2, 63, 89, 0.412);
+    border-radius: 15px;
+    grid-area: section;
+}
+
+.subtC {
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+
+.rankingList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.rankingCard {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.rankingCard:hover {
+    transform: translateX(5px);
+}
+
+.medalla {
+    font-size: 2.5rem;
+    margin-right: 1rem;
+}
+
+.rankInfo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.rankName {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin-bottom: 0.3rem;
+}
+
+.rankCount {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .rankingContainer {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .rankingCard {
+        padding: 1rem;
+    }
+
+    .medalla {
+        font-size: 2rem;
+    }
+}
+
+
+/*index*/
+.mainContainerUser{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "div section";
+  gap: 2%;
+}
+
+@media (max-width: 968px) {
+    .prueba {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "div"
+            "section";
+    }
+}
+
+

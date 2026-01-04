@@ -33,12 +33,44 @@
                             Sinopsis: <%= anime.descripcion %> 
                         </p>
                         <button><a href="/insertFav/<%= user %>&<%= anime.id %>" class="favs">Añadir a Favoritos✨</a></button> 
+                        <% if(user && user.rol === "admin"){ %>
+                            <button onclick="openEditModal(
+                                '<%= anime.id %>',
+                                '<%= anime.titulo %>',
+                                '<%= anime.genero %>',
+                                '<%= anime.descripcion %>',
+                                '<%= anime.episodios %>',
+                            )">
+                                Editar
+                            </button>
+                            <% } %>
                     </div>
                 
             <% }) %>
         
         <% } %>
     </main>
+
+    <div id="editModal" class="modal" style="display: none;">
+        <div class="modalContent">
+            <h2>Editar Anime</h2>
+                <form method="POST" action="/anime/update">
+                    <input type="hidden" name="id" id="edit_id">
+
+                    <label for="titulo">Título</label>
+                    <input type="text" name="titulo" id="editTitulo">
+                    <label for="genero">Género</label>
+                    <input type="text" name="genero" id="editGenero">
+                    <label for="episodios">Episodios</label>
+                    <input type="text" name="episodios" id="editEpisdios">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" name="descripcion" id="editDescripcion">
+
+                    <button type="submit">Guardar cambios</button>
+                    <button type="button" onclick="closeEditModal()">Cancelar</button>
+                </form>
+        </div>
+    </div>
 
     <%- include("../partials/footer") %> <!--Footer-->
 
@@ -96,6 +128,20 @@
             boton.addClass("añadido");
             }
         });
+
+        function openEditModal(id, titulo, genero, descripcion, episodios){
+            document.getElementById("edit_id").value = id;
+            document.getElementById("editTitulo").value = titulo;
+            document.getElementById("editGenero").value = genero;
+            document.getElementById("editEpisdios").value = episodios;
+            document.getElementById("editDescripcion").value = descripcion;
+
+            document.getElementById("editModal").style.display = "block";
+        }
+
+        function closeEditModal(){
+            document.getElementById("editModal").style.display = "none";
+        }
 
 </script>
 </body>
