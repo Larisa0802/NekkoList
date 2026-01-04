@@ -733,4 +733,8 @@ td {
     }
 }
 
-
+/*pet*/
+.pet{
+  width: 100px;
+  height: 100px;
+}
