@@ -27,11 +27,13 @@ class FavController {
     updateFav = async (req, res) => {
         try {
             // Petición a la API
-            const datos = await this.client.post("/updateFav")
+            const datos = await this.client.post("/updateFav",{
+                usuario_id: req.body.usuario_id,
+                anime_id: req.body.anime_id,
+                rating: req.body.rating
+            })
             if (datos.status === 200) {
-                res.render("completes/", {
-                    
-                })
+                res.redirect("/profile")
             } else {
                 res.status(404).send("No se han encontrado tareas")
             }

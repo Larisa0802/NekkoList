@@ -40,7 +40,7 @@ async function setFavourite(req, res){
 // }
 async function updateFavourite(req, res){
     try{
-        await favRepo.updateFavouriteById(req.body.data)
+        await favRepo.updateFavouriteById(req.body)
 
     }catch(error){
         console.log(error)
