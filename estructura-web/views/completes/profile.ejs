@@ -50,6 +50,7 @@
             <th>Género</th>
             <th>Episodios</th>
             <th>Fecha de publicación</th>
+            <th>Rating</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -73,9 +74,21 @@
                   <%= new Date(animeFav.animeData.fecha_pub).toISOString().split("T")[0] %>
                 </td>
                 <td>
+                  <input
+                    type="number"
+                    min="0"
+                    max="10"
+                    step="1"
+                    value="<%= animeFav.rating %>"
+                    id="rating-<%= animeFav.anime_id %>"
+                  />
+                </td>
+                <td>
                   <button>
                     <a href="/deleteFav/<%= user.uuid %>&<%= animeFav.anime_id %>">Eliminar</a>
                   </button>
+
+                  <button class="btn-update-rating" data-user="<%= user.uuid %>" data-anime="<%= animeFav.anime_id %>"> Actualizar rating</button>
                 </td>
               </tr>
               <% }) %>
@@ -121,6 +134,39 @@
                         tooltip.classList.remove("show");
                       }, 1200);
                     });
+
+
+                    document.querySelectorAll(".btn-update-rating").forEach(button => {
+                    button.addEventListener("click", async () => {
+                      const usuarioId = button.dataset.user;
+                      const animeId = button.dataset.anime;
+
+                      const ratingInput = document.getElementById(`rating-${animeId}`);
+                      const rating = ratingInput.value;
+
+                      try {
+                        const response = await fetch("/updateFav", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            usuario_id: usuarioId,
+                            anime_id: animeId,
+                            rating: rating
+                          })
+                        });
+
+                        if (response.ok) {
+                          ratingInput.style.border = "2px solid green";
+                          setTimeout(() => ratingInput.style.border = "", 800);
+                        } else {
+                          alert("Error al actualizar rating");
+                        }
+                      } catch (err) {
+                        console.error(err);
+                        alert("Error de conexión");
+                      }
+                    });
+                  });
                   </script>
 </body>
 
