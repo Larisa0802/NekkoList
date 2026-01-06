@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/estilos.css">
     <link rel="icon" href="/favicon.ico">
-    <title>Cerrar sesión</title>
+    <title>NekkoList - Logout</title>
 </head>
 
 <body>
     <% const user = locals.user || null; %>
     <%- include("../partials/header") %> <!--Header-->
 
-    <h1 id="titC">Deseas cerrar sesión?</h1>
+    <h1 id="titC">¿Deseas cerrar sesión?</h1>
     <main class="logOutDiv">
         <form action="/signOutUser" method="post">
         <p>Cerrar Sesión:</p>

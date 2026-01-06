@@ -1,62 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/estilos.css" />
-    <link rel="icon" href="/favicon.ico" />
-    <title>Document</title>
-  </head>
 
-  <body>
-    <%- include ("../partials/header") %> <% if(user) { %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/estilos.css" />
+  <link rel="icon" href="/favicon.ico" />
+  <title>NekkoList</title>
+</head>
+
+<body>
+  <%- include ("../partials/header") %>
+    <% if(user) { %>
 
       <h2 id="titC">Cambiar nombre</h2>
-        <main class="dataChangeDiv">
-          <form action="/updateUserName" method="post">
-            <label for="name">Introduce tu nuevo nombre</label>
-            <input type="text" id="newName" name="newName" required />
-            <button id="cmbName">Cambiar nombre</button>
-          </form>
+      <main class="dataChangeDiv">
+        <form action="/updateUserName" method="post">
+          <label for="name">Introduce tu nuevo nombre</label>
+          <input type="text" id="newName" name="newName" required />
+          <button id="cmbName">Cambiar nombre</button>
+        </form>
+      </main>
 
-        </main>
-<div id="mensaje"></div>
-    <%}else{%>
-    <h3>Debes estar logueado</h3>
 
-    <% } %> <%- include ("../partials/footer") %>
+      <div id="mensaje"></div>
+      <%}else{%>
+        <h3>Debes estar logueado</h3>
 
-   <script>
-    const mensaje = document.getElementById("mensaje")
+        <% } %> <%- include ("../partials/footer") %>
 
-  async function cambiarNombre() {
-    const name = document.getElementById("newName").value.trim()
+            <script>
+              const mensaje = document.getElementById("mensaje")
 
-    try {
-      const response = await fetch("/updateUserName", {
-        method: "POST",
-        headers: { "Content-Type": "application/json"},
-        body: JSON.stringify({ newName: name })
-      })
+              async function cambiarNombre() {
+                const name = document.getElementById("newName").value.trim()
 
-      const data = await response.json()
+                if (name != "") {
+                  try {
+                    const response = await fetch("/updateUserName", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ newName: name })
+                    })
 
-      if(response.ok) {
-        mensaje.innerHTML = "<h2 style='color:green'>" + data.mensaje + "</h2>"
-        setTimeout(() => window.location.href = "/profile", 2000)
-      } else {
-        mensaje.innerHTML = "<h2 style='color:red'>" + data.error + "</h2>"
-      }
-    } catch(error) {
-      mensaje.innerHTML = "<h2 style='color:red'>Error: "+ error.message + "</h2>"
-    }
-  }
+                    const data = await response.json()
 
-  document.getElementById("cmbName").addEventListener("click", (e) => {
-    e.preventDefault()
-    cambiarNombre()
-  })
-</script>
+                    if (response.ok) {
+                      mensaje.innerHTML = "<h2 id='correct'>" + data.mensaje + "</h2>"
+                    } else {
+                      mensaje.innerHTML = "<h2 id='error'>" + data.error + "</h2>"
+                    }
+                  } catch (error) {
+                    mensaje.innerHTML = "<h2 id='error'>Error: " + error.mensaje + "</h2>"
+                  }
+                }else{
+                    mensaje.innerHTML = "<h2 id='error'>"+"El campo nombre no puede estar vacio"+"</h2>"
 
-  </body>
+                }
+              }
+
+              document.getElementById("cmbName").addEventListener("click", (e) => {
+                e.preventDefault()
+                cambiarNombre()
+              })
+            </script>
+
+</body>
+
 </html>

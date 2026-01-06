@@ -254,7 +254,7 @@ nav a:hover {
   transform: scale(1.05);
 }
 
-.contactoDiv{
+.contactoDiv {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -418,7 +418,7 @@ nav a:hover {
 }
 
 .tablaFav {
-    width:90%;
+  width: 90%;
   margin: 30px auto;
   border-radius: 8px;
   overflow: hidden;
@@ -490,6 +490,22 @@ td {
   text-align: left;
 }
 
+#error {
+  text-align: center;
+  color: red;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
+#correct {
+   text-align: center;
+  color: green;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+
 .datos p:hover {
   background-color: rgba(255, 255, 255, 0.053);
   border-radius: 8px;
@@ -538,8 +554,8 @@ td {
 }
 
 #puuid {
-    display:flex;
-    gap:10px;
+  display: flex;
+  gap: 10px;
 }
 
 #copyUUID {
@@ -571,7 +587,7 @@ td {
   width: 40%;
   margin: 20px auto;
   margin-bottom: 20px;
-  padding-bottom: 10PX;
+  padding-bottom: 10px;
   border-color: white;
   border: 1px solid;
   box-shadow: 1px 1px 10px 1px white;
@@ -641,83 +657,82 @@ td {
 
 /*CSSde ranking*/
 .rankingContainer {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: rgba(2, 63, 89, 0.412);
-    border-radius: 15px;
-    grid-area: section;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: rgba(2, 63, 89, 0.412);
+  border-radius: 15px;
+  grid-area: section;
 }
 
 .subtC {
-    color: #fff;
-    text-align: center;
-    font-size: 20px;
-    margin-bottom: 1.5rem;
-    font-weight: bold;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
 }
 
 .rankingList {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .rankingCard {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    padding: 5px;
-    border-radius: 10px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 5px;
+  border-radius: 10px;
 }
 
 .rankingCard:hover {
-    transform: translateX(5px);
+  transform: translateX(5px);
 }
 
 .medalla {
-    font-size: 2.5rem;
-    margin-right: 1rem;
+  font-size: 2.5rem;
+  margin-right: 1rem;
 }
 
 .rankInfo {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .rankName {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #1e3a5f;
-    margin-bottom: 0.3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1e3a5f;
+  margin-bottom: 0.3rem;
 }
 
 .rankCount {
-    font-size: 0.9rem;
-    color: #64748b;
+  font-size: 0.9rem;
+  color: #64748b;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .rankingContainer {
-        padding: 1rem;
-        margin: 1rem;
-    }
+  .rankingContainer {
+    padding: 1rem;
+    margin: 1rem;
+  }
 
-    .rankingCard {
-        padding: 1rem;
-    }
+  .rankingCard {
+    padding: 1rem;
+  }
 
-    .medalla {
-        font-size: 2rem;
-    }
+  .medalla {
+    font-size: 2rem;
+  }
 }
 
-
 /*index*/
-.mainContainerUser{
+.mainContainerUser {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "div section";
@@ -725,35 +740,40 @@ td {
 }
 
 @media (max-width: 968px) {
-    .prueba {
-        grid-template-columns: 1fr;
-        grid-template-areas: 
-            "div"
-            "section";
-    }
+  .prueba {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "div"
+      "section";
+  }
 }
 
 /*pet*/
-.pet{
+.pet {
   width: 100px;
   height: 100px;
 }
 
 /*css botones catalogo*/
-.favs, .catalogoSinUser{
+.favs,
+.catalogoSinUser {
   text-decoration: none;
   font-size: small;
 }
-.masInfo, .favs, .catalogoSinUser{
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 50px;
-    border: 1px solid rgb(32, 196, 251);
-    color: white;
-    background-color: rgba(128, 128, 128, 0);
+.masInfo,
+.favs,
+.catalogoSinUser {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 50px;
+  border: 1px solid rgb(32, 196, 251);
+  color: white;
+  background-color: rgba(128, 128, 128, 0);
 }
 
-.masInfo:hover, .favs:hover, .catalogoSinUser:hover{
-    background: linear-gradient(to right, #20c4ff, #17507ffc);
-    transition: background 0.3s;
+.masInfo:hover,
+.favs:hover,
+.catalogoSinUser:hover {
+  background: linear-gradient(to right, #20c4ff, #17507ffc);
+  transition: background 0.3s;
 }

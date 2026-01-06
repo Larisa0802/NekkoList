@@ -1,78 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/estilos.css">
     <link rel="icon" href="/favicon.ico">
-    <title>Document</title>
-  </head>
-  <body>
-        <%- include ("../partials/header") %>
+    <title>NekkoList</title>
+</head>
+
+<body>
+    <%- include ("../partials/header") %>
 
         <% if(user) { %>
-    <h2 id="titC">Cambiar email</h2>
-        <main class="dataChangeDiv">
-            <form id="changeEmailF">
-            <label for="email">Introduce tu nuevo email</label>
-            <input type="email" id="newEmail" placeholder="Nuevo email" required/>
-            <br><br>
-            <label for="password">Introduce tu contraseña actual</label>
-            <input type="password" id="pass" placeholder="Contraseña actual" required />
-            <br><br>
-            <button type="submit">Actualizar email</button>
-            </form>
-        </main>
+            <h2 id="titC">Cambiar email</h2>
+            <main class="dataChangeDiv">
+                <form id="changeEmailF">
+                    <label for="email">Introduce tu nuevo email</label>
+                    <input type="email" id="newEmail" placeholder="Nuevo email" required />
+                    <br><br>
+                    <label for="password">Introduce tu contraseña actual</label>
+                    <input type="password" id="pass" placeholder="Contraseña actual" required />
+                    <br><br>
+                    <button type="submit">Actualizar email</button>
 
-    <div id="msg"></div>
+                </form>
 
-     <%}else{%>
-        <h3>Debes estar logueado</h3>
-        <% } %>
+            </main>
 
-        <%- include("../partials/footer")%>
+            <div id="msg"></div>
+            <%}else{%>
+                <h3>Debes estar logueado</h3>
+                <% } %>
 
-    <script>
-        const form = document.getElementById("changeEmailF")
-         const mensaje = document.getElementById("msg")
+                    <%- include("../partials/footer")%>
 
-         form.addEventListener("submit", async (e) => {
-            e.preventDefault()
-            
-            const newEmail = document.getElementById("newEmail").value.trim()
-            const pass = document.getElementById("pass").value.trim()
+                        <script>
+                            const form = document.getElementById("changeEmailF")
+                            const mensaje = document.getElementById("msg")
 
-            mensaje.innerHTML = ""
+                            form.addEventListener("submit", async (e) => {
+                                e.preventDefault()
 
-            //Validaciones
+                                const newEmail = document.getElementById("newEmail").value.trim()
+                                const pass = document.getElementById("pass").value.trim()
 
-            if(!newEmail || !pass){
-                mensaje.innerHTML = "<h2 style='color:red'> Todos los campos son obligatorios</h2>"
-                return
-            }
+                                mensaje.innerHTML = ""
 
-            try { 
-                //Hace una peticion de tipo post a updateEmail, enviando el nuevo email y la password en formato json
-                const response = await fetch("/updateEmail", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json"},
-                    body: JSON.stringify({newEmail, pass})
-                })
+                                //Validaciones
+                                if (!newEmail || !pass) {
+                                    mensaje.innerHTML = "<h2 id='error'> Todos los campos son obligatorios</h2>"
+                                    return
+                                }
 
-                //Recoge la respuesta
-                const data = await response.json()
+                                try {
+                                    //Hace una peticion de tipo post a updateEmail, enviando el nuevo email y la password en formato json
+                                    const response = await fetch("/updateEmail", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ newEmail, pass })
+                                    })
 
-                //Si es correcta, salta el mensaje, sino salta el error.
-                if(response.ok) {
-                    mensaje.innerHTML = data.mensaje
-                    setTimeout(() => window.location.href = "/profile", 2000)
-                }else{
-                    mensaje.innerHTML = "<h2 style='color:red'>" + data.error + "</h2>"
-                }
-            }catch(error){
-                mensaje.innerHTML = "<h2 style='color:red'>Error: "+ error.message + "</h2>"
-            }
-         })
-    </script>
-  </body>
+                                    //Recoge la respuesta
+                                    const data = await response.json()
+
+                                    //Si es correcta, salta el mensaje, sino salta el error.
+                                    if (response.ok) {
+                                        mensaje.innerHTML = "<h3 id='correct'>" + data.mensaje + "</h3>"
+                                    } else {
+                                        mensaje.innerHTML = "<h2 id='error'>" + data.error + "</h2>"
+                                    }
+                                } catch (error) {
+                                    mensaje.innerHTML = "<h2 id='error'>Error: " + error.message + "</h2>"
+                                }
+                            })
+                        </script>
+</body>
+
 </html>
