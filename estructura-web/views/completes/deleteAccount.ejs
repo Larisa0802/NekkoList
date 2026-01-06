@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/estilos.css" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>NekkoList</title>
+</head>
+
+<body>
+    <%- include ("../partials/header") %>
+        <% if(user) { %>
+
+            <h2 id="titC">¿Estas seguro de eliminar tu cuenta?</h2>
+            <main class="dataChangeDiv">
+                <form action="/deleteUser" method="post">
+                    <button id="delAccount">Eliminar</button>
+                </form>
+            </main>
+
+
+            <div id="mensaje"></div>
+            <%}else{%>
+                <h3>Debes estar logueado</h3>
+
+                <% } %> <%- include ("../partials/footer") %>
+
+                        <script>
+                            const mensaje = document.getElementById("mensaje")
+
+                            document.getElementById("delAccount").addEventListener("click", async (e) => {
+                                e.preventDefault()
+
+                                try {
+                                    const response = await fetch("/deleteUser", {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ id: "<%= user.uuid %>" })
+                                    })
+
+                                    const data = await response.json()
+
+                                    if (response.ok) {
+                                        mensaje.innerHTML = "<h2 id='correct'>" + data.mensaje + "</h2>"
+                                                              window.location.href = "/login";
+
+                                    } else {
+                                        mensaje.innerHTML = "<h2 id='error'>" + data.error + "</h2>"
+                                    }
+                                } catch (error) {
+                                    mensaje.innerHTML = "<h2 id='error'>Error: " + error.message + "</h2>"
+                                }
+                            })
+                        </script>
+
+</body>
+
+</html>

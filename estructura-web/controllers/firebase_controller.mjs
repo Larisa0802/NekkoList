@@ -8,7 +8,7 @@ import {
   verifyBeforeUpdateEmail,
   createUserWithEmailAndPassword,
   signOut,
-  deleteUser,
+  deleteUser as deleteFirebaseUser,
 } from "firebase/auth";
 
 class FirebaseController {
@@ -183,8 +183,8 @@ class FirebaseController {
 
       res.json({ mensaje: "Contraseña actualizada" });
     } catch (error) {
-      if(error.code === "auth/invalid-credential"){
-            return res.status(400).json({ error: "Contraseña incorrecta" });
+      if (error.code === "auth/invalid-credential") {
+        return res.status(400).json({ error: "Contraseña incorrecta" });
       }
       console.error("Error al consumir la API:", error.message);
     }
@@ -208,31 +208,26 @@ class FirebaseController {
 
       const user = userCredential.user;
 
-
       const credential = EmailAuthProvider.credential(
         user.email,
         req.body.pass
       );
 
       await reauthenticateWithCredential(user, credential);
-      let existentEmail = await this.client.post("/getUserEmail",
-        {
-          email:req.body.newEmail
-        }
-      )
-      console.log(existentEmail.data.length)
-      if(existentEmail.data.length != 0){
+      let existentEmail = await this.client.post("/getUserEmail", {
+        email: req.body.newEmail,
+      });
+      console.log(existentEmail.data.length);
+      if (existentEmail.data.length != 0) {
         console.error("Error al consumir la API:", error.message);
         res.status(500).send("Error al cambiar el email");
-      }else{
+      } else {
         await verifyBeforeUpdateEmail(user, req.body.newEmail);
 
-        let datos = await this.client.post("/updateUserEmail",
-          {
-            id:userData.uuid,
-            email:req.body.newEmail
-          }
-        )
+        let datos = await this.client.post("/updateUserEmail", {
+          id: userData.uuid,
+          email: req.body.newEmail,
+        });
 
         res.cookie("datosUsuario", {
           email: req.body.newEmail,
@@ -242,8 +237,6 @@ class FirebaseController {
           nombre: userData.nombre,
         });
       }
-
-      
 
       res.json({ mensaje: "Email actualizado correctamente" });
     } catch (error) {
@@ -288,9 +281,7 @@ class FirebaseController {
         return res.redirect("/logIn");
       }
 
-      const datos = await this.client.get(
-        `/getAllFav/${userData.uuid}`
-      );
+      const datos = await this.client.get(`/getAllFav/${userData.uuid}`);
       res.render("completes/profile", {
         favData: datos.data,
         user: userData,
@@ -312,21 +303,25 @@ class FirebaseController {
       if (!userData) {
         return res.redirect("/logIn");
       }
+
       const auth = getAuth();
       const user = auth.currentUser;
 
-      await deleteUser(user)
-      const datos = await this.client.get(`/deleteUser`,{id:userData.uuid});
+      //Borrar usuario de Firebase
+      await deleteFirebaseUser(user);
+
+      //Borrar usuario de bd
+      await this.client.post("/deleteUser", { id: userData.uuid });
+
+      //Borrar cookie
+      res.clearCookie("datosUsuario");
+
+      return res.json({ mensaje: "Cuenta eliminada correctamente" });
     } catch (error) {
       console.error("Error:", error.message);
-      res.render("completes/profile", {
-        error: {
-          mensaje: "Error al cargar el perfil",
-        },
-      });
+      return res.status(500).json({ error: "Error al eliminar el usuario" });
     }
   };
-  
 }
 
 export default new FirebaseController();

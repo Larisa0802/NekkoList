@@ -39,7 +39,9 @@
         <button id="cmbPass">Cambiar contraseña</button>
         <button id="cmbEmail">Cambiar email</button>
         <button id="cmbName">Cambiar nombre</button>
+        <button id="delUser">Eliminar cuenta</button>
       </div>
+
       <h3 style="text-align: center; font-size: 30px" id="subtC">Tus favoritos</h3>
 
       <table class="tablaFav">
@@ -110,6 +112,10 @@
                       window.location.href = "/changeName";
                     });
 
+                    document.getElementById("delUser").addEventListener("click", () => {
+                      window.location.href = "/deleteUser";
+                    });
+                    
                     document.getElementById("copyUUID").addEventListener("click", () => {
                       const uuid = document.getElementById("uuid").textContent;
                       navigator.clipboard.writeText(uuid);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,22 +8,51 @@
     <link rel="icon" href="/favicon.ico">
     <title>NekkoList - Contacto</title>
 </head>
+
 <body>
     <%- include("../partials/header") %> <!--Header-->
 
-    <main class="contactoDiv">
-        <h1 id="titC">¡Contactanos!<img src="/img/contactPet.png" alt="contactPet" class="pet"></h1>
-        <section class="contactos">
-            <form>
-                <label for="nombre">Nombre: <span></label><input id="nombre" type="text" placeholder="Nombre" required><br><br>
-                <label for="email">Email:</label><input id="email" type="text" placeholder="Email" required><br><br>
-                <label for="nombre">Sugerencia o duda: </label> <br><br>
-                <textarea placeholder="¡Escribe aqui tus dudas o sugerencias!" required></textarea><br><br>
-                <button type="submit" name="enviar">Enviar</button>
-            </form>
-        </section>
-    </main>
+        <main class="contactoDiv">
+            <h1 id="titC">¡Contactanos!<img src="/img/contactPet.png" alt="contactPet" class="pet"></h1>
+            <section class="contactos">
+                <form>
+                    <label for="nombre">Nombre: <span></label><input id="nombre" type="text" placeholder="Nombre"
+                        required><br><br>
+                    <label for="email">Email:</label><input id="email" type="text" placeholder="Email" required><br><br>
+                    <label for="nombre">Sugerencia o duda: </label> <br><br>
+                    <textarea placeholder="¡Escribe aqui tus dudas o sugerencias!" required></textarea><br><br>
+                    <button type="submit" name="enviar">Enviar</button>
+                </form>
+            </section>
 
-    <%- include("../partials/footer") %> <!--Footer-->
+            <aside>
+                <h2>🎯Nuestros perfiles</h2>
+                <ul>
+                    <div>
+                        <li><a href="https://github.com/iNakky" target="_blank">👉🏻GITHUB ALBA👈🏻</a></li>
+                        <li><a href="https://www.linkedin.com/in/alba-rojas-0575a3298/" target="_blank">👉🏻LINKEDIN
+                                ALBA👈🏻</a></li>
+                    </div>
+                    <br><br>
+
+                    <div>
+                        <li><a href="https://github.com/gold199" target="_blank">👉🏻GITHUB IZAN👈🏻</a></li>
+                        <li><a href="https://www.linkedin.com/in/izan-fernandez-lafite-891029356/"
+                                target="_blank">👉🏻LINKEDIN
+                                IZAN👈🏻</a></li>
+                    </div>
+                    <br><br>
+                    <div>
+                        <li><a href="https://github.com/Larisa0802" target="_blank">👉🏻GITHUB LARISA👈🏻</a></li>
+                        <li><a href="https://www.linkedin.com/in/larisa-mancebo-morfe-058997246/"
+                                target="_blank">👉🏻LINKEDIN
+                                LARISA👈🏻</a></li>
+                    </div>
+                </ul>
+            </aside>
+        </main>
+
+        <%- include("../partials/footer") %> <!--Footer-->
 </body>
+
 </html>

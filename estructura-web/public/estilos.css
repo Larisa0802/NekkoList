@@ -499,7 +499,7 @@ td {
 }
 
 #correct {
-   text-align: center;
+  text-align: center;
   color: green;
   margin: 0 auto;
   text-align: center;
@@ -533,6 +533,36 @@ td {
 .botones button:hover {
   background: #1a252f;
   transform: translateY(-2px);
+}
+
+#delUser {
+  background-color: red;
+}
+.botones #delUser:hover {
+  background: linear-gradient(90deg, #ff0000, #ff000050);
+  transform: translateY(-2px);
+}
+
+aside > ul {
+  display: flex;
+  gap: 10px;
+  background-color: #ffffff25;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+aside a {
+  color: white;
+  text-decoration: none;
+}
+
+aside li {
+  list-style-type: none;
+}
+
+aside h2 {
+  color: white;
+  font-family: "Nekko";
 }
 
 .tooltip {
