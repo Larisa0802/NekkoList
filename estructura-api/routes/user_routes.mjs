@@ -10,6 +10,7 @@ router.post("/updateUserEmail", userController.updateUserEmail)
 router.post("/updateUserName", userController.updateUserName)
 router.post("/deleteUser", userController.deleteUser)
 router.post("/getUserFollowStat", userController.getUserFollowStat)
+router.post("/getUserEmail", userController.getUserEmail)
 
 
 export default router

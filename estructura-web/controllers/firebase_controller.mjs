@@ -198,6 +198,7 @@ class FirebaseController {
 
       const auth = getAuth();
 
+      // Login para sesión válida
       const userCredential = await signInWithEmailAndPassword(
         auth,
         userData.email,
@@ -206,29 +207,47 @@ class FirebaseController {
 
       const user = userCredential.user;
 
+
       const credential = EmailAuthProvider.credential(
         user.email,
         req.body.pass
       );
 
       await reauthenticateWithCredential(user, credential);
+      let existentEmail = await this.client.post("/getUserEmail",
+        {
+          email:req.body.newEmail
+        }
+      )
+      console.log(existentEmail.data.length)
+      if(existentEmail.data.length != 0){
+        console.error("Error al consumir la API:", error.message);
+        res.status(500).send("Error al cambiar el email");
+      }else{
+        await verifyBeforeUpdateEmail(user, req.body.newEmail);
 
-      await verifyBeforeUpdateEmail(user, req.body.newEmail);
+        let datos = await this.client.post("/updateUserEmail",
+          {
+            id:userData.uuid,
+            email:req.body.newEmail
+          }
+        )
 
-      return res.json({
-        mensaje:
-          "Revisa tu bandeja de entrada o spam que te hemos enviado en tu nuevo correo electrónico para confirmar el cambio de email",
-      });
-    } catch (error) {
-      if (
-        error.code === "auth/invalid-credential" ||
-        error.code === "auth/invalid-login-credentials" ||
-        error.code === "auth/wrong-password"
-      ) {
-        return res.status(400).json({ error: "Contraseña incorrecta" });
+        res.cookie("datosUsuario", {
+          email: req.body.newEmail,
+          pass: userData.pass,
+          uuid: userData.uuid,
+          admin: userData.admin,
+          nombre: userData.nombre,
+        });
       }
 
-      return res.status(400).json({ error: "Error al cambiar el email" });
+      
+
+      res.json({ mensaje: "Email actualizado correctamente" });
+    } catch (error) {
+      console.error("Error al consumir la API:", error.message);
+      res.status(500).send("Error al cambiar el email");
     }
   };
 

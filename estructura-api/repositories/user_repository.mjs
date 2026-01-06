@@ -57,6 +57,26 @@ async function selectUserById(id){
     return user
 }
 
+async function selectUserByEmail(email){
+    const client = await pool.connect()
+    let result = ""
+    let user = undefined
+    try{
+        result = await client.query(`SELECT * from usuarios where email = '${email}';`)
+
+    }catch(err){
+        console.error("Error en la insercion de datos",err.message)
+        result = err.message
+    }finally{
+        client.release()
+        
+    }
+    if(result && result.rows){
+        user = result.rows.map((e) => new User(e))
+    }
+    return user
+}
+
 // se envian todos los campos de un a vez al ser modificados
 // data = {
 //     email = asd,
@@ -146,5 +166,6 @@ export default {
     updateUserEmailById,
     updateUserNameById,
     deleteUserById,
-    selectUserFollowedStat
+    selectUserFollowedStat,
+    selectUserByEmail
 }

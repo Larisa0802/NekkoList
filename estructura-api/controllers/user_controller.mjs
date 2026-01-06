@@ -29,6 +29,18 @@ async function getUserData(req, res){
    
 }
 
+async function getUserEmail(req, res){
+    let user = undefined
+    try{
+        user = await userRepo.selectUserByEmail(req.body.email)
+    }catch(error){
+        console.log(error)
+        res.send(error).status(500)
+    }
+    res.send(user).status(200)
+   
+}
+
 // data = {
 //     id:asd,
 //     email:asd,
@@ -90,5 +102,6 @@ export default {
     updateUserEmail,
     updateUserName,
     deleteUser,
-    getUserFollowStat
+    getUserFollowStat,
+    getUserEmail
 }
