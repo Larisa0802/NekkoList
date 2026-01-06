@@ -8,6 +8,7 @@ import {
   verifyBeforeUpdateEmail,
   createUserWithEmailAndPassword,
   signOut,
+  deleteUser,
 } from "firebase/auth";
 
 class FirebaseController {
@@ -288,7 +289,7 @@ class FirebaseController {
       }
 
       const datos = await this.client.get(
-        `/getAllFav/${req.cookies["datosUsuario"].uuid}`
+        `/getAllFav/${userData.uuid}`
       );
       res.render("completes/profile", {
         favData: datos.data,
@@ -303,6 +304,29 @@ class FirebaseController {
       });
     }
   };
+
+  deleteUser = async (req, res) => {
+    try {
+      const userData = req.cookies["datosUsuario"];
+
+      if (!userData) {
+        return res.redirect("/logIn");
+      }
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      await deleteUser(user)
+      const datos = await this.client.get(`/deleteUser`,{id:userData.uuid});
+    } catch (error) {
+      console.error("Error:", error.message);
+      res.render("completes/profile", {
+        error: {
+          mensaje: "Error al cargar el perfil",
+        },
+      });
+    }
+  };
+  
 }
 
 export default new FirebaseController();
