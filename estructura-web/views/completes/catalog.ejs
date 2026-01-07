@@ -39,13 +39,13 @@
                             <a href="#" class="catalogoSinUser">Añadir a Favoritos✨</a>
                         <% } %>
                         <% if(user && user.admin === true){ %>
-                            <button onclick="openEditModal(
-                                '<%= anime.id %>',
-                                '<%= anime.titulo %>',
-                                '<%= anime.genero %>',
-                                '<%= anime.descripcion %>',
-                                '<%= anime.episodios %>',
-                            )">
+                            <button 
+                                class="editarAdmin"
+                                data-id="<%= anime.id %>"
+                                data-titulo="<%= anime.titulo %>"
+                                data-genero="<%= anime.genero %>"
+                                data-descripcion="<%= anime.descripcion %>"
+                                data-episodios="<%= anime.episodios %>">
                                 Editar
                             </button>
                             <% } %>
@@ -58,8 +58,8 @@
 
     <div id="editModal" class="modal" style="display: none;">
         <div class="modalContent">
-            <h2>Editar Anime</h2>
-                <form method="POST" action="/anime/update">
+            <h2 id="subtC" style="font-size:x-large;">Editar Anime</h2>
+                <form method="POST" action="/update">
                     <input type="hidden" name="id" id="edit_id">
 
                     <label for="titulo">Título</label>
@@ -67,7 +67,7 @@
                     <label for="genero">Género</label>
                     <input type="text" name="genero" id="editGenero">
                     <label for="episodios">Episodios</label>
-                    <input type="text" name="episodios" id="editEpisdios">
+                    <input type="text" name="episodios" id="editEpisodios">
                     <label for="descripcion">Descripción</label>
                     <input type="text" name="descripcion" id="editDescripcion">
 
@@ -138,15 +138,28 @@
             alert("Debes loguearte primero!")
         });
 
-        function openEditModal(id, titulo, genero, descripcion, episodios){
+        window.onclick = function(event){
+            const modal = document.getElementById("editModal")
+            if(event.target === modal){
+                modal.style.display = "none";
+            }
+        }
+
+        $(".editarAdmin") .on("click", function(){
+            const id = $(this).data("id")
+            const titulo = $(this).data("titulo")
+            const genero = $(this).data("genero")
+            const descripcion = $(this).data("descripcion")
+            const episodios = $(this).data("episodios")
+
             document.getElementById("edit_id").value = id;
             document.getElementById("editTitulo").value = titulo;
             document.getElementById("editGenero").value = genero;
-            document.getElementById("editEpisdios").value = episodios;
             document.getElementById("editDescripcion").value = descripcion;
+            document.getElementById("editEpisodios").value = episodios;
 
             document.getElementById("editModal").style.display = "block";
-        }
+        })
 
         function closeEditModal(){
             document.getElementById("editModal").style.display = "none";

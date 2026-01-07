@@ -740,11 +740,11 @@ td {
 }
 
 /*css botones catalogo*/
-.favs, .catalogoSinUser{
+.favs, .catalogoSinUser, .editarAdmin{
   text-decoration: none;
   font-size: small;
 }
-.masInfo, .favs, .catalogoSinUser{
+.masInfo, .favs, .catalogoSinUser, .editarAdmin{
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 50px;
@@ -753,7 +753,330 @@ td {
     background-color: rgba(128, 128, 128, 0);
 }
 
-.masInfo:hover, .favs:hover, .catalogoSinUser:hover{
+.masInfo:hover, .favs:hover, .catalogoSinUser:hover, .editarAdmin:hover{
     background: linear-gradient(to right, #20c4ff, #17507ffc);
     transition: background 0.3s;
+}
+
+/*CSS ventana modal Catalogo*/
+.modal {
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0 ;
+  width: 100% ;
+  height: 100% ;
+  background-color: rgba(0, 0, 0, 0.7) ;
+  display: flex ;
+  justify-content: center ;
+  align-items: center ;
+}
+
+.modalContent {
+  background-color: #05355dcf ;
+  padding: 2rem ;
+  border-radius: 10px ;
+  max-width: 500px ;
+  width: 90% ;
+  box-shadow: 0 5px 15px rgba(4, 141, 179, 0.924) ;
+  position: relative ;
+  z-index: 10001 ;
+  margin-top: 5%;
+  margin-left: 30%;
+}
+
+.modalContent form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modalContent label {
+  font-weight: bold;
+  color: white;
+}
+
+.modalContent input,
+.modalContent textarea {
+  padding: 0.8rem;
+  border: 1px solid #1fb0ee;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modalContent button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.modalContent button[type="submit"] {
+  background-color:#229508;
+  color: white;
+}
+
+.modalContent button[type="submit"]:hover {
+  background-color: #024b0c;
+}
+
+.modalContent button[type="button"] {
+  background-color: #e50404;
+  color: white;
+}
+
+.modalContent button[type="button"]:hover {
+  background-color: #640000;
+}
+
+/* ----------------- RESPONSIVE ----------------- */
+
+/* ----------------- Pantallas grandes medianas ----------------- */
+@media (max-width: 1024px) {
+    /* Header y nav */
+    header {
+        padding: 10px 15px;
+        grid-template-columns: auto 1fr;
+    }
+
+    nav a {
+        width: auto;
+        padding: 5px 8px;
+        font-size: 0.9rem;
+    }
+
+    .logo p {
+        margin-left: 20px;
+        font-size: 1rem;
+    }
+
+    .logo img {
+        width: 60px;
+        height: 80px;
+        padding-top: 20px;
+        padding-left: 20px;
+    }
+
+    /* Contenedor principal */
+    .mainContainerUser {
+        grid-template-columns: 1fr 1fr;
+        gap: 1%;
+    }
+
+    /* Presentación */
+    .presentacion {
+        width: 400px;
+        height: 180px;
+        padding: 60px 40px;
+        margin-left: 20px;
+    }
+
+    /* Tarjetas de catálogo */
+    .tarjetaAnime {
+        width: 280px;
+    }
+
+    .tarjetaAnime img {
+        height: 380px;
+    }
+
+    /* Formularios login, register, contacto */
+    .login-div form,
+    .register-div form,
+    .contactoDiv form,
+    .dataChangeDiv form {
+        width: 300px;
+        padding: 30px 20px;
+    }
+
+    /* Tabla de favoritos */
+    .tablaFav img {
+        width: 150px;
+    }
+
+    /* Modal */
+    .modalContent {
+        max-width: 450px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* ----------------- Tablets / pantallas medianas ----------------- */
+@media (max-width: 768px) {
+    /* Header */
+    header {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "logo"
+            "nav";
+        padding: 5px 10px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav a {
+        margin: 5px 0;
+    }
+
+    .logo p {
+        margin-left: 0;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .logo img {
+        width: 50px;
+        height: 70px;
+        padding: 10px 0;
+    }
+
+    /* Main container pasa a columna */
+    .mainContainerUser {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "div"
+            "section";
+        gap: 1rem;
+        padding: 10px;
+    }
+
+    /* Presentación y tarjetas */
+    .presentacion {
+        width: 90%;
+        height: auto;
+        padding: 40px 20px;
+        margin: 20px auto;
+        word-break: break-word;
+    }
+
+    .tarjetaAnime {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .tarjetaAnime img {
+        height: auto;
+    }
+
+    /* Formularios */
+    .login-div form,
+    .register-div form,
+    .contactoDiv form,
+    .dataChangeDiv form {
+        width: 90%;
+        padding: 25px 15px;
+    }
+
+    /* Modal */
+    .modalContent {
+        width: 90%;
+        margin: 5% auto 0 auto;
+        padding: 1.5rem;
+    }
+
+    /* Imágenes pequeñas */
+    .pet {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* ----------------- Móviles pequeños ----------------- */
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    nav a {
+        font-size: 0.8rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .logo p {
+        font-size: 0.8rem;
+    }
+
+    .logo img {
+        width: 40px;
+        height: 60px;
+    }
+
+        .presentacion {
+        width: 90%;            
+        padding: 20px 10px;    
+        margin: 20px auto;      
+        height: auto;         
+        overflow: hidden;       
+        display: flex;         
+        flex-direction: column; 
+        align-items: center;   
+        text-align: center;     
+        box-sizing: border-box; 
+    }
+
+   
+    .presentacion img {
+        max-width: 85%;       
+        height: 50%;         
+    }
+
+  
+    .presentacion p, .presentacion h1, .presentacion h2 {
+        word-break: break-word; 
+        margin: 5px 0;
+    }
+
+    .tarjetaAnime {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .tarjetaAnime img {
+        height: auto;
+    }
+
+    .login-div form,
+    .register-div form,
+    .contactoDiv form,
+    .dataChangeDiv form {
+        width: 95%;
+        padding: 20px 15px;
+    }
+
+    .tablaFav {
+        width: 100%;
+        font-size: 0.8rem;
+    }
+
+    .tablaFav img {
+        width: 100px;
+    }
+
+    .modalContent {
+        width: 95%;
+        padding: 1rem;
+        margin: 5% auto 0 auto;
+    }
+
+    .pet {
+        width: 60px;
+        height: 60px;
+    }
+
+    #entrada {
+        width: 90%;          
+        margin: 10px auto;    
+        display: block;       
+        padding: 10px;       
+        box-sizing: border-box; 
+    } 
+
 }

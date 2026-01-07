@@ -7,6 +7,7 @@ import favRoutes from "./routes/fav_routes.mjs"
 import cookieParser from "cookie-parser" //npm i cookie-parser
 import { initializeApp } from "firebase/app";
 import { fileURLToPath } from 'url';
+import session from "express-session" 
 
 //inicializacion del server
 const PORT = 3001
@@ -19,6 +20,17 @@ const __dirname = path.dirname(__filename);
 //middleware
 app.use(cookieParser())
 
+//session config
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'tu-secreto',
+  resave: false,
+  saveUninitialized : false,
+  cookie: {
+    secure : false,
+    maxAge: 1000 * 60 * 60 * 24
+  }
+}))
+
 //Comprueba que exista la cookie, que no este vacia o corrupta, si no vale es null y si vale continua.
 app.use((req, res, next) => {
   let user = req.cookies["datosUsuario"];
@@ -26,6 +38,7 @@ app.use((req, res, next) => {
   // Si no existe o está vacía
   if (!user || user === "null" || user === "undefined") {
     res.locals.user = null;
+    req.session.user = null;
     return next();
   }
 
@@ -41,10 +54,12 @@ app.use((req, res, next) => {
   //Si es un objeto vacio es null
   if (!user || typeof user !== "object") {
     res.locals.user = null;
+    req.session.user = null;
     return next();
   }
 
   res.locals.user = user;
+  req.session.user = null;
   next();
 });
 
