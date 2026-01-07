@@ -6,7 +6,8 @@ const router = new express.Router()
 
 //Mostrar pags
 router.get("/catalog", taskController.listar)
-router.get("/detalles/:id", taskController.detalle)
+router.get("/anime/:id", taskController.detalle);
+
 
 
 router.post("/update", async(req, res) => {

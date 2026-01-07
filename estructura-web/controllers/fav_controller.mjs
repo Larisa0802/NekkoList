@@ -33,6 +33,7 @@ class FavController {
                 rating: req.body.rating
             })
             if (datos.status === 200) {
+                console.log("prueba")
                 res.redirect("/profile")
             } else {
                 res.status(404).send("No se han encontrado tareas")
