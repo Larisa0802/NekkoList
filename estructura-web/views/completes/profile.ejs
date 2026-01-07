@@ -90,7 +90,7 @@
                     <a href="/deleteFav/<%= user.uuid %>&<%= animeFav.anime_id %>">Eliminar</a>
                   </button>
 
-                  <button class="btn-update-rating" data-user="<%= user.uuid %>" data-anime="<%= animeFav.anime_id %>"> Actualizar rating</button>
+                  <button class="btn-update-rating" id="btnrating" data-user="<%= user.uuid %>" data-anime="<%= animeFav.anime_id %>"> Actualizar rating</button>
                 </td>
               </tr>
               <% }) %>
@@ -128,6 +128,8 @@
                     document.getElementById("delUser").addEventListener("click", () => {
                       window.location.href = "/deleteUser";
                     });
+
+          
                     
                     document.getElementById("copyUUID").addEventListener("click", () => {
                       const uuid = document.getElementById("uuid").textContent;
@@ -164,6 +166,7 @@
                         if (response.ok) {
                           ratingInput.style.border = "2px solid green";
                           setTimeout(() => ratingInput.style.border = "", 800);
+                          window.location.reload()
                         } else {
                           alert("Error al actualizar rating");
                         }

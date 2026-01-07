@@ -45,7 +45,7 @@ async function selectDataById(id){
         char = result.rows.map((e) => new Characters(e))
       
     }
-    return anime
+    return char
 }
 
 

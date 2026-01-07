@@ -37,10 +37,11 @@ class AnimeController {
     const { id } = req.params;
     try {
       const respuesta = await this.client.get(`/getAnimeById/${id}`);
-      const anime = respuesta.data;
+      const anime = respuesta.data[0];
       const char = await this.client.get(`/getAllCharacters/${id}`);
-
-      res.render("completes/detalle", {
+console.log("RESPUESTA RAW DE LA API:", char.data);
+      console.log("ANIME:", anime)
+      res.render("completes/masInfo", {
         title: anime.titulo,
         anime: anime,
         char: char.data,
