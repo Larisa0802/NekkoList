@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/estilos.css">
     <link rel="icon" href="/favicon.ico">
-    <title>Inicio de sesión</title>
+    <title>NekkoList - Login</title>
 </head>
-    <body>
-        <%- include("../partials/header") %> <!--Header-->
 
+<body>
+    <%- include("../partials/header") %> <!--Header-->
 
-        <% if(errorL){ %>
-        <h3 style='color:red'><%= errorL.mensaje %></h3>
-        <% } %>
-                 <main class="login-div">
+        <main class="login-div">
 
-        <form action="/logIn" method="post">
-            <p>Inicia sesión<img src="/img/loginPet.png" alt="loginPet" class="pet"></p>
-            <p>Email: <input name="email" type="text"
-                    value="<%= log?.email || '' %>"></p>
-            <p>Contraseña: <input name="password" type="password"
-                    value="<%= log?.pass || '' %>"></p>
-            <input type="submit" value="Entrar">
-        </form>
+            <form action="/logIn" method="post">
+                <p>Inicia sesión<img src="/img/loginPet.png" alt="loginPet" class="pet"></p>
+                <p>Email: <input name="email" type="text" value="<%= log?.email || '' %>"></p>
+                <p>Contraseña: <input name="password" type="password" value="<%= log?.pass || '' %>"></p>
+                <input type="submit" value="Entrar"><br><br>
+
+                <% if(errorL){ %>
+                    <h3 style='color:red' id="error">
+                        <%= errorL.mensaje %>
+                    </h3>
+                    <% } %>
+            </form>
 
             <p><a href="/register">¿No tienes cuenta? Registrate aquí</a></p>
 
@@ -31,6 +33,6 @@
 
         <%- include("../partials/footer") %> <!--Footer-->
 
-    </body>
+</body>
 
 </html>

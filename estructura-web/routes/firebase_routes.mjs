@@ -80,6 +80,13 @@ router.get("/changeEmail", (req, res) => {
   res.render("completes/changeEmail");
 });
 
+router.get("/deleteUser", (req, res) => {
+  if (!res.locals.user) {
+    return res.redirect("/login")
+  }
+  res.render("completes/deleteAccount");
+});
+
 router.get("/changeName", (req, res) => {
   if (!res.locals.user) {
     return res.redirect("/login")
@@ -94,5 +101,6 @@ router.post("/signOutUser", firebaseController.signOutUser);
 router.post("/updatePassword", firebaseController.updatePassword);
 router.post("/updateEmail", firebaseController.updateEmail);
 router.post("/updateUserName", firebaseController.updateName);
+router.post("/deleteUser", firebaseController.deleteUser)
 
 export default router;
