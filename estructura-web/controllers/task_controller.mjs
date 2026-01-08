@@ -39,8 +39,9 @@ class AnimeController {
       const respuesta = await this.client.get(`/getAnimeById/${id}`);
       const anime = respuesta.data[0];
       const char = await this.client.get(`/getAllCharacters/${id}`);
-console.log("RESPUESTA RAW DE LA API:", char.data);
+      console.log("RESPUESTA RAW DE LA API:", char.data);
       console.log("ANIME:", anime)
+      
       res.render("completes/masInfo", {
         title: anime.titulo,
         anime: anime,
@@ -48,10 +49,7 @@ console.log("RESPUESTA RAW DE LA API:", char.data);
         user: req.cookies["datosUsuario"] || null,
       });
     } catch (error) {
-      res.status(404).render("completes/not_found", {
-        title: "Anime no encontrado",
-        user: req.cookies["datosUsuario"] || null,
-      });
+      res.status(404).send("Error al cargar")
     }
   };
 }

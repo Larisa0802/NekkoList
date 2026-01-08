@@ -14,7 +14,7 @@ const PORT = 3001
 const app = express()
 const actualRoute = path.resolve(".")
 const __filename = fileURLToPath(import.meta.url);
-const _dirname = path.dirname(_filename);
+const __dirname = path.dirname(__filename);
 
 
 //middleware

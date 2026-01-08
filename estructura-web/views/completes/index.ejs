@@ -14,7 +14,8 @@
     <%- include("../partials/header") %> <!--Header-->
 
       <% if (user) { %>
-        <h1 id="titC" style="margin-top:5%;">Bienvenido <%= user.nombre %></h1>
+        <h1 id="titC" style="margin-top:5%;">Bienvenido <%= user.nombre %>
+        </h1>
 
         <main class="mainContainerUser">
           <div class="presentacion">
@@ -30,62 +31,66 @@
           </div>
 
 
-                        <section class="rankingContainer">
-                    <% if (rankingAnimeFav && rankingAnimeFav.length > 0) { %>
-                        <h2 class="subtC">🏆 Top 3 Animes Más Seguidos</h2>
-                        <div class="rankingList">
-                            <% rankingAnimeFav.forEach((item, index) => { %>
-                                <div class="rankingCard top-<%= index + 1 %>">
-                                    <span class="medalla">
-                                        <%= index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉' %>
-                                    </span>
-                                    <div class="rankInfo">
-                                        <span class="rankName"><%= item.titulo %></span>
-                                        <span class="rankCount">
-                                            <%= item.count %> <%= item.count === 1 ? 'seguidor' : 'seguidores' %>
-                                        </span>
-                                    </div>
-                                </div>
-                            <% }) %>
+          <section class="rankingContainer">
+            <% if (rankingAnimeFav && rankingAnimeFav.length> 0) { %>
+              <h2 class="subtC">🏆 Top 3 Animes Más Seguidos</h2>
+              <div class="rankingList">
+                <% rankingAnimeFav.forEach((item, index)=> { %>
+                  <div class="rankingCard top-<%= index + 1 %>">
+                    <span class="medalla">
+                      <%= index===0 ? '🥇' : index===1 ? '🥈' : '🥉' %>
+                    </span>
+                    <div class="rankInfo">
+                      <span class="rankName">
+                        <%= item.titulo %>
+                      </span>
+                      <span class="rankCount">
+                        <%= item.count %>
+                          <%= item.count===1 ? 'seguidor' : 'seguidores' %>
+                      </span>
+                    </div>
+                  </div>
+                  <% }) %>
+              </div>
+              <% } %>
+
+                <% if (rankingUserFav && rankingUserFav.length> 0) { %>
+                  <h2 class="subtC">👥 Top 3 Usuarios con Más Favoritos</h2>
+                  <div class="rankingList">
+                    <% rankingUserFav.forEach((item, index)=> { %>
+                      <div class="rankingCard top-<%= index + 1 %>">
+                        <span class="medalla">
+                          <%= index===0 ? '🥇' : index===1 ? '🥈' : '🥉' %>
+                        </span>
+                        <div class="rankInfo">
+                          <span class="rankName">
+                            <%= item.nombre %>
+                          </span>
+                          <span class="rankCount">
+                            <%= item.count %>
+                              <%= item.count===1 ? 'favorito' : 'favoritos' %>
+                          </span>
                         </div>
-                    <% } %>
+                      </div>
+                      <% }) %>
+                  </div>
+                  <% } %>
+          </section>
+        </main>
 
-                    <% if (rankingUserFav && rankingUserFav.length > 0) { %>
-                        <h2 class="subtC">👥 Top 3 Usuarios con Más Favoritos</h2>
-                        <div class="rankingList">
-                            <% rankingUserFav.forEach((item, index) => { %>
-                                <div class="rankingCard top-<%= index + 1 %>">
-                                    <span class="medalla">
-                                        <%= index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉' %>
-                                    </span>
-                                    <div class="rankInfo">
-                                        <span class="rankName"><%= item.nombre %></span>
-                                        <span class="rankCount">
-                                            <%= item.count %> <%= item.count === 1 ? 'favorito' : 'favoritos' %>
-                                        </span>
-                                    </div>
-                                </div>
-                            <% }) %>
-                        </div>
-                    <% } %>
-                </section>
-                  </main>
-
-                        <% } else { %>
-                          <h1 id="titC" style="margin-top:5%;">Bienvenido a NekkoList</h1>
-                          <div class="presentacion">
-                            <p>
-                              Descubre y explora una amplia colección de animes donde podrás consultar información
-                              detallada de cada serie: sinopsis, géneros, número de episodios y fecha de publicación.
-                              Utiliza nuestro buscador inteligente para filtrar por título o género y encuentra
-                              exactamente lo que buscas. Guarda tus animes favoritos para tenerlos siempre a mano
-                              y construye tu propia lista personalizada. Todo lo que necesitas para gestionar
-                              tu experiencia anime en un solo lugar.
-                            </p>
-                            <img src="/img/pet.png" alt="pet">
-                          </div>
-
-                          <% } %> <%- include("../partials/footer") %> <!--Footer-->
+        <% } else { %>
+          <h1 id="titC" style="margin-top:5%;">Bienvenido a NekkoList</h1>
+          <div class="presentacion2">
+            <p>
+              Descubre y explora una amplia colección de animes donde podrás consultar información
+              detallada de cada serie: sinopsis, géneros, número de episodios y fecha de publicación.
+              Utiliza nuestro buscador inteligente para filtrar por título o género y encuentra
+              exactamente lo que buscas. Guarda tus animes favoritos para tenerlos siempre a mano
+              y construye tu propia lista personalizada. Todo lo que necesitas para gestionar
+              tu experiencia anime en un solo lugar.
+            </p>
+            <img src="/img/pet.png" alt="pet">
+          </div>
+          <% } %> <%- include("../partials/footer") %> <!--Footer-->
 </body>
-
 </html>

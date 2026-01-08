@@ -417,6 +417,34 @@ nav a:hover {
   grid-area: div;
 }
 
+.presentacion2 {
+  width: 70%;
+  max-width: 900px;
+  background-color: rgba(2, 63, 89, 0.412);
+  border-radius: 30px;
+  padding: 40px;
+  margin: 40px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.presentacion2 p {
+  flex: 1;
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.presentacion2 img {
+  width: 200px;
+  height: auto;
+}
+
+
+
 .tablaFav {
   width: 90%;
   margin: 30px auto;
@@ -1113,7 +1141,7 @@ aside h2 {
         height: 60px;
     }
 
-        .presentacion {
+    .presentacion {
         width: 90%;            
         padding: 20px 10px;    
         margin: 20px auto;      
@@ -1137,6 +1165,8 @@ aside h2 {
         word-break: break-word; 
         margin: 5px 0;
     }
+
+    
 
     .tarjetaAnime {
         width: 100%;
