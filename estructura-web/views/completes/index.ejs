@@ -33,7 +33,7 @@
 
           <section class="rankingContainer">
             <% if (rankingAnimeFav && rankingAnimeFav.length> 0) { %>
-              <h2 class="subtC">🏆 Top 3 Animes Más Seguidos</h2>
+              <h2 class="subtC">🏆 Top Animes Más Seguidos</h2>
               <div class="rankingList">
                 <% rankingAnimeFav.forEach((item, index)=> { %>
                   <div class="rankingCard top-<%= index + 1 %>">
@@ -55,7 +55,7 @@
               <% } %>
 
                 <% if (rankingUserFav && rankingUserFav.length> 0) { %>
-                  <h2 class="subtC">👥 Top 3 Usuarios con Más Favoritos</h2>
+                  <h2 class="subtC">👥 Top Usuarios con Más Favoritos</h2>
                   <div class="rankingList">
                     <% rankingUserFav.forEach((item, index)=> { %>
                       <div class="rankingCard top-<%= index + 1 %>">
