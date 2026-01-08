@@ -12,13 +12,15 @@
 
     <body>
         <%- include("../partials/header") %> <!--Header-->
-        <!-- <a href="/jikanAnimeDatabase">Cargar Animes Jikan</a> -->
         <h1 id="titC" style="margin-top:10%;">Catálogo<img
                 src="/img/catalogPet.png" alt="catalogPet" class="pet"></h1>
         <h2 id="subtC">Explore el mundo de los animes libremente scrollenado, o
             filtrando por título o género en la
             barra de búsqueda de abajo. Feliz Experiencia!</h2>
         <input id="entrada" placeholder="Buscar anime por título o género">
+        <% if(user && user.admin===true){ %>
+        <a href="/jikanAnimeDatabase" class="btnCargar">Cargar Animes Jikan</a> 
+        <% } %>
         <main class="catalogContainer">
             <% if (animes) { %>
             <% animes.forEach((anime)=> { %>
@@ -31,11 +33,17 @@
                     Titulo: <%= anime.titulo %> <br>
                     Genero: <%= anime.genero %> <br>
                 </p>
-                <a href="/anime/<%= anime.id %>" class="masInfo">Más
-                    Información</a>
-                <!--<a href="/detalles/<%= anime.id %>" id="masInfo">Mas Informacion</a>-->
+
+                <button class="masInfo1 <% if(user){ %>ocultar<% } %>">Mas Informacion</button>
+                <p class="descripcion">
+                            Id: <%= anime.id %>  <br>
+                            Episodios: <%= anime.episodios != null ? anime.episodios : "On-Going" %> <br>
+                            Fecha: <%= new Date(anime.fecha_pub).toISOString().split("T")[0] %>   <br>
+                            Sinopsis: <%= anime.descripcion %> 
+                </p>           
 
                 <% if (user) { %>
+                <a href="/anime/<%= anime.id %>" class="masInfo">Más Información</a>
                 <a href="/insertFav/<%= user %>&<%= anime.id %>"
                     class="favs">Añadir a Favoritos✨</a>
 
@@ -84,6 +92,20 @@
 
         <script>
                 /*JS para la barra de búsqueda**/
+                $(".masInfo1").on("click", function(){
+                    const descripcion = $(this).siblings(".descripcion");
+                    descripcion.slideToggle();
+
+                    if(!user){
+
+                    }
+
+                    if($(this).text() === "Más Información"){
+                        $(this).text("Ocultar Información");
+                    } else {
+                        $(this).text("Más Información");
+                    }
+                });
 
                 $("#entrada").on("keyup", function () {
                     let query = $(this).val().toLowerCase().trim();
@@ -115,9 +137,11 @@
                         });
                         boton.removeClass('añadido');
 
+
                     } else {
                         //cambiar a añadido
                         boton.text('Añadido a Favoritos✨');
+
 
                         //se modifica el color
                         boton.css({

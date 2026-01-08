@@ -13,7 +13,7 @@ class JikanController {
             const datos = await this.client.get("/jikanAnimeDatabase")
             console.log(datos.data)
             if (datos.status === 200) {
-                res.sendStatus(200)
+                res.redirect("/catalog")    
             } else {
                 res.status(404).send("No se han encontrado tareas")
             }

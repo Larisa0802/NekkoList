@@ -67,7 +67,7 @@ async function updateAnimeById(animeData){
     const client = await pool.connect()
     let result = ""
     try{
-        result = await client.query(`UPDATE animes set titulo = '${animeData.titulo}', genero = '${animeData.genero}', descripcion = '${animeData.descripcion}', episodios = ${episodeChecker(animeData.episodios)}, fecha_pub = '${animeData.fecha_pub}', imagen = '${animeData.imagen}' where id = ${animeData.id};`)
+        result = await client.query(`UPDATE animes set titulo = '${animeData.titulo}', genero = '${animeData.genero}', descripcion = '${animeData.descripcion}', episodios = ${episodeChecker(animeData.episodios)} where id = ${animeData.id};`)
 
     }catch(err){
         console.error("Error en la insercion de datos",err.message)
@@ -141,8 +141,8 @@ function titleChecker(titleObject){
 }
 
 function episodeChecker(episodes){
-    if(isNaN(Number(episodes))){
-        return episodes
+    if(!isNaN(Number(episodes))){
+        return Number(episodes)
     }else{
         return null
     }

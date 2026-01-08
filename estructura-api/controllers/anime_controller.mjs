@@ -37,6 +37,7 @@ async function getAnimeById(req, res){
 // }
 async function updateAnime(req, res){
     try{
+        console.log(req.body)
         await animeRepo.updateAnimeById(req.body.data)
 
     }catch(error){
