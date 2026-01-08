@@ -12,8 +12,8 @@ router.get("/", async (req, res) => {
   let rankingUserFav = [];
 
   try {
-    const anime = await firebaseController.client.post("/getAnimeFollowStat");
-    const users = await firebaseController.client.post("/getUserFollowStat");
+    const anime = await firebaseController.client.get("/getAnimeFollowStat");
+    const users = await firebaseController.client.get("/getUserFollowStat");
     rankingAnimeFav = anime.data || [];
     rankingUserFav = users.data || [];
   } catch (err) {
@@ -46,8 +46,8 @@ router.get("/inicio", async (req, res) => {
   let rankingUserFav = [];
 
   try {
-    const anime = await firebaseController.client.post("/getAnimeFollowStat");
-    const users = await firebaseController.client.post("/getUserFollowStat");
+    const anime = await firebaseController.client.get("/getAnimeFollowStat");
+    const users = await firebaseController.client.get("/getUserFollowStat");
     rankingAnimeFav = anime.data || [];
     rankingUserFav = users.data || [];
   } catch (err) {

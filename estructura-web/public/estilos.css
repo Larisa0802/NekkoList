@@ -432,6 +432,10 @@ nav a:hover {
   grid-area: div;
 }
 
+.mainContainerUser .presentacion {
+    grid-area: presentacion;
+}
+
 .presentacion2 {
   width: 70%;
   max-width: 900px;
@@ -444,6 +448,7 @@ nav a:hover {
   align-items: center;
   gap: 40px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  grid-area: div;
 }
 
 .presentacion2 p {
@@ -740,6 +745,33 @@ ul > div{
   margin-bottom:5%;
 }
 
+.mainNoUser{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "div article";
+  gap: 2%;
+}
+
+.YOUTUBE1{
+  grid-area: article;
+  margin-top: 7%;
+}
+
+.mainContainerUser .YOUTUBE{
+  grid-area: youtube;
+  margin-left: 15%;
+}
+
+@media (max-width: 968px) {
+    .mainContainerUser {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "presentacion"
+            "ranking"
+            "youtube";
+    }
+}
+
 /*PAGINA LOGOUT*/
 .logOutDiv {
   background-color: rgba(2, 1, 35, 0.208);
@@ -824,7 +856,7 @@ ul > div{
   padding: 2rem;
   background-color: rgba(2, 63, 89, 0.412);
   border-radius: 15px;
-  grid-area: section;
+  grid-area: ranking;
 }
 
 .subtC {
@@ -896,13 +928,19 @@ ul > div{
 /*index*/
 .mainContainerUser {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "div section";
-  gap: 2%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+        "presentacion ranking"
+        "youtube ranking";
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 @media (max-width: 968px) {
-  .prueba {
+  .mainContainerUser {
     grid-template-columns: 1fr;
     grid-template-areas:
       "div"

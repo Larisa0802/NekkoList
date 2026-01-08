@@ -76,11 +76,24 @@
                   </div>
                   <% } %>
           </section>
+
+          <article class="YOUTUBE">
+              <iframe 
+                    width="560" 
+                    height="315" 
+                    src="https://www.youtube.com/embed/O_SRs4V5-Bs" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-media; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+              </iframe>
+        </article>
         </main>
 
         <% } else { %>
           <h1 id="titC" style="margin-top:5%;">Bienvenido a NekkoList</h1>
-          <div class="presentacion2">
+          <main class="mainNoUser">
+            <div class="presentacion2">
             <p>
               Descubre y explora una amplia colección de animes donde podrás consultar información
               detallada de cada serie: sinopsis, géneros, número de episodios y fecha de publicación.
@@ -91,6 +104,19 @@
             </p>
             <img src="/img/pet.png" alt="pet">
           </div>
+
+          <article class="YOUTUBE1">
+              <iframe 
+                    width="560" 
+                    height="315" 
+                    src="https://www.youtube.com/embed/O_SRs4V5-Bs" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-media; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+              </iframe>
+          </article>
+          </main>
           <% } %> <%- include("../partials/footer") %> <!--Footer-->
 </body>
 </html>
