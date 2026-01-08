@@ -654,7 +654,7 @@ td {
 
 aside{
   width: 650px;
-  margin-top: 13%;
+  margin-top: 7%;
 }
 
 aside > ul {
@@ -729,13 +729,15 @@ ul > div{
 
 .perfiles{
   grid-area: aside;
+  width:100%;
 }
 
 .perfiles img{
-  width: 23%;
-  height: 50%;
+  width: 50%;
+  height: 60%;
   border-radius: 100%;
-  margin-left: 30%;
+  margin-left: 15%;
+  margin-bottom:5%;
 }
 
 /*PAGINA LOGOUT*/
