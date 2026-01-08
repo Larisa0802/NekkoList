@@ -61,12 +61,14 @@ async function deleteAnime(req, res){
 async function getAnimeFollowStat(req, res){
     let animes = undefined
     try{
+        
         animes = await animeRepo.selectAnimeFollowedStat()
 
     }catch(error){
         console.log(error)
         res.send(error).status(500)
     }
+    console.log(animes)
     res.send(animes).status(200)
    
 }
