@@ -42,6 +42,7 @@ async function selectUserById(id){
     let result = ""
     let user = undefined
     try{
+        
         result = await client.query(`SELECT * from usuarios where id = '${id}';`)
 
     }catch(err){
@@ -54,6 +55,7 @@ async function selectUserById(id){
     if(result && result.rows){
         user = result.rows.map((e) => new User(e))
     }
+    
     return user
 }
 

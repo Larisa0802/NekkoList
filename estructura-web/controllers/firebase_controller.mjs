@@ -81,6 +81,7 @@ class FirebaseController {
         const userData = await this.client.get(
           `/getUserData/${userCredential.user.uid}`
         );
+        
         res.cookie(
           "datosUsuario",
           {
@@ -96,10 +97,12 @@ class FirebaseController {
         );
 
         // tiene como atributos rankingAnimeFav.count y rankingAnimeFav.titulo
-        let rankingAnimeFav = await this.client.post("/getAnimeFollowStat");
+        let rankingAnimeFav = await this.client.get("/getAnimeFollowStat");
+
+        
 
         // tiene como atributos rankingUserFav.count y rankingUserFav.nombre
-        let rankingUserFav = await this.client.post("/getUserFollowStat");
+        let rankingUserFav = await this.client.get("/getUserFollowStat");
 
         if (!rankingAnimeFav || !rankingAnimeFav.data) {
           console.log("No se pudo obtener el ranking de animes favoritos");
@@ -115,7 +118,7 @@ class FirebaseController {
         console.log("rankingUserFav:", rankingUserFav.data);
 
         res.render("completes/index", {
-          user: userData.data[0],
+          user: userData.data,
           rankingAnimeFav: rankingAnimeFav.data,
           rankingUserFav: rankingUserFav.data,
         });
@@ -282,6 +285,7 @@ class FirebaseController {
       }
 
       const datos = await this.client.get(`/getAllFav/${userData.uuid}`);
+      console.log(datos.data)
       res.render("completes/profile", {
         favData: datos.data,
         user: userData,
