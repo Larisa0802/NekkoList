@@ -19,12 +19,22 @@
 
         <img src="<%= anime.imagen %>" alt="<%= anime.titulo %>" width="250px" height="auto">
 
-        <p>Título: <%= anime.titulo %></p>
-        <p>Género: <%= anime.genero %></p>
-        <p>ID: <%= anime.id %></p>
-        <p>Episodios: <%= anime.episodios != null ? anime.episodios : "On-Going" %></p>
+        <p class="detallesHeaders">Título: </p>
+           <p><%= anime.titulo %></p>
+        <p class="detallesHeaders">Género: </p>
+            <p><%= anime.genero %></p>
+        <p class="detallesHeaders">ID: </p>
+            <p><%= anime.id %></p>
+        <p class="detallesHeaders">Episodios: </p>
+            <p><%= anime.episodios != null ? anime.episodios : "On-Going" %></p>
+        <p class="detallesHeaders">Fecha: </p>
+            <p><%= anime.fecha_pub 
+                ? new Date(anime.fecha_pub).toISOString().split("T")[0] 
+                : "Desconocida" 
+            %>
+        </p>
 
-        <p>Personajes</p>
+        <p class="detallesHeaders">Personajes:</p>
 
         <div class="characters-grid">
             <% if (char && char.length > 0) { %>
@@ -44,14 +54,8 @@
             <% } %>
         </div>
 
-        <p>Fecha: 
-            <%= anime.fecha_pub 
-                ? new Date(anime.fecha_pub).toISOString().split("T")[0] 
-                : "Desconocida" 
-            %>
-        </p>
-
-        <p>Sinopsis: <%= anime.descripcion %></p>
+        <p class="detallesHeaders">Sinopsis:</p>
+        <p><%= anime.descripcion %></p>
 
     </div>
 

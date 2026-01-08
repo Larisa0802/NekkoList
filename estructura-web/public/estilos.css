@@ -254,7 +254,14 @@ nav a:hover {
   transform: scale(1.05);
 }
 
-.contactoDiv {
+.contactoDiv{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "section aside";
+  gap: 2%;
+}
+
+.contactos {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -264,7 +271,7 @@ nav a:hover {
   padding: 15px;
 }
 
-.contactoDiv form {
+.contactos form {
   width: 350px;
   display: flex;
   flex-direction: column;
@@ -274,14 +281,14 @@ nav a:hover {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
 }
 
-.contactoDiv form label {
+.contactos form label {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   font-size: 14px;
 }
 
-.contactoDiv form input {
+.contactos form input {
   padding: 10px 12px;
   margin-bottom: 8px;
   border: none;
@@ -292,13 +299,17 @@ nav a:hover {
   transition: all 0.3s ease;
 }
 
-.contactoDiv form input:focus {
+.contactos form input:focus {
   outline: none;
   background-color: rgba(0, 195, 255, 0.1);
   box-shadow: 0 0 10px #00c3ff;
 }
 
-.contactoDiv form button {
+#textarea{
+  resize: none;
+}
+
+.contactos form button {
   margin-top: 10px;
   padding: 12px 0;
   border: none;
@@ -310,9 +321,13 @@ nav a:hover {
   transition: all 0.3s ease;
 }
 
-.contactoDiv form button:hover {
+.contactos form button:hover {
   background: linear-gradient(90deg, #0072ff, #00c3ff);
   transform: scale(1.05);
+}
+
+.contactos{
+  grid-area: section;
 }
 
 /* CSS DE COMPLETES*/
@@ -590,8 +605,15 @@ td {
   width: 80%;
   margin:0 auto;
   border-radius: 8px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  font-size: large;
 
+}
+
+.detallesHeaders{
+  color: #fff;
+  text-shadow: 0 0 5px #00c3ff, 0 0 10px #2fc3f0, 0 0 20px #33bbe4;
+  animation: neon 5s ease-in-out infinite alternate, fadeInDown 2s ease forwards;
 }
 
 #delUser {
@@ -602,10 +624,15 @@ td {
   transform: translateY(-2px);
 }
 
+aside{
+  width: 650px;
+  margin-top: 13%;
+}
+
 aside > ul {
   display: flex;
   gap: 10px;
-  background-color: #ffffff25;
+  background-color: rgba(12, 57, 84, 0.732);;
   padding: 20px;
   border-radius: 8px;
 }
@@ -622,6 +649,11 @@ aside li {
 aside h2 {
   color: white;
   font-family: "Nekko";
+}
+
+ul > div{
+  width: 33%;
+  margin-left: 20px;
 }
 
 .tooltip {
@@ -665,6 +697,17 @@ aside h2 {
 }
 #copyUUID:active {
   transform: scale(0.96);
+}
+
+.perfiles{
+  grid-area: aside;
+}
+
+.perfiles img{
+  width: 23%;
+  height: 50%;
+  border-radius: 100%;
+  margin-left: 30%;
 }
 
 /*PAGINA LOGOUT*/
@@ -848,16 +891,25 @@ aside h2 {
   text-decoration: none;
   font-size: small;
 }
-.masInfo, .favs, .catalogoSinUser, .editarAdmin{
+.masInfo, .favs, .catalogoSinUser, .editarAdmin, .masInfo1{
     padding: 10px;
-    margin-bottom: 10px;
+    margin-top: 20px;
     border-radius: 50px;
     border: 1px solid rgb(32, 196, 251);
     color: white;
     background-color: rgba(128, 128, 128, 0);
 }
 
-.masInfo:hover, .favs:hover, .catalogoSinUser:hover, .editarAdmin:hover{
+.masInfo, .masInfo1{
+  text-decoration: none;
+  font-size: small;
+}
+
+.ocultar{
+  display: none;
+}
+
+.masInfo:hover, .masInfo1:hover, .favs:hover, .catalogoSinUser:hover, .editarAdmin:hover{
     background: linear-gradient(to right, #20c4ff, #17507ffc);
     transition: background 0.3s;
 }
@@ -990,7 +1042,7 @@ aside h2 {
     /* Formularios login, register, contacto */
     .login-div form,
     .register-div form,
-    .contactoDiv form,
+    .contactos form,
     .dataChangeDiv form {
         width: 300px;
         padding: 30px 20px;
@@ -1072,7 +1124,7 @@ aside h2 {
     /* Formularios */
     .login-div form,
     .register-div form,
-    .contactoDiv form,
+    .contactos form,
     .dataChangeDiv form {
         width: 90%;
         padding: 25px 15px;
@@ -1149,7 +1201,7 @@ aside h2 {
 
     .login-div form,
     .register-div form,
-    .contactoDiv form,
+    .contactos form,
     .dataChangeDiv form {
         width: 95%;
         padding: 20px 15px;
