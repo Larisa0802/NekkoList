@@ -46,7 +46,10 @@
                       </span>
                       <span class="rankCount">
                         <%= item.count %>
-                          <%= item.count===1 ? 'seguidor' : 'seguidores' %>
+                          <%= item.count ===1 ? 'seguidor' : 'seguidores' %>
+                      </span>
+                       <span class="rankCount">
+                        <p>Nota media de los usuarios: <%= item.round %> </p>
                       </span>
                     </div>
                   </div>
