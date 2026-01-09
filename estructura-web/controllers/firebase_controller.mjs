@@ -27,6 +27,17 @@ class FirebaseController {
         nombre: req.body.name,
       };
 
+      if (
+        datosJson.email === "" ||
+        datosJson.password === "" ||
+        datosJson.nombre === ""
+      ) {
+       return res.render("completes/register", {
+          errorR: { mensaje: "Los campos no pueden estar vacios" },
+          log: { email: req.body.email, pass: req.body.password },
+        });
+      }
+
       // Petición a la API
       const auth = getAuth();
       let userCredential = await createUserWithEmailAndPassword(
@@ -41,6 +52,7 @@ class FirebaseController {
           nombre: datosJson.nombre,
           id: userCredential.user.uid,
         });
+
         res.render("completes/logIn", {
           log: {
             email: datosJson.email,
@@ -48,28 +60,47 @@ class FirebaseController {
             uuid: userCredential.user.uid, // UID devuelto por la API
           },
           user: null,
-          errorL: null,
+          errorR: null,
         });
       } else {
         res.status(400).send("Error en el registro");
       }
     } catch (error) {
       console.error("Error al consumir la API:", error.message);
-      res.render("completes/register", {
-        error: {
-          mensaje: "Error al registrarse (email en uso)",
-        },
-      });
-    }
-  };
+
+      if (error.code === "auth/password-does-not-meet-requirements") {
+        return res.render("completes/register", {
+          errorR: { mensaje: "La contraseña debe tener minimo 6 caracteres" },
+          log: { email: req.body.email, pass: req.body.password },
+        });
+      } else if (error.code ==="auth/invalid-email"){
+         return res.render("completes/register", {
+          errorR: { mensaje: "Email no válido" },
+          log: { email: req.body.email, pass: req.body.password },
+        });
+      } else if (error.code === "auth/email-already-in-use"){
+        return res.render("completes/register", {
+          errorR: { mensaje: "Ese email ya esta en uso" },
+          log: { email: req.body.email, pass: req.body.password },
+        });
+      }
+   }
+};
 
   logIn = async (req, res) => {
     try {
-      //cambiar estructura para que comprube si la cookie existe para utilizar las llamadas con la info del formulario o de la cookie existente
       const datosJson = {
         email: req.body.email,
         password: req.body.password,
       };
+
+      if (datosJson.email === "" || datosJson.password === "") {
+        res.render("completes/logIn", {
+          errorL: { mensaje: "Los campos no pueden estar vacios" },
+          log: { email: req.body.email, pass: req.body.password },
+        });
+      }
+
       const auth = getAuth();
       let userCredential = await signInWithEmailAndPassword(
         auth,
@@ -98,8 +129,6 @@ class FirebaseController {
 
         // tiene como atributos rankingAnimeFav.count y rankingAnimeFav.titulo
         let rankingAnimeFav = await this.client.get("/getAnimeFollowStat");
-
-        
 
         // tiene como atributos rankingUserFav.count y rankingUserFav.nombre
         let rankingUserFav = await this.client.get("/getUserFollowStat");
@@ -135,7 +164,7 @@ class FirebaseController {
     }
   };
 
-  //Añadi: Limpiar cookie para que la nav se resetee (no estaba puesto) y redirige al login para que se recargue
+  //Limpiar cookie para que la nav se resetee (no estaba puesto) y redirige al login para que se recargue
   signOutUser = async (req, res) => {
     try {
       const auth = getAuth();
@@ -158,7 +187,7 @@ class FirebaseController {
     try {
       const userData = req.cookies["datosUsuario"];
 
-      if (!userData) {
+      if (!userData) { 
         return res.json({ error: "No estas logueado" });
       }
 
@@ -220,6 +249,7 @@ class FirebaseController {
       let existentEmail = await this.client.post("/getUserEmail", {
         email: req.body.newEmail,
       });
+      
       console.log(existentEmail.data.length);
       if (existentEmail.data.length != 0) {
         console.error("Error al consumir la API:", error.message);
@@ -285,7 +315,7 @@ class FirebaseController {
       }
 
       const datos = await this.client.get(`/getAllFav/${userData.uuid}`);
-      console.log(datos.data)
+      console.log(datos.data);
       res.render("completes/profile", {
         favData: datos.data,
         user: userData,

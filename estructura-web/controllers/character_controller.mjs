@@ -13,7 +13,7 @@ class CharController {
             const datos = await this.client.post("/updateCharacterVA",{
                 //mirar como recoger el id del anime cuando se vayan a actualizar los datos de los animes
                 info:req.body.nameVA,
-                // animeId:
+                // animeId: 
             })
             if (datos.status === 200) {
                 res.redirect("/profile")

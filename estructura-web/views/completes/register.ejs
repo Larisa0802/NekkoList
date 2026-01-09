@@ -19,37 +19,17 @@
                 <p>Nombre: <input name="name" type="text" /></p>
                 <a href="login.html"></a>
                 <input type="submit" value="Registrarse" />
-             
+                <%if(errorR){%>
+                    <h3 id="error">
+                        <%= errorR.mensaje %>
+                    </h3>
+                        <%}%>
             </form>
 
-            <div id="msg"></div>
 
         </main>
-        <%- include("../partials/footer") %>
-            <!--Footer-->
+        <%- include("../partials/footer") %><!--Footer-->
 
-            <script>
-                const form = document.querySelector("form")
-                const mensaje = document.getElementById("msg")
-
-                form.addEventListener("submit", (e) => {
-                    const email = document.getElementsByName("email")[0].value
-                    const pass = document.getElementsByName("password")[0].value
-                    const nombre = document.getElementsByName("name")[0].value
-                    mensaje.innerHTML = ""
-                    if (!pass || !email || !nombre) {
-                        e.preventDefault()
-                        mensaje.innerHTML = "<h2  id='error'>Los campos no pueden estar vacios</h2>";
-                        return
-                    }
-
-                    if (pass.length < 6) {
-                        e.preventDefault()
-                        mensaje.innerHTML = "<h2 id='error'>La contraseña debe tener mínimo 6 caracteres</h2>";
-                        return
-                    }
-                })
-            </script>
 </body>
 
 </html>

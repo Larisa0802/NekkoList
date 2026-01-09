@@ -33,7 +33,7 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/register", (req, res) => {
-  res.render("completes/register");
+  res.render("completes/register", {errorR: null, log: ""});
 });
 
 router.get("/logOut", (req, res) => {

@@ -10,8 +10,9 @@
 </head>
 
 <body>
-    <% const user = locals.user || null; %>
-    <%- include("../partials/header") %> <!--Header-->
+        <%- include("../partials/header") %> <!--Header-->
+
+    <%if(user){%>
 
     <h1 id="titC">¿Deseas cerrar sesión?</h1>
     <main class="logOutDiv">
@@ -23,7 +24,10 @@
         <input type="submit" value="Cerrar sesión">
     </form>
     </main>
-        <%- include("../partials/footer") %> <!--Footer-->
+    <%}else{%>
+        <h3 id="error">Debes estar logueado</h3>
+        <%}%>
+                <%- include("../partials/footer") %> <!--Footer-->
 
 </body>
 

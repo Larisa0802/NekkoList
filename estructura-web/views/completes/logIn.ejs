@@ -16,12 +16,11 @@
 
             <form action="/logIn" method="post">
                 <p>Inicia sesión<img src="/img/loginPet.png" alt="loginPet" class="pet"></p>
-                <p>Email: <input name="email" type="text" value="<%= log?.email || '' %>"></p>
-                <p>Contraseña: <input name="password" type="password" value="<%= log?.pass || '' %>"></p>
-                <input type="submit" value="Entrar"><br><br>
-
+                <p>Email: <input name="email" type="text" value="<%= log?.email || '' %>" id="email"></p>
+                <p>Contraseña: <input name="password" type="password" value="<%= log?.pass || '' %>" id="pass"></p>
+                <input type="submit" value="Entrar" id="btn"><br><br>
                 <% if(errorL){ %>
-                    <h3 style='color:red' id="error">
+                    <h3 id="error">
                         <%= errorL.mensaje %>
                     </h3>
                     <% } %>
@@ -32,7 +31,7 @@
         </main>
 
         <%- include("../partials/footer") %> <!--Footer-->
-
+       
 </body>
 
 </html>
