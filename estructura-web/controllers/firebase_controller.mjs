@@ -33,7 +33,7 @@ class FirebaseController {
         datosJson.nombre === ""
       ) {
        return res.render("completes/register", {
-          errorR: { mensaje: "Los campos no pueden estar vacios" },
+          errorL: { mensaje: "Los campos no pueden estar vacios" },
           log: { email: req.body.email, pass: req.body.password },
         });
       }
@@ -60,7 +60,7 @@ class FirebaseController {
             uuid: userCredential.user.uid, // UID devuelto por la API
           },
           user: null,
-          errorR: null,
+          errorL: null,
         });
       } else {
         res.status(400).send("Error en el registro");
@@ -70,17 +70,17 @@ class FirebaseController {
 
       if (error.code === "auth/password-does-not-meet-requirements") {
         return res.render("completes/register", {
-          errorR: { mensaje: "La contraseña debe tener minimo 6 caracteres" },
+          errorL: { mensaje: "La contraseña debe tener minimo 6 caracteres" },
           log: { email: req.body.email, pass: req.body.password },
         });
       } else if (error.code ==="auth/invalid-email"){
          return res.render("completes/register", {
-          errorR: { mensaje: "Email no válido" },
+          errorL: { mensaje: "Email no válido" },
           log: { email: req.body.email, pass: req.body.password },
         });
       } else if (error.code === "auth/email-already-in-use"){
         return res.render("completes/register", {
-          errorR: { mensaje: "Ese email ya esta en uso" },
+          errorL: { mensaje: "Ese email ya esta en uso" },
           log: { email: req.body.email, pass: req.body.password },
         });
       }

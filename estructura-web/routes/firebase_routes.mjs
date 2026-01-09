@@ -29,11 +29,11 @@ router.get("/", async (req, res) => {
 
 
 router.get("/login", (req, res) => {
-  res.render("completes/logIn", { errorL: null,log: ""});
+  res.render("completes/logIn", { errorL: null, log: ""});
 });
 
 router.get("/register", (req, res) => {
-  res.render("completes/register", {errorR: null, log: ""});
+  res.render("completes/register",  {errorL: null, log: ""});
 });
 
 router.get("/logOut", (req, res) => {
